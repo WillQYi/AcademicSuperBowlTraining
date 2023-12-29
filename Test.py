@@ -10,7 +10,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill("green")
+    screen.fill("dark red")
 
     pygame.display.flip()
 

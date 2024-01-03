@@ -1,50 +1,37 @@
 import pygame
-import elements
+import Elements
+import Screens
 
 pygame.init()
 screen = pygame.display.set_mode((1280,720),pygame.RESIZABLE)
 clock = pygame.time.Clock()
 running = True
+Buttons = []
 
-'''
-def text(string, X, Y, size, color):
-    font = pygame.font.Font('freesansbold.ttf', size)
-    text = font.render(string, True, color)
-    textRect = text.get_rect()
-    textRect.center = (X,Y)
-    screen.blit(text, textRect)
-'''
-    
-#Creates the homescreen
-def homescreen():
-
-    darkBlue = (53, 63, 112)
-
-    titleTextSize = 50
-    textDrawer = elements.TextDrawer(screen)
-    textDrawer.add("2023-2024 BHSS Academic Super Bowl", 640, 100, titleTextSize, darkBlue)
-    textDrawer.add("Math Training Tool", 640, 160, titleTextSize, darkBlue)
-    textDrawer.drawAll()
-    #text("2023-2024 BHSS Academic Super Bowl", 640, 100, titleTextSize, darkBlue)
-    #text("Math Training Tool", 640, 160, titleTextSize, darkBlue)
-
-    buttonTextSize = 30
-    #text("Training", 640, 350, buttonTextSize, darkBlue)
-    #text("Resources", 640, 480, buttonTextSize, darkBlue)
-
-    pygame.draw.rect(screen, darkBlue, pygame.Rect(520, 300, 240, 100), 7, 10)
-    pygame.draw.rect(screen, darkBlue, pygame.Rect(520, 430, 240, 100), 7, 10)
-    #pygame.draw.rect(screen, buttonColor, pygame.Rect(640, 90, 90, 120))
+center_X = 640
+center_Y = 360
+homescreen = Screens.homescreen(screen, center_X, center_Y)
 
 while running:
     for event in pygame.event.get():
+        print(event)
         if event.type == pygame.QUIT:
             running = False
+
+        if event.type == pygame.MOUSEBUTTONUP:
+            mousePos = pygame.mouse.get_pos()
+            for Button in homescreen.Buttons:
+                Button.clicked(mousePos)
+
+    print("-----------")   
     
     screen.fill((230,230,230))
 
-    homescreen()
+    center_X = pygame.display.get_window_size()[0]/2
+    center_Y = pygame.display.get_window_size()[1]/2
     
+    homescreen.draw()
+
     pygame.display.flip()
 
     clock.tick(60)

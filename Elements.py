@@ -1,6 +1,10 @@
 import pygame
 import Elements
 
+#
+# The following classes are used to draw/create specifics things to display or for users to interact with
+#
+
 #Draws text on a given screen
 #Used for miscellaneous text
 class TextDrawer:
@@ -24,8 +28,9 @@ class TextDrawer:
             self.draw(self.Texts[i][0],self.Texts[i][1],self.Texts[i][2],self.Texts[i][3],self.Texts[i][4])
 
     def getTexts(self):
-        for textTuple in Texts:
-
+        for textTuple in self.Texts:
+            print(textTuple)
+        return self.Texts
 
 
 # Creates a Button object which returns a event when pressed
@@ -80,8 +85,6 @@ class Button:
 
     def getSize(self):
         return self.sizeX, self.sizeY
-
-
 
 #Creates a label object which can be stuck on things like buttons
 class Label:

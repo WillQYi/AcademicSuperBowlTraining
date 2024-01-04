@@ -5,7 +5,7 @@ class homescreen:
 
     def __init__(self, screen, center_X, center_Y):
 
-        self.Buttons = []
+        self.Interactive = []
 
         self.colors = {"darkBlue":(53, 63, 112)}
 
@@ -17,15 +17,15 @@ class homescreen:
 
         buttonTextSize = 30
         
-        StartButton = Elements.Button(screen, center_X, center_Y-10, 240, 100, self.colors["darkBlue"], 7, 10)
-        OtherButton = Elements.Button(screen, center_X, center_Y+120, 240, 100, self.colors["darkBlue"], 7, 10)
+        StartButton = Elements.Button(screen, center_X, center_Y-10, 240, 100, self.colors["darkBlue"], 7, 10, "text", "Button 1", 30)
+        OtherButton = Elements.Button(screen, center_X, center_Y+120, 240, 100, self.colors["darkBlue"], 7, 10, "text", "Button 2", 30)
 
-        self.Buttons.append(StartButton)
-        self.Buttons.append(OtherButton)
+        self.Interactive.append(StartButton)
+        self.Interactive.append(OtherButton)
 
     def draw(self):
         self.textDrawer.drawAll()
-        for Button in self.Buttons:
+        for Button in self.Interactive:
             Button.draw()
 
 class resourcesScreen:

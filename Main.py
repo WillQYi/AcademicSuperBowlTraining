@@ -14,16 +14,16 @@ homescreen = Screens.homescreen(screen, center_X, center_Y)
 
 while running:
     for event in pygame.event.get():
-        print(event)
+        #print(event)
         if event.type == pygame.QUIT:
             running = False
 
         if event.type == pygame.MOUSEBUTTONUP:
             mousePos = pygame.mouse.get_pos()
-            for Button in homescreen.Buttons:
+            for Button in homescreen.Interactive:
                 Button.clicked(mousePos)
 
-    print("-----------")   
+    #print("-----------")   
     
     screen.fill((230,230,230))
 

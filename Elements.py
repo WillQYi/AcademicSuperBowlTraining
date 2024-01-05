@@ -65,7 +65,7 @@ class Button:
         self.label.draw()
         if (self.runTick > 0):
             self.runTick += 1
-            if (self.runTick == 60):
+            if (self.runTick == 10):
                 self.ButtonRect = self.ButtonRect.scale_by(10/9)
                 self.label.changeSize(int(self.labelSize * 10/9))
                 self.runTick = 0

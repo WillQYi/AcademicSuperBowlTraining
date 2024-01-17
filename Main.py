@@ -30,7 +30,7 @@ while running:
     center_X = pygame.display.get_window_size()[0]/2
     center_Y = pygame.display.get_window_size()[1]/2
     
-    homescreen.draw()
+    homescreen.draw(center_X, center_Y)
 
     pygame.display.flip()
 

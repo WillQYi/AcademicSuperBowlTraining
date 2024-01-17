@@ -9,24 +9,22 @@ class homescreen:
 
         self.colors = {"darkBlue":(53, 63, 112)}
 
-        self.textDrawer = Elements.TextDrawer(screen)
+        self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
 
         titleTextSize = 50
-        self.textDrawer.add("2023-2024 BHSS Academic Super Bowl", center_X, center_Y-260, titleTextSize, self.colors["darkBlue"])
-        self.textDrawer.add("Math Training Tool", center_X, center_Y-200, titleTextSize, self.colors["darkBlue"])
+        self.textDrawer.add("2023-2024 BHSS Academic Super Bowl", 0, -260, titleTextSize, self.colors["darkBlue"])
+        self.textDrawer.add("Math Training Tool", 0, -200, titleTextSize, self.colors["darkBlue"])
 
-        buttonTextSize = 30
+        buttonTextSize = 40
         
-        StartButton = Elements.Button(screen, center_X, center_Y-10, 240, 100, self.colors["darkBlue"], 7, 10, "text", "Button 1", 30)
-        OtherButton = Elements.Button(screen, center_X, center_Y+120, 240, 100, self.colors["darkBlue"], 7, 10, "text", "Button 2", 30)
-
+        StartButton = Elements.Button(screen, 0, 50, 300, 150, self.colors["darkBlue"], 8, 10, "text", "Start", buttonTextSize, center_X, center_Y)
+        
         self.Interactive.append(StartButton)
-        self.Interactive.append(OtherButton)
 
-    def draw(self):
-        self.textDrawer.drawAll()
+    def draw(self, center_X, center_Y):
+        self.textDrawer.drawAll(center_X, center_Y)
         for Button in self.Interactive:
-            Button.draw()
+            Button.draw(center_X, center_Y)
 
 class resourcesScreen:
 

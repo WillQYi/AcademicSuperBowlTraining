@@ -38,7 +38,7 @@ class TextDrawer:
 # Note the drawing of the button is centerbased    
 class Button:
 
-    def __init__(self, screen, X, Y, sizeX, sizeY, color, thickness, curveRadius, labelType, string, labelSize, center_X, center_Y):
+    def __init__(self, screen, X, Y, sizeX, sizeY, color, thickness, curveRadius, labelType, string, labelSize, center_X, center_Y, event):
 
         #Initial Variables
         self.runTick = 0

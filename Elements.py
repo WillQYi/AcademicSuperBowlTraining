@@ -38,6 +38,7 @@ class TextDrawer:
 # Note the drawing of the button is centerbased    
 class Button:
 
+    #Fix: Streamline inputs for button function
     def __init__(self, screen, X, Y, sizeX, sizeY, color, thickness, curveRadius, labelType, string, labelSize, center_X, center_Y, event):
 
         #Initial Variables
@@ -55,6 +56,7 @@ class Button:
         self.string = string
         self.labelSize = labelSize
         self.labelType = labelType
+        self.event = event
 
         #Button Creation
         self.ButtonRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
@@ -64,11 +66,19 @@ class Button:
     def draw(self, center_X, center_Y):
         pygame.draw.rect(self.screen, self.color, self.ButtonRect, self.thickness, self.curveRadius)
         self.label.draw(center_X+self.X, center_Y+self.Y)
+
+        #Button waiting after pressed and growing again
         if (self.runTick > 0):
             self.runTick += 1
             if (self.runTick == 10):
+                #Makes button large again
                 self.ButtonRect = self.ButtonRect.scale_by(10/9)
                 self.label.changeSizeText(int(self.labelSize * 10/9))
+
+                #Creates event to change screen
+                #Fix: event creater/processing, don't know how to convey information with events, only can change the event type
+                CUSTOMEVENT = pygame.event.Event(self.event)
+                pygame.event.post(CUSTOMEVENT)
                 self.runTick = 0
         else: 
             self.ButtonRect = pygame.Rect(center_X+self.X-self.sizeX/2, center_Y+self.Y-self.sizeY/2, self.sizeX, self.sizeY)

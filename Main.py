@@ -14,8 +14,9 @@ center_Y = 360
 practiceSelectScreen = Screens.practiceSelectScreen(screen, center_X, center_Y)
 
 while running:
+    #Checks for user interactions
     for event in pygame.event.get():
-        #print(event)
+        print(event)
         if event.type == pygame.QUIT:
             running = False
 
@@ -25,7 +26,7 @@ while running:
                 Button.clicked(mousePos)
 
     #print("-----------")   
-    
+
     screen.fill((230,230,230))
 
     center_X = pygame.display.get_window_size()[0]/2

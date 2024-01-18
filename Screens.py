@@ -1,6 +1,8 @@
 import pygame
 import Elements
 
+eventDict = {4199: "home", 4200: "pracScreen", 4201: "alegbra", 4202: "geometry", 4203: "statistics", 4204: "logarithms", 4205: "calculus", 4206: "mod", 4207: "dooms"}
+
 class homescreen:
 
     def __init__(self, screen, center_X, center_Y):
@@ -17,7 +19,7 @@ class homescreen:
 
         buttonTextSize = 40
         
-        StartButton = Elements.Button(screen, 0, 50, 300, 150, self.colors["darkBlue"], 8, 10, "text", "Start", buttonTextSize, center_X, center_Y, "to practice screen")
+        StartButton = Elements.Button(screen, 0, 50, 300, 150, self.colors["darkBlue"], 8, 10, "text", "Start", buttonTextSize, center_X, center_Y, "PRACTICESELECT")
         
         self.Interactive.append(StartButton)
 
@@ -55,13 +57,13 @@ class practiceSelectScreen:
         spreadY = 150
         spreadX = 400
         
-        AlegbraButton = Elements.Button(screen, 0-spreadX, 50-spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Algebra", buttonTextSize, center_X, center_Y, "to algebra practice")
-        GeometryButton = Elements.Button(screen, 0, 50-spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Geometry", buttonTextSize, center_X, center_Y, "to geometry practice")
-        StatisticsButton = Elements.Button(screen, 0+spreadX, 50-spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Statistics", buttonTextSize, center_X, center_Y, "to statistics practice")
-        LogarithmButton = Elements.Button(screen, 0-spreadX, 50, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Logarithms", buttonTextSize, center_X, center_Y, "to logarithms practice")
-        CalculusButton = Elements.Button(screen, 0, 50, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Calculus", buttonTextSize, center_X, center_Y, "to calculus practice")
-        ModButton = Elements.Button(screen, 0+spreadX, 50, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Modulo Arithemtic", buttonTextSize, center_X, center_Y, "to mod practice")
-        DoomsButton = Elements.Button(screen, 0, 50+spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Doomsday Rule", buttonTextSize, center_X, center_Y, "to doomsday practice")
+        AlegbraButton = Elements.Button(screen, 0-spreadX, 50-spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Algebra", buttonTextSize, center_X, center_Y, 4201)
+        GeometryButton = Elements.Button(screen, 0, 50-spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Geometry", buttonTextSize, center_X, center_Y, 4202)
+        StatisticsButton = Elements.Button(screen, 0+spreadX, 50-spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Statistics", buttonTextSize, center_X, center_Y, 4203)
+        LogarithmButton = Elements.Button(screen, 0-spreadX, 50, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Logarithms", buttonTextSize, center_X, center_Y, 4204)
+        CalculusButton = Elements.Button(screen, 0, 50, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Calculus", buttonTextSize, center_X, center_Y, 4205)
+        ModButton = Elements.Button(screen, 0+spreadX, 50, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Modulo Arithemtic", buttonTextSize, center_X, center_Y, 4206)
+        DoomsButton = Elements.Button(screen, 0, 50+spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Doomsday Rule", buttonTextSize, center_X, center_Y, 4207)
 
         self.Interactive.append(AlegbraButton)
         self.Interactive.append(GeometryButton)

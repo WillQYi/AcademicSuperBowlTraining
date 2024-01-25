@@ -11,7 +11,7 @@ Buttons = []
 center_X = 640
 center_Y = 360
 #homescreen = Screens.homescreen(screen, center_X, center_Y)
-practiceSelectScreen = Screens.practiceSelectScreen(screen, center_X, center_Y)
+currScreen = Screens.practiceSelectScreen(screen, center_X, center_Y)
 
 while running:
     #Checks for user interactions
@@ -20,19 +20,21 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+        if event.type == 32778:
+            center_X = pygame.display.get_window_size()[0]/2
+            center_Y = pygame.display.get_window_size()[1]/2
+            currScreen.recenter(center_X,center_Y)
+
         if event.type == pygame.MOUSEBUTTONUP:
             mousePos = pygame.mouse.get_pos()
-            for Button in practiceSelectScreen.Interactive:
+            for Button in currScreen.Interactive:
                 Button.clicked(mousePos)
 
     #print("-----------")   
 
     screen.fill((230,230,230))
-
-    center_X = pygame.display.get_window_size()[0]/2
-    center_Y = pygame.display.get_window_size()[1]/2
     
-    practiceSelectScreen.draw(center_X, center_Y)
+    currScreen.draw()
 
     pygame.display.flip()
 

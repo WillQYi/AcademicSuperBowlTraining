@@ -9,6 +9,9 @@ class homescreen:
 
         self.Interactive = []
 
+        self.center_X = center_X
+        self.center_Y = center_Y
+
         self.colors = {"darkBlue":(53, 63, 112)}
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
@@ -25,24 +28,24 @@ class homescreen:
 
         self.draw(center_X, center_Y)
 
-    def draw(self, center_X, center_Y):
-        self.textDrawer.drawAll(center_X, center_Y)
+    def draw(self):
+        self.textDrawer.drawAll()
         for Button in self.Interactive:
-            Button.draw(center_X, center_Y)
+            Button.draw()
 
-class resourcesScreen:
-
-    def __init__(self):
-        pass
-
-    def draw():
-        pass
+    def recenter(self, center_X, center_Y):
+        self.textDrawer.recenter(center_X, center_Y)
+        for Interactive in self.Interactive:
+            Interactive.recenter(center_X, center_Y)
 
 class practiceSelectScreen:
 
     def __init__(self, screen, center_X, center_Y):
 
         self.Interactive = []
+
+        self.center_X = center_X
+        self.center_Y = center_Y
 
         self.colors = {"darkBlue":(53, 63, 112)}
 
@@ -73,10 +76,15 @@ class practiceSelectScreen:
         self.Interactive.append(ModButton)
         self.Interactive.append(DoomsButton)
 
-        self.draw(center_X, center_Y)
+        self.draw()
 
 
-    def draw(self, center_X, center_Y):
-        self.textDrawer.drawAll(center_X, center_Y)
+    def draw(self):
+        self.textDrawer.drawAll()
         for Button in self.Interactive:
-            Button.draw(center_X, center_Y)
+            Button.draw()
+
+    def recenter(self, center_X, center_Y):
+        self.textDrawer.recenter(center_X, center_Y)
+        for Interactive in self.Interactive:
+            Interactive.recenter(center_X, center_Y)

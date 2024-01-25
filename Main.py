@@ -10,8 +10,7 @@ Buttons = []
 
 center_X = 640
 center_Y = 360
-#homescreen = Screens.homescreen(screen, center_X, center_Y)
-currScreen = Screens.practiceSelectScreen(screen, center_X, center_Y)
+currScreen = Screens.homescreen(screen, center_X, center_Y)
 
 while running:
     #Checks for user interactions
@@ -20,6 +19,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+        #Window size is changed
         if event.type == 32778:
             center_X = pygame.display.get_window_size()[0]/2
             center_Y = pygame.display.get_window_size()[1]/2
@@ -30,6 +30,14 @@ while running:
             for Button in currScreen.Interactive:
                 Button.clicked(mousePos)
 
+        #Custom events
+        if event.type >= 4200 and event.type <= 4300:
+            if Screens.eventDict[event.type] == "home":
+                currScreen = Screens.homescreen(screen, center_X, center_Y)
+                continue
+            elif Screens.eventDict[event.type] == "pracSelect":
+                currScreen = Screens.practiceSelectScreen(screen, center_X, center_Y)
+                continue
     #print("-----------")   
 
     screen.fill((230,230,230))

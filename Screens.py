@@ -1,7 +1,7 @@
 import pygame
 import Elements
 
-eventDict = {4199: "home", 4200: "pracScreen", 4201: "alegbra", 4202: "geometry", 4203: "statistics", 4204: "logarithms", 4205: "calculus", 4206: "mod", 4207: "dooms"}
+eventDict = {4200: "home", 4201: "pracSelect", 4202: "alegbra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms"}
 
 class homescreen:
 
@@ -20,13 +20,13 @@ class homescreen:
         self.textDrawer.add("2023-2024 BHSS Academic Super Bowl", 0, -260, titleTextSize, self.colors["darkBlue"])
         self.textDrawer.add("Math Training Tool", 0, -200, titleTextSize, self.colors["darkBlue"])
 
-        buttonTextSize = 40
+        ButtonTextSize = 40
         
-        StartButton = Elements.Button(screen, 0, 50, 300, 150, self.colors["darkBlue"], 8, 10, "text", "Start", buttonTextSize, center_X, center_Y, "PRACTICESELECT")
+        StartButton = Elements.Button(screen, 0, 50, 300, 150, self.colors["darkBlue"], 8, 10, "text", "Start", ButtonTextSize, center_X, center_Y, 4201)
         
         self.Interactive.append(StartButton)
 
-        self.draw(center_X, center_Y)
+        self.draw()
 
     def draw(self):
         self.textDrawer.drawAll()
@@ -54,20 +54,29 @@ class practiceSelectScreen:
         titleTextSize = 50
         self.textDrawer.add("Select Practice", 0, -260, titleTextSize, self.colors["darkBlue"])
 
-        buttonTextSize = 30
-        buttonX = 350
-        buttonY = 100
-        spreadY = 150
-        spreadX = 400
         
-        AlegbraButton = Elements.Button(screen, 0-spreadX, 50-spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Algebra", buttonTextSize, center_X, center_Y, 4201)
-        GeometryButton = Elements.Button(screen, 0, 50-spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Geometry", buttonTextSize, center_X, center_Y, 4202)
-        StatisticsButton = Elements.Button(screen, 0+spreadX, 50-spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Statistics", buttonTextSize, center_X, center_Y, 4203)
-        LogarithmButton = Elements.Button(screen, 0-spreadX, 50, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Logarithms", buttonTextSize, center_X, center_Y, 4204)
-        CalculusButton = Elements.Button(screen, 0, 50, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Calculus", buttonTextSize, center_X, center_Y, 4205)
-        ModButton = Elements.Button(screen, 0+spreadX, 50, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Modulo Arithemtic", buttonTextSize, center_X, center_Y, 4206)
-        DoomsButton = Elements.Button(screen, 0, 50+spreadY, buttonX, buttonY, self.colors["darkBlue"], 8, 10, "text", "Doomsday Rule", buttonTextSize, center_X, center_Y, 4207)
+        #Utility Button Sizes
+        settingsButton = Elements.Button(screen, 500, -260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "homeButton.png", 0.2, center_X, center_Y, 4200)
 
+        #Practice Button Sizes
+        practiceButtonTextSize = 30
+        practiceButtonX = 350
+        practiceButtonY = 100
+        practiceSpreadY = 150
+        practiceSpreadX = 400
+        
+        #Creating Practice Buttons
+        AlegbraButton = Elements.Button(screen, 0-practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Algebra", practiceButtonTextSize, center_X, center_Y, 4202)
+        GeometryButton = Elements.Button(screen, 0, 50-practiceSpreadY, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Geometry", practiceButtonTextSize, center_X, center_Y, 4203)
+        StatisticsButton = Elements.Button(screen, 0+practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Statistics", practiceButtonTextSize, center_X, center_Y, 4204)
+        LogarithmButton = Elements.Button(screen, 0-practiceSpreadX, 50, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Logarithms", practiceButtonTextSize, center_X, center_Y, 4205)
+        CalculusButton = Elements.Button(screen, 0, 50, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Calculus", practiceButtonTextSize, center_X, center_Y, 4206)
+        ModButton = Elements.Button(screen, 0+practiceSpreadX, 50, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Modulo Arithemtic", practiceButtonTextSize, center_X, center_Y, 4207)
+        DoomsButton = Elements.Button(screen, 0, 50+practiceSpreadY, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Doomsday Rule", practiceButtonTextSize, center_X, center_Y, 4208)
+        
+        #Creating Utility Buttons
+
+        #Adding to interactive
         self.Interactive.append(AlegbraButton)
         self.Interactive.append(GeometryButton)
         self.Interactive.append(StatisticsButton)
@@ -75,6 +84,8 @@ class practiceSelectScreen:
         self.Interactive.append(CalculusButton)
         self.Interactive.append(ModButton)
         self.Interactive.append(DoomsButton)
+
+        self.Interactive.append(settingsButton)
 
         self.draw()
 

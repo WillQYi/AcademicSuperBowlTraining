@@ -83,7 +83,7 @@ class Button:
             if (self.runTick == 10):
                 #Makes button large again
                 self.ButtonRect = self.ButtonRect.scale_by(10/9)
-                self.label.changeSizeText(int(self.labelSize * 10/9))
+                self.label.changeSize(10/9)
 
                 #Creates event to change screen
                 #Fix: event creater/processing, don't know how to carry information with events, only can change the event type
@@ -97,11 +97,15 @@ class Button:
     def clicked(self, mousePos):
         if (self.ButtonRect.collidepoint(mousePos) and self.runTick == 0):
             self.runTick += 1
-            self.ButtonRect = self.ButtonRect.scale_by(0.9)
-            self.label.changeSizeText(int(self.labelSize * 9/10))
+            self.changeSize(9/10)
             return True
         else:
             return False
+
+    #Changes size of button
+    def changeSize(self, scale):
+        self.ButtonRect = self.ButtonRect.scale_by(scale)
+        self.label.changeSize(scale)
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
@@ -125,6 +129,7 @@ class Label:
             # Inputed variables stored in the object
             self.screen = screen
             self.string = string
+            self.labelSize = initSize
             self.font = pygame.font.Font('freesansbold.ttf', initSize)
             self.color = color
             self.X = X
@@ -132,15 +137,37 @@ class Label:
             self.text = self.font.render(string, True, color)
             self.textRect = self.text.get_rect()
             self.textRect.center = (X, Y)
+
+        elif (type == "image"):
+
+            #Initial Variables
+            self.type = "image"
+
+            # Inputed variables stored in the object
+            self.screen = screen
+            self.string = string
+            self.X = X
+            self.Y = Y
+            self.image = pygame.image.load(string)
+            self.image = pygame.transform.scale_by(self.image, initSize)
+            self.imageRect = self.image.get_rect()
+            self.imageRect.center = (X, Y)
+
     
     def draw(self, X, Y):
         if (self.type == "text"):
-            self.textRect.center = (X, Y)
             self.screen.blit(self.text, self.textRect)
+        elif (self.type == "image"):
+            self.screen.blit(self.image, self.imageRect)
 
-    #Just changes the size for Text, so the shrinking button animation works
-    def changeSizeText(self, size):
-        self.font = pygame.font.Font('freesansbold.ttf', size)
-        self.text = self.font.render(self.string, True, self.color)
-        self.textRect = self.text.get_rect()
-        self.textRect.center = (self.X, self.Y)
+    #Just changes the size for label, so the shrinking button animation works
+    def changeSize(self, scale):
+        if (self.type == "text"):
+            self.font = pygame.font.Font('freesansbold.ttf', int(self.labelSize * scale))
+            self.text = self.font.render(self.string, True, self.color)
+            self.textRect = self.text.get_rect()
+            self.textRect.center = (self.X, self.Y)
+        elif (self.type == "image"):
+            self.image = pygame.transform.scale_by(self.image, scale)
+            self.imageRect = self.image.get_rect()
+            self.imageRect.center = (self.X, self.Y)

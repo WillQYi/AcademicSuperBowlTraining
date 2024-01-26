@@ -75,7 +75,7 @@ class Button:
     #Draws everything
     def draw(self):
         pygame.draw.rect(self.screen, self.color, self.ButtonRect, self.thickness, self.curveRadius)
-        self.label.draw(self.center_X+self.X, self.center_Y+self.Y)
+        self.label.draw()
 
         #Button waiting after pressed and growing again
         if (self.runTick > 0):
@@ -110,6 +110,7 @@ class Button:
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
+        self.label.recenter(center_X+self.X, center_Y+self.Y)
      
     def getPosition(self):
         return self.X, self.Y
@@ -148,13 +149,13 @@ class Label:
             self.string = string
             self.X = X
             self.Y = Y
+            self.size = initSize
             self.image = pygame.image.load(string)
             self.image = pygame.transform.scale_by(self.image, initSize)
             self.imageRect = self.image.get_rect()
             self.imageRect.center = (X, Y)
-
-    
-    def draw(self, X, Y):
+ 
+    def draw(self):
         if (self.type == "text"):
             self.screen.blit(self.text, self.textRect)
         elif (self.type == "image"):
@@ -168,6 +169,13 @@ class Label:
             self.textRect = self.text.get_rect()
             self.textRect.center = (self.X, self.Y)
         elif (self.type == "image"):
-            self.image = pygame.transform.scale_by(self.image, scale)
+            self.image = pygame.image.load(self.string)
+            self.image = pygame.transform.scale_by(self.image, self.size*scale)
             self.imageRect = self.image.get_rect()
             self.imageRect.center = (self.X, self.Y)
+    
+    def recenter(self, X, Y):
+        if (self.type == "text"):
+            self.textRect.center = (X, Y)
+        elif (self.type == "image"):
+            self.imageRect.center = (X, Y)

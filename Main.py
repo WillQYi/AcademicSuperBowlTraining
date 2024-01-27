@@ -38,11 +38,14 @@ while running:
             elif Screens.eventDict[event.type] == "pracSelect":
                 currScreen = Screens.practiceSelectScreen(screen, center_X, center_Y)
                 continue
+            elif Screens.eventDict[event.type] == "algebra":
+                currScreen = Screens.algebraScreen(screen, center_X, center_Y)
+                continue
     #print("-----------")   
 
     screen.fill((230,230,230))
     
-    currScreen.draw()
+    currScreen.run()
 
     pygame.display.flip()
 

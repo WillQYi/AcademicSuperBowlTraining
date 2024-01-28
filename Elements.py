@@ -8,6 +8,21 @@ import Elements
 #Draws text on a given screen
 #Used for miscellaneous text
 #X and Y are operations relative to the center
+
+#Element template 
+'''
+class Element:
+
+    def __init__(self, screen, X, Y, sizeX, sizeY):
+        pass
+
+    def draw(self):
+        pass
+
+    def recenter(self):
+        pass
+'''
+
 class TextDrawer:
 
     def __init__(self, screen, center_X, center_Y):
@@ -213,3 +228,14 @@ class Label:
         if (self.type == "line"):
             self.X = X
             self.Y = Y
+
+class inputTextBox:
+
+    def __init__(self, screen, X, Y, sizeX, sizeY):
+        pass
+
+    def draw(self):
+        pass
+
+    def recenter(self):
+        pass

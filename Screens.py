@@ -59,7 +59,9 @@ class practiceSelectScreen:
 
         
         #Utility Button Sizes
-        homeButton = Elements.Button(screen, 500, -260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "homeButton.png", 0.2, center_X, center_Y, 4200, True)
+        homeButton = Elements.Button(screen, 500, -260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
+        settingsButton = Elements.Button(screen, 500, 260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "settingsButton.png", 0.9, center_X, center_Y, 4200, False)
+        statsButton = Elements.Button(screen, -500, 260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "statsButton.png", 0.9, center_X, center_Y, 4200, False)
 
         #Practice Button Sizes
         practiceButtonTextSize = 30
@@ -89,6 +91,8 @@ class practiceSelectScreen:
         self.Interactive.append(DoomsButton)
 
         self.Interactive.append(homeButton)
+        self.Interactive.append(settingsButton)
+        self.Interactive.append(statsButton)
 
         self.draw()
 

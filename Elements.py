@@ -13,14 +13,19 @@ import Elements
 '''
 class Element:
 
-    def __init__(self, screen, X, Y, sizeX, sizeY):
-        pass
+    def __init__(self, screen, X, Y):
+        
+        self.screen = screen
+
+        self.center_X = X
+        self.center_Y = Y
 
     def draw(self):
         pass
 
-    def recenter(self):
-        pass
+    def recenter(self, X, Y):
+        self.center_X = X
+        self.center_Y = Y
 '''
 
 class TextDrawer:
@@ -32,19 +37,22 @@ class TextDrawer:
         self.center_Y = center_Y
     
     #Creates a tuple that holds information about individual texts to draw
-    def add(self, string, X, Y, size, color):
-        self.Texts.append((string, X, Y, size, color))
+    def add(self, string, X, Y, size, color, type):
+        self.Texts.append((string, X, Y, size, color, type))
 
-    def draw(self, string, X, Y, size, color):
+    def drawOne(self, string, X, Y, size, color, type):
         font = pygame.font.Font('freesansbold.ttf', size)
         text = font.render(string, True, color)
         textRect = text.get_rect()
-        textRect.center = (self.center_X+X,self.center_Y+Y)
+        if (type == "center"):
+            textRect.center = (self.center_X+X,self.center_Y+Y)
+        elif (type == "origin"):
+            textRect.center = (X,Y)
         self.screen.blit(text, textRect)
 
     def drawAll(self):
         for i in range(len(self.Texts)):
-            self.draw(self.Texts[i][0],self.Texts[i][1],self.Texts[i][2],self.Texts[i][3],self.Texts[i][4])
+            self.drawOne(self.Texts[i][0],self.Texts[i][1],self.Texts[i][2],self.Texts[i][3],self.Texts[i][4],self.Texts[i][5])
 
     def getTexts(self):
         for textTuple in self.Texts:
@@ -54,9 +62,12 @@ class TextDrawer:
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
+    
+    def clear(self):
+        self.Texts = []
 
 # Creates a Button object which returns a event when pressed
-# Note the drawing of the button is centerbased    
+# Note the drawing of the button is center based    
 class Button:
 
     #Fix: Streamline inputs for button function
@@ -144,6 +155,7 @@ class Button:
         return self.sizeX, self.sizeY
 
 #Creates a label object which can be stuck on things like buttons
+# not center or origin based, you put in the cords of the center of where you want to put the label
 class Label:
 
     #Initializing function for labels of text and images 
@@ -239,3 +251,59 @@ class inputTextBox:
 
     def recenter(self):
         pass
+
+class divider:
+
+    def __init__(self, screen, type, center_X, center_Y, cord, thickness, color):
+
+        self.screen = screen
+        
+        self.type = type
+
+        self.center_X= center_X
+        self.center_Y = center_Y
+
+        self.cord = cord
+
+        self.color = color
+
+        self.thickness = thickness
+
+    def draw(self):
+        if (self.type == "horizontal"):
+            pygame.draw.line(self.screen, self.color, (0,self.cord), (2*self.center_X,self.cord), self.thickness)
+        elif (self.type == "vertical"):
+            pygame.draw.line(self.screen, self.color, (self.cord,0), (self.cord,2*self.center_Y), self.thickness)
+
+    def recenter(self, X, Y):
+        self.center_X = X
+        self.center_Y = Y
+
+#origin based
+class problemNumberBox:
+
+    def __init__(self, screen, X, Y, sizeX, sizeY, problemNumber, color):
+        
+        self.screen = screen
+
+        self.X = X
+        self.Y = Y
+
+        self.sizeX = sizeX
+        self.sizeY = sizeY
+
+        self.color = color
+
+        self.boxOutlineRect = pygame.Rect(X, Y, sizeX, sizeY)
+        self.boxFillRect = pygame.Rect(X, Y, sizeX, sizeY)
+
+        self.label = Elements.Label(screen, 30, "text", X+sizeX/2, Y+sizeY/2, problemNumber, color)
+
+    def draw(self):
+        pygame.draw.rect(self.screen, (255,255,255), self.boxOutlineRect, 0, 0)
+        pygame.draw.rect(self.screen, self.color, self.boxOutlineRect, 7, 0)
+        self.label.draw()
+
+    def recenter(self, X, Y):
+        self.X = X
+        self.Y = Y

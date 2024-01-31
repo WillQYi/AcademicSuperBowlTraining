@@ -30,6 +30,17 @@ while running:
             for Button in currScreen.Interactive:
                 Button.clicked(mousePos)
 
+        '''
+        if event.type == pygame.KEYDOWN:
+            if event.key == pg.K_RETURN:
+                print(text)
+                text = ''
+            elif event.key == pg.K_BACKSPACE:
+                text = text[:-1]
+            else:
+                text += event.unicode  
+        '''        
+
         #Custom events
         if event.type >= 4200 and event.type <= 4300:
             if Screens.eventDict[event.type] == "home":

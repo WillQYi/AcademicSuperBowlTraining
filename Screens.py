@@ -18,8 +18,8 @@ class homescreen:
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
 
         titleTextSize = 50
-        self.textDrawer.add("2023-2024 BHSS Academic Super Bowl", 0, -260, titleTextSize, self.colors["darkBlue"], "center")
-        self.textDrawer.add("Math Training Tool", 0, -200, titleTextSize, self.colors["darkBlue"], "center")
+        self.textDrawer.add("2023-2024 BHSS Academic Super Bowl", 0, -260, titleTextSize, self.colors["darkBlue"], "center","calibri")
+        self.textDrawer.add("Math Training Tool", 0, -200, titleTextSize, self.colors["darkBlue"], "center","calibri")
 
         ButtonTextSize = 40
         
@@ -61,7 +61,7 @@ class practiceSelectScreen:
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
 
         titleTextSize = 50
-        self.textDrawer.add("Select Practice", 0, -260, titleTextSize, self.colors["darkBlue"], "center")
+        self.textDrawer.add("Select Practice", 0, -260, titleTextSize, self.colors["darkBlue"], "center","calibri")
         
         #Utility Button Sizes
         homeButton = Elements.Button(screen, 500, -260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
@@ -148,14 +148,14 @@ class algebraScreen:
         self.titleTextSize = 40
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
-        self.textDrawer.add("Algebra", 100, 40, self.titleTextSize, self.colors["darkBlue"], "origin")
+        self.textDrawer.add("Algebra Practice", 0, -1*(self.center_Y-40), self.titleTextSize, self.colors["darkBlue"], "center","calibri")
 
         self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 80, 7, self.colors["darkBlue"])
         self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 550, 7, self.colors["darkBlue"])
-        self.problemNumberBox = Elements.problemNumberBox(screen, 50, 125, 75, 75, str(self.problemsDone+1), self.colors["darkBlue"])
+        self.problemNumberBox = Elements.problemNumberBox(screen, 25, 115, 60, 60, str(self.problemsDone+1), self.colors["darkBlue"])
 
         #Testing
-        self.textBox = Elements.inputTextBox(screen, center_X, center_Y, 0, 275, 300, 50, "x", "text")
+        self.textBox = Elements.inputTextBox(screen, center_X, center_Y, 0, 275, 300, 50, "x", "Type Answer")
 
         self.Elements.append(self.textDrawer)
         self.Elements.append(self.topDivider)

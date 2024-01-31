@@ -7,6 +7,7 @@ class homescreen:
 
     def __init__(self, screen, center_X, center_Y):
 
+        self.Elements = []
         self.Interactive = []
 
         self.center_X = center_X
@@ -24,6 +25,9 @@ class homescreen:
         
         StartButton = Elements.Button(screen, 0, 50, 300, 150, self.colors["darkBlue"], 8, 10, "text", "Start", ButtonTextSize, center_X, center_Y, 4201, True)
         
+        self.Elements.append(self.textDrawer)
+        self.Elements.append(StartButton)
+
         self.Interactive.append(StartButton)
 
         self.draw()
@@ -32,21 +36,21 @@ class homescreen:
         self.draw()
 
     def draw(self):
-        self.textDrawer.drawAll()
-        for Button in self.Interactive:
-            Button.draw()
+        for element in self.Elements:
+            element.draw()
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
         self.textDrawer.recenter(center_X, center_Y)
-        for Interactive in self.Interactive:
-            Interactive.recenter(center_X, center_Y)
+        for Elements in self.Elements:
+            Elements.recenter(center_X, center_Y)
 
 class practiceSelectScreen:
 
     def __init__(self, screen, center_X, center_Y):
 
+        self.Elements = []
         self.Interactive = []
 
         self.center_X = center_X
@@ -58,7 +62,6 @@ class practiceSelectScreen:
 
         titleTextSize = 50
         self.textDrawer.add("Select Practice", 0, -260, titleTextSize, self.colors["darkBlue"], "center")
-
         
         #Utility Button Sizes
         homeButton = Elements.Button(screen, 500, -260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
@@ -83,6 +86,21 @@ class practiceSelectScreen:
         
         #Creating Utility Buttons
 
+        #Adding to Elements
+        self.Elements.append(AlegbraButton)
+        self.Elements.append(GeometryButton)
+        self.Elements.append(StatisticsButton)
+        self.Elements.append(LogarithmButton)
+        self.Elements.append(CalculusButton)
+        self.Elements.append(ModButton)
+        self.Elements.append(DoomsButton)
+
+        self.Elements.append(homeButton)
+        self.Elements.append(settingsButton)
+        self.Elements.append(statsButton)
+
+        self.Elements.append(self.textDrawer)
+
         #Adding to interactive
         self.Interactive.append(AlegbraButton)
         self.Interactive.append(GeometryButton)
@@ -102,16 +120,14 @@ class practiceSelectScreen:
         self.draw()
 
     def draw(self):
-        self.textDrawer.drawAll()
-        for Button in self.Interactive:
-            Button.draw()
+        for element in self.Elements:
+            element.draw()
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
-        self.textDrawer.recenter(center_X, center_Y)
-        for Interactive in self.Interactive:
-            Interactive.recenter(center_X, center_Y)
+        for Elements in self.Elements:
+            Elements.recenter(center_X, center_Y)
 
 class algebraScreen:
 
@@ -119,6 +135,7 @@ class algebraScreen:
 
         self.screen = screen
 
+        self.Elements = []
         self.Interactive = []
 
         self.center_X = center_X
@@ -134,7 +151,19 @@ class algebraScreen:
         self.textDrawer.add("Algebra", 100, 40, self.titleTextSize, self.colors["darkBlue"], "origin")
 
         self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 80, 7, self.colors["darkBlue"])
+        self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 550, 7, self.colors["darkBlue"])
         self.problemNumberBox = Elements.problemNumberBox(screen, 50, 125, 75, 75, str(self.problemsDone+1), self.colors["darkBlue"])
+
+        #Testing
+        self.textBox = Elements.inputTextBox(screen, center_X, center_Y, 0, 275, 300, 50, "x", "text")
+
+        self.Elements.append(self.textDrawer)
+        self.Elements.append(self.topDivider)
+        self.Elements.append(self.bottomDivider)
+        self.Elements.append(self.textBox)
+        self.Elements.append(self.problemNumberBox)
+
+        self.Interactive.append(self.textBox)
 
         self.draw()
 
@@ -142,16 +171,11 @@ class algebraScreen:
         self.draw()
 
     def draw(self):
-        self.textDrawer.drawAll()
-        for Button in self.Interactive:
-            Button.draw()
-        self.topDivider.draw()
-        self.problemNumberBox.draw()
+        for element in self.Elements:
+            element.draw()
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
-        self.textDrawer.recenter(center_X, center_Y)
-        for Interactive in self.Interactive:
-            Interactive.recenter(center_X, center_Y)
-        self.topDivider.recenter(center_X, center_Y)
+        for element in self.Elements:
+            element.recenter(center_X, center_Y)

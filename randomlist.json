@@ -1,0 +1,6 @@
+{
+    "set2variables": [["x","y"],["a","b"],["x","z"],["y","z"],["b","c"],["a","c"],["m","n"],["p","q"]],
+    "set3variables": [["x","y","z"],["a","b","c"],["p","q","r"]],
+    "mathObjects": ["fruits","candies","dollars"],
+    "mathObjectPairs": [["apples","oranges"]]
+}  

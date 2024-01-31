@@ -50,7 +50,7 @@ class TextDrawer:
             textRect.center = (X,Y)
         self.screen.blit(text, textRect)
 
-    def drawAll(self):
+    def draw(self):
         for i in range(len(self.Texts)):
             self.drawOne(self.Texts[i][0],self.Texts[i][1],self.Texts[i][2],self.Texts[i][3],self.Texts[i][4],self.Texts[i][5])
 
@@ -99,10 +99,10 @@ class Button:
         self.ButtonRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
 
         self.labels = []
-        self.label = Elements.Label(screen, labelSize, labelType, center_X+X, center_Y+Y, string, color)
+        self.label = Elements.Label(screen, labelSize, labelType, center_X+X, center_Y+Y, string, color, 'freesansbold.ttf')
         self.labels.append(self.label)
         if (not isWorking):
-            self.crossLine = Elements.Label(screen, thickness, "line", center_X+X, center_Y+Y, (sizeX, sizeY), color)
+            self.crossLine = Elements.Label(screen, thickness, "line", center_X+X, center_Y+Y, (sizeX, sizeY), color, 'freesansbold.ttf')
             self.labels.append(self.crossLine)
 
     #Draws everything
@@ -159,7 +159,7 @@ class Button:
 class Label:
 
     #Initializing function for labels of text and images 
-    def __init__(self, screen, initSize, type, X, Y, otherInformation, color):
+    def __init__(self, screen, initSize, type, X, Y, otherInformation, color, font):
         if (type == "text"):
 
             #Initial Variables
@@ -169,10 +169,15 @@ class Label:
             self.screen = screen
             self.string = otherInformation
             self.labelSize = initSize
-            self.font = pygame.font.Font('freesansbold.ttf', initSize)
-            self.color = color
             self.X = X
             self.Y = Y
+
+            if (font.endswith("ttf")):
+                self.font = pygame.font.Font(font, initSize)
+            else:
+                self.font = pygame.font.SysFont(font, initSize)
+
+            self.color = color
             self.text = self.font.render(otherInformation, True, color)
             self.textRect = self.text.get_rect()
             self.textRect.center = (X, Y)
@@ -241,16 +246,57 @@ class Label:
             self.X = X
             self.Y = Y
 
+#Note that this is center-based 
 class inputTextBox:
 
-    def __init__(self, screen, X, Y, sizeX, sizeY):
+    def __init__(self, screen, center_X, center_Y, X, Y, sizeX, sizeY, textOutside, textInside):
+
+        self.screen = screen
+        self.isActive = False
+
+        self.X = X
+        self.Y = Y
+        self.center_X = center_X
+        self.center_Y = center_Y
+        self.sizeX = sizeX
+        self.sizeY = sizeY
+
+        self.textOutside = textOutside
+        self.textInside = textInside
+
+        self.insideRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
+        self.outsideRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
+        self.activeRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
+
+        self.label = Elements.Label(screen, 20,"text",center_X+X, center_Y+Y, "Input text", (200,200,200), 'ariel')
+
         pass
 
     def draw(self):
+        pygame.draw.rect(self.screen, (255,255,255), self.insideRect, 0, 3)
+        pygame.draw.rect(self.screen, (100,100,100), self.outsideRect, 3, 3)
+        if (self.isActive):
+            pygame.draw.rect(self.screen, (55, 190, 245), self.activeRect, 3, 3)
+        self.label.draw()
         pass
 
-    def recenter(self):
-        pass
+    def clicked(self, mousePos):
+        if (self.activeRect.collidepoint(mousePos)):
+            self.isActive = True
+            return True
+        else:
+            self.isActive = False
+            return False
+
+
+    def recenter(self, center_X, center_Y):
+        self.center_X = center_X
+        self.center_Y = center_Y
+        self.insideRect = pygame.Rect(center_X+self.X-self.sizeX/2, center_Y+self.Y-self.sizeY/2, self.sizeX, self.sizeY)
+        self.outsideRect = pygame.Rect(center_X+self.X-self.sizeX/2, center_Y+self.Y-self.sizeY/2, self.sizeX, self.sizeY)
+        self.activeRect = pygame.Rect(center_X+self.X-self.sizeX/2, center_Y+self.Y-self.sizeY/2, self.sizeX, self.sizeY)
+        self.label.recenter(center_X, center_Y)
+        pass 
 
 class divider:
 
@@ -297,7 +343,7 @@ class problemNumberBox:
         self.boxOutlineRect = pygame.Rect(X, Y, sizeX, sizeY)
         self.boxFillRect = pygame.Rect(X, Y, sizeX, sizeY)
 
-        self.label = Elements.Label(screen, 30, "text", X+sizeX/2, Y+sizeY/2, problemNumber, color)
+        self.label = Elements.Label(screen, 30, "text", X+sizeX/2, Y+sizeY/2, problemNumber, color, 'freesansbold.ttf')
 
     def draw(self):
         pygame.draw.rect(self.screen, (255,255,255), self.boxOutlineRect, 0, 0)

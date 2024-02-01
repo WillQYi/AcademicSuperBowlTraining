@@ -9,6 +9,7 @@ class homescreen:
 
         self.Elements = []
         self.Interactive = []
+        self.InteractiveText = []
 
         self.center_X = center_X
         self.center_Y = center_Y
@@ -17,11 +18,11 @@ class homescreen:
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
 
-        titleTextSize = 50
-        self.textDrawer.add("2023-2024 BHSS Academic Super Bowl", 0, -260, titleTextSize, self.colors["darkBlue"], "center","calibri")
-        self.textDrawer.add("Math Training Tool", 0, -200, titleTextSize, self.colors["darkBlue"], "center","calibri")
+        titleTextSize = 70
+        self.textDrawer.add("2023-2024 BHSS Academic Super Bowl", 0, -260, titleTextSize, self.colors["darkBlue"], "center","ariel")
+        self.textDrawer.add("Math Training Tool", 0, -200, titleTextSize, self.colors["darkBlue"], "center","ariel")
 
-        ButtonTextSize = 40
+        ButtonTextSize = 50
         
         StartButton = Elements.Button(screen, 0, 50, 300, 150, self.colors["darkBlue"], 8, 10, "text", "Start", ButtonTextSize, center_X, center_Y, 4201, True)
         
@@ -53,6 +54,8 @@ class practiceSelectScreen:
         self.Elements = []
         self.Interactive = []
 
+        self.InteractiveText = []
+
         self.center_X = center_X
         self.center_Y = center_Y
 
@@ -60,8 +63,8 @@ class practiceSelectScreen:
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
 
-        titleTextSize = 50
-        self.textDrawer.add("Select Practice", 0, -260, titleTextSize, self.colors["darkBlue"], "center","calibri")
+        titleTextSize = 70
+        self.textDrawer.add("Select Practice", 0, -260, titleTextSize, self.colors["darkBlue"], "center","ariel")
         
         #Utility Button Sizes
         homeButton = Elements.Button(screen, 500, -260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
@@ -69,7 +72,7 @@ class practiceSelectScreen:
         statsButton = Elements.Button(screen, -500, 260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "statsButton.png", 0.9, center_X, center_Y, 4200, False)
 
         #Practice Button Sizes
-        practiceButtonTextSize = 30
+        practiceButtonTextSize = 40
         practiceButtonX = 350
         practiceButtonY = 100
         practiceSpreadY = 150
@@ -138,6 +141,8 @@ class algebraScreen:
         self.Elements = []
         self.Interactive = []
 
+        self.InteractiveText = []
+
         self.center_X = center_X
         self.center_Y = center_Y
 
@@ -145,10 +150,10 @@ class algebraScreen:
 
         self.colors = {"darkBlue":(53, 63, 112)}
 
-        self.titleTextSize = 40
+        self.titleTextSize = 50
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
-        self.textDrawer.add("Algebra Practice", 0, -1*(self.center_Y-40), self.titleTextSize, self.colors["darkBlue"], "center","calibri")
+        self.textDrawer.add("Algebra Practice", 0, -1*(self.center_Y-40), self.titleTextSize, self.colors["darkBlue"], "center","ariel")
 
         self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 80, 7, self.colors["darkBlue"])
         self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 550, 7, self.colors["darkBlue"])
@@ -164,6 +169,7 @@ class algebraScreen:
         self.Elements.append(self.problemNumberBox)
 
         self.Interactive.append(self.textBox)
+        self.InteractiveText.append(self.textBox)
 
         self.draw()
 

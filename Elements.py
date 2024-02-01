@@ -102,10 +102,10 @@ class Button:
         self.ButtonRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
 
         self.labels = []
-        self.label = Elements.Label(screen, labelSize, labelType, center_X+X, center_Y+Y, string, color, 'calibri')
+        self.label = Elements.Label(screen, labelSize, labelType, center_X+X, center_Y+Y, string, color, 'ariel')
         self.labels.append(self.label)
         if (not isWorking):
-            self.crossLine = Elements.Label(screen, thickness, "line", center_X+X, center_Y+Y, (sizeX, sizeY), color, 'calibri')
+            self.crossLine = Elements.Label(screen, thickness, "line", center_X+X, center_Y+Y, (sizeX, sizeY), color, 'ariel')
             self.labels.append(self.crossLine)
 
     #Draws everything
@@ -228,7 +228,7 @@ class Label:
     #Just changes the size for label, so the shrinking button animation works
     def changeSize(self, scale):
         if (self.type == "text"):
-            self.font = pygame.font.SysFont('calibri', int(self.labelSize * scale))
+            self.font = pygame.font.SysFont('ariel', int(self.labelSize * scale))
             self.text = self.font.render(self.string, True, self.color)
             self.textRect = self.text.get_rect()
             self.textRect.center = (self.X, self.Y)
@@ -241,6 +241,8 @@ class Label:
     def change(self, change, string):
         if (self.type == "text" and change == "text"):
             self.text = self.font.render(string, True, self.color)
+        elif (self.type == "text" and change == "color"):
+            self.color = string
         else:
             pass
 
@@ -279,7 +281,7 @@ class inputTextBox:
         self.outsideRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
         self.activeRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
 
-        self.label = Elements.Label(screen, 30,"text",center_X+X, center_Y+Y, self.textInside, (200,200,200), 'ariel')
+        self.label = Elements.Label(screen, 20,"text",center_X+X, center_Y+Y, self.textInside, (200,200,200), 'calibri')
         self.label.recenter(center_X+X-(self.sizeX/2-10-self.label.textRect.width/2), center_Y+Y)
 
         pass
@@ -290,20 +292,36 @@ class inputTextBox:
         if (self.isActive):
             pygame.draw.rect(self.screen, (55, 190, 245), self.activeRect, 3, 3)
         self.label.draw()
+        if (len(self.inputtedText) > 0):
+            self.label.change("text",self.inputtedText)
+            self.label.change("color",(0,0,0))
+        else:
+            if (len(self.inputtedText) == 0):
+                self.label.change("text",self.textInside)
+                self.label.change("color",(200,200,200))
+            else: 
+                self.label.change("text","")
         pass
 
     def clicked(self, mousePos):
         if (self.activeRect.collidepoint(mousePos)):
             self.isActive = True
-            self.label.change("text",self.inputtedText)
             return True
         else:
             self.isActive = False
-            if (len(self.inputtedText) == 0):
-                self.label.change("text",self.textInside)
-            else: 
-                self.label.change("text","")
             return False
+        
+    def inputText(self, event):
+        if event.key == pygame.K_RETURN:
+            self.isActive = False
+            pass
+        elif event.key == pygame.K_BACKSPACE:
+            if (len(self.inputtedText) == 1):
+                self.inputtedText = ""
+            else:
+                self.inputtedText = self.inputtedText[:-1]
+        else:
+            self.inputtedText += event.unicode  
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
@@ -359,7 +377,7 @@ class problemNumberBox:
         self.boxOutlineRect = pygame.Rect(X, Y, sizeX, sizeY)
         self.boxFillRect = pygame.Rect(X, Y, sizeX, sizeY)
 
-        self.label = Elements.Label(screen, 30, "text", X+sizeX/2, Y+sizeY/2, problemNumber, color, 'calibri')
+        self.label = Elements.Label(screen, 30, "text", X+sizeX/2, Y+sizeY/2, problemNumber, color, 'ariel')
 
     def draw(self):
         pygame.draw.rect(self.screen, (255,255,255), self.boxOutlineRect, 0, 0)

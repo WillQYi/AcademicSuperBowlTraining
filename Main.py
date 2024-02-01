@@ -30,16 +30,11 @@ while running:
             for Button in currScreen.Interactive:
                 Button.clicked(mousePos)
 
-        '''
+        
         if event.type == pygame.KEYDOWN:
-            if event.key == pg.K_RETURN:
-                print(text)
-                text = ''
-            elif event.key == pg.K_BACKSPACE:
-                text = text[:-1]
-            else:
-                text += event.unicode  
-        '''        
+            for textbox in currScreen.InteractiveText:
+                if (textbox.isActive):
+                    textbox.inputText(event)
 
         #Custom events
         if event.type >= 4200 and event.type <= 4300:
@@ -52,6 +47,10 @@ while running:
             elif Screens.eventDict[event.type] == "algebra":
                 currScreen = Screens.algebraScreen(screen, center_X, center_Y)
                 continue
+
+        if event.type >= 6900 and event.type <= 7000:
+            pass
+        
     #print("-----------")   
 
     screen.fill((230,230,230))

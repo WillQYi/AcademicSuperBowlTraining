@@ -7,7 +7,7 @@ primeList = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
 
 #Problem template
 '''
-class AlgebraProblem1: 
+class ModProblem1: 
 
     def __init__(self):
 
@@ -53,8 +53,8 @@ class ModProblem1:
     
     def generateProblem(self):
 
-        self.mod1 = random.randint(1,100)
-        self.mod2 = random.randint(1,100)
+        self.mod1 = random.randint(2,100)
+        self.mod2 = random.randint(2,100)
 
         while (math.gcd(self.mod1, self.mod2) != 1):
             self.mod2 = random.randint(1,100)
@@ -127,7 +127,7 @@ class ModProblem2:
         pass
 
 # 3 gcd problem
-class ModProblem2: 
+class ModProblem3: 
 
     def __init__(self):
 
@@ -171,4 +171,144 @@ class ModProblem2:
     def display(self):
         pass
 
-print(ModProblem2().getQuestion())
+class ModProblem4: 
+
+    def __init__(self):
+
+        self.question = []
+        self.answers = []
+        
+        self.generateProblem()
+        self.generateQuestion()
+
+        pass
+    
+    def generateProblem(self):
+
+        self.factor = random.randint(1,300)
+        self.extra1 = random.randint(1,300)
+        self.extra2 = random.randint(1,300)
+
+        while (math.gcd(self.extra1, self.extra2) != 1):
+            self.extra2 = random.randint(1,300)
+
+        self.answer = self.factor * self.extra1 * self.extra2
+        pass
+
+    def generateQuestion(self):
+        
+        self.question.append("Find the lcm of " + str(self.factor*self.extra1) + " and " + str(self.factor*self.extra2))
+
+    def checkCorrect(self):
+        pass
+        
+    def getQuestion(self):
+        return self.question
+
+    def getAnswer(self):
+        return self.answers
+        
+    def display(self):
+        pass
+
+# 3 gcd problem
+class ModProblem3: 
+
+    def __init__(self):
+
+        self.question = []
+        self.answers = []
+        
+        self.generateProblem()
+        self.generateQuestion()
+
+        pass
+    
+    def generateProblem(self):
+
+        self.factor = random.randint(1,300)
+        self.extra1 = random.randint(1,300)
+        self.extra2 = random.randint(1,300)
+        self.extra3 = random.randint(1,300)
+
+        while (math.gcd(self.extra1, self.extra2) != 1):
+            self.extra2 = random.randint(1,300)
+
+        while (math.gcd(self.extra2, self.extra3) != 1 and math.gcd(self.extra1, self.extra3) != 1):
+            self.extra3 = random.randint(1,300)
+
+        self.answer = self.factor
+        pass
+
+    def generateQuestion(self):
+        
+        self.question.append("Find the gcd of " + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", and " + str(self.factor*self.extra3))
+
+    def checkCorrect(self):
+        pass
+        
+    def getQuestion(self):
+        return self.question
+
+    def getAnswer(self):
+        return self.answers
+        
+    def display(self):
+        pass
+
+# 3 lcm problem
+class ModProblem5: 
+
+    def __init__(self):
+
+        self.question = []
+        self.answers = []
+        
+        self.generateProblem()
+        self.generateQuestion()
+
+        pass
+    
+    def generateProblem(self):
+
+        self.factor = random.randint(1,300)
+        self.extra1 = random.randint(1,300)
+        self.extra2 = random.randint(1,300)
+        self.extra3 = random.randint(1,300)
+
+        while (math.gcd(self.extra1, self.extra2) != 1):
+            self.extra2 = random.randint(1,300)
+
+        while (math.gcd(self.extra2, self.extra3) != 1 and math.gcd(self.extra1, self.extra3) != 1):
+            self.extra3 = random.randint(1,300)
+
+        self.answer = self.factor * self.extra1 * self.extra2 * self.extra3
+        pass
+
+    def generateQuestion(self):
+        
+        choice = random.randint(1,3)
+        if (choice == 1):
+            self.question.append("Find the lcm of " + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", and " + str(self.factor*self.extra3))
+        elif (choice == 2):
+            self.question.append("Find the least common multiple of " + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", and " + str(self.factor*self.extra3))
+        else:
+            self.question.append("Compute lcm(" + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", " + str(self.factor*self.extra3))
+
+
+
+    def checkCorrect(self):
+        pass
+        
+    def getQuestion(self):
+        return self.question
+
+    def getAnswer(self):
+        return self.answers
+        
+    def display(self):
+        pass
+
+problemList = [ModProblem1(), ModProblem2(), ModProblem3(), ModProblem4(), ModProblem5()]
+
+print(problemList[4].getQuestion())

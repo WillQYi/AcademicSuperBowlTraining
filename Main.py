@@ -15,7 +15,7 @@ currScreen = Screens.homescreen(screen, center_X, center_Y)
 while running:
     #Checks for user interactions
     for event in pygame.event.get():
-        print(event)
+        #print(event)
         if event.type == pygame.QUIT:
             running = False
 
@@ -50,7 +50,7 @@ while running:
 
         if event.type >= 6900 and event.type <= 7000:
             pass
-        
+
     #print("-----------")   
 
     screen.fill((230,230,230))

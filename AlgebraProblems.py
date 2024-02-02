@@ -41,6 +41,9 @@ class AlgebraProblem1:
 
     def __init__(self):
 
+        self.question = []
+        self.answers = []
+
         self.generateProblem()
         self.generateQuestionAndAnswer()
 
@@ -106,27 +109,24 @@ class AlgebraProblem1:
         LHS1 = answerX * coefficient1x + answerY * coefficient1y
         LHS2 = answerX * coefficient2x + answerY * coefficient2y
 
-        print(self.equationBuilder(coefficient1x, coefficient1y, LHS1))
-        print(self.equationBuilder(coefficient2x, coefficient2y, LHS2))
-
-        self.answers.append(self.equationBuilder(coefficient1x, coefficient1y, LHS1))
-        self.answers.append(self.equationBuilder(coefficient2x, coefficient2y, LHS2))
+        self.question.append(self.equationBuilder(coefficient1x, coefficient1y, LHS1))
+        self.question.append(self.equationBuilder(coefficient2x, coefficient2y, LHS2))
 
     def generateQuestionAndAnswer(self):
         choice = random.randint(1,100)
         if (choice <= 25):
-            self.question = "Find x,y"
+            self.question.append("Find x,y")
             self.answerReceiver = ("textBox",2)
         elif (choice <= 50):
-            self.question = "Find x+y"
+            self.question.append("Find x+y")
             self.answerReceiver = ("textBox",1)
         elif (choice <= 75):
-            self.question = "Find x-y"
+            self.question.append("Find x-y")
             self.answerReceiver = ("textBox",1)
         else:
-            self.question = "Find xy"
+            self.question.append("Find xy")
             self.answerReceiver = ("textBox",1)
-        print(self.question)
+        
         return self.question
     
     def getQuestion(self):
@@ -136,9 +136,6 @@ class AlgebraProblem1:
         return self.answers
 
     def checkCorrect(self):
-        pass
-
-    def display(self):
         pass
 
 #Three linear equatons wtih integer solution 
@@ -243,35 +240,30 @@ class AlgebraProblem2:
         LHS2 = answerX * coefficient2x + answerY * coefficient2y + answerZ * coefficient2z
         LHS3 = answerX * coefficient3x + answerY * coefficient3y + answerZ * coefficient3z
 
-        print(self.equationBuilder(coefficient1x, coefficient1y, coefficient1z, LHS1))
-        print(self.equationBuilder(coefficient2x, coefficient2y, coefficient2z, LHS2))
-        print(self.equationBuilder(coefficient3x, coefficient3y, coefficient3z, LHS3))
-
-        self.answers.append(self.equationBuilder(coefficient1x, coefficient1y, coefficient1z, LHS1))
-        self.answers.append(self.equationBuilder(coefficient2x, coefficient2y, coefficient2z, LHS2))
-        self.answers.append(self.equationBuilder(coefficient3x, coefficient3y, coefficient3z, LHS3))
+        self.question.append(self.equationBuilder(coefficient1x, coefficient1y, coefficient1z, LHS1))
+        self.question.append(self.equationBuilder(coefficient2x, coefficient2y, coefficient2z, LHS2))
+        self.question.append(self.equationBuilder(coefficient3x, coefficient3y, coefficient3z, LHS3))
     
     def generateQuestionAndAnswer(self):
         choice = random.randint(1,100)
         if (choice <= 24):
-            self.question = "Find x,y,z"
+            self.question.append("Find x,y,z")
             self.answerReceiver = ("textBox",3)
         elif (choice <= 40):
-            self.question = "Find x+y+z"
+            self.question.append("Find x+y+z")
             self.answerReceiver = ("textBox",1)
         elif (choice <= 56):
-            self.question = "Find x-y+z"
+            self.question.append("Find x-y+z")
             self.answerReceiver = ("textBox",1)
         elif (choice <= 72):
-            self.question = "Find x+y-z"
+            self.question.append("Find x+y-z")
             self.answerReceiver = ("textBox",1) 
         elif (choice <= 88):
-            self.question = "Find -x+y+z"
+            self.question.append("Find -x+y+z")
             self.answerReceiver = ("textBox",1)      
         else:
-            self.question = "Find xyz"
+            self.question.append("Find xyz")
             self.answerReceiver = ("textBox",1)
-        print(self.question)
 
     def getQuestion(self):
         return self.question
@@ -285,5 +277,7 @@ class AlgebraProblem2:
     def display(self):
         pass
 
-print(pygame.font.get_fonts())
-problem = AlgebraProblem2()
+#print(pygame.font.get_fonts())
+problem = print(AlgebraProblem1().getQuestion())
+
+problemList = [AlgebraProblem1(), AlgebraProblem2()]

@@ -387,3 +387,36 @@ class problemNumberBox:
     def recenter(self, X, Y):
         self.X = X
         self.Y = Y
+
+class problemDisplayer():
+
+    def __init__(self, screen, center_X, center_Y, color):
+
+        self.screen = screen
+        self.color = color
+        self.TextDrawer = TextDrawer(screen, center_X, center_Y)
+        pass
+
+    def loadProblem(self, type, problem):
+        if (type == "equations"):
+            
+            self.type = type
+
+            spacing = 100
+
+            topHieght = -1*float((len(problem)-1))/2 * spacing
+
+            for i in range(len(problem)-1):
+                print(topHieght-spacing*i)
+                self.TextDrawer.add(problem[i], 0, topHieght+spacing*i, 60, self.color, "center", "ariel")
+            
+            self.TextDrawer.add(problem[len(problem)-1], 200, 150, 60, self.color, "origin", "ariel")
+    
+    def draw(self):
+        if (self.type == "equations"):
+            self.TextDrawer.draw()
+    
+    def recenter(self, center_X, center_Y):
+        self.center_X = center_X
+        self.center_Y = center_Y
+        self.TextDrawer.recenter(center_X, center_Y)

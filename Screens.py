@@ -1,5 +1,6 @@
 import pygame
 import Elements
+import random
 import AlgebraProblems
 
 eventDict = {4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted"}
@@ -154,17 +155,17 @@ class algebraScreen:
         self.titleTextSize = 50
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
-        self.textDrawer.add("Algebra Practice", 0, -1*(self.center_Y-40), self.titleTextSize, self.colors["darkBlue"], "center","ariel")
+        self.textDrawer.add("Algebra Practice", 0, -1 * (self.center_Y) + 40, self.titleTextSize, self.colors["darkBlue"], "center","ariel")
 
         self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 80, 7, self.colors["darkBlue"])
-        self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 550, 7, self.colors["darkBlue"])
+        self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, "2*cY-200", 7, self.colors["darkBlue"])
         self.problemNumberBox = Elements.problemNumberBox(screen, 25, 115, 60, 60, str(self.problemsDone+1), self.colors["darkBlue"])
 
         self.problemDisplayer = Elements.problemDisplayer(screen, self.center_X, self.center_Y, self.colors["darkBlue"])
         self.loadProblem()
         self.Elements.append(self.problemDisplayer)
 
-        self.textBox = Elements.inputTextBox(screen, center_X, center_Y, 0, 275, 300, 50, "x", "Type Answer")
+        self.textBox = Elements.inputTextBox(screen, center_X, center_Y, 0, "cY-100", 300, 50, "x", "Type Answer")
 
         self.Elements.append(self.textDrawer)
         self.Elements.append(self.topDivider)
@@ -185,6 +186,7 @@ class algebraScreen:
             element.draw()
 
     def loadProblem(self):
+
         self.problem = AlgebraProblems.problemList[0]
         self.problemDisplayer.loadProblem("equations",self.problem.getQuestion())
 

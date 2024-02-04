@@ -1,5 +1,6 @@
 import pygame
 import Elements
+import Expressions
 
 #
 # The following classes are used to draw/create specifics things to display or for users to interact with
@@ -47,6 +48,7 @@ class TextDrawer:
             self.font = pygame.font.SysFont(font, size)
         text = self.font.render(string, True, color)
         textRect = text.get_rect()
+
         if (type == "center"):
             textRect.center = (self.center_X+X,self.center_Y+Y)
         elif (type == "origin"):
@@ -277,12 +279,14 @@ class inputTextBox:
 
         self.inputtedText = ""
 
-        self.insideRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
-        self.outsideRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
-        self.activeRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
+        xOp = Expressions.locationOperationValue(self.X, center_X, center_Y)
+        yOp = Expressions.locationOperationValue(self.Y, center_X, center_Y)
+        self.insideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
+        self.outsideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
+        self.activeRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
 
-        self.label = Elements.Label(screen, 20,"text",center_X+X, center_Y+Y, self.textInside, (200,200,200), 'calibri')
-        self.label.recenter(center_X+X-(self.sizeX/2-10-self.label.textRect.width/2), center_Y+Y)
+        self.label = Elements.Label(screen, 20,"text",center_X+xOp, center_Y+yOp, self.textInside, (200,200,200), 'calibri')
+        self.label.recenter(center_X+xOp-(self.sizeX/2-10-self.label.textRect.width/2), center_Y+yOp)
 
         pass
 
@@ -326,10 +330,12 @@ class inputTextBox:
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
-        self.insideRect = pygame.Rect(center_X+self.X-self.sizeX/2, center_Y+self.Y-self.sizeY/2, self.sizeX, self.sizeY)
-        self.outsideRect = pygame.Rect(center_X+self.X-self.sizeX/2, center_Y+self.Y-self.sizeY/2, self.sizeX, self.sizeY)
-        self.activeRect = pygame.Rect(center_X+self.X-self.sizeX/2, center_Y+self.Y-self.sizeY/2, self.sizeX, self.sizeY)
-        self.label.recenter(center_X+self.X-(self.sizeX/2-10-self.label.textRect.width/2), center_Y+self.Y)
+        xOp = Expressions.locationOperationValue(self.X, center_X, center_Y)
+        yOp = Expressions.locationOperationValue(self.Y, center_X, center_Y)
+        self.insideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
+        self.outsideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
+        self.activeRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
+        self.label.recenter(center_X+xOp-(self.sizeX/2-10-self.label.textRect.width/2), center_Y+yOp)
         pass 
 
 class divider:
@@ -350,10 +356,11 @@ class divider:
         self.thickness = thickness
 
     def draw(self):
+        cord = Expressions.locationOperationValue(self.cord, self.center_X, self.center_Y)
         if (self.type == "horizontal"):
-            pygame.draw.line(self.screen, self.color, (0,self.cord), (2*self.center_X,self.cord), self.thickness)
+            pygame.draw.line(self.screen, self.color, (0,cord), (2*self.center_X,cord), self.thickness)
         elif (self.type == "vertical"):
-            pygame.draw.line(self.screen, self.color, (self.cord,0), (self.cord,2*self.center_Y), self.thickness)
+            pygame.draw.line(self.screen, self.color, (cord,0), (cord,2*self.center_Y), self.thickness)
 
     def recenter(self, X, Y):
         self.center_X = X
@@ -404,7 +411,7 @@ class problemDisplayer():
 
             spacing = 100
 
-            topHieght = -1*float((len(problem)-1))/2 * spacing
+            topHieght = -1*float((len(problem)-2))/2 * spacing
 
             for i in range(len(problem)-1):
                 print(topHieght-spacing*i)

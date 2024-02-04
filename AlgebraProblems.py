@@ -278,6 +278,6 @@ class AlgebraProblem2:
         pass
 
 #print(pygame.font.get_fonts())
-problem = print(AlgebraProblem1().getQuestion())
+#problem = print(AlgebraProblem1().getQuestion())
 
 problemList = [AlgebraProblem1(), AlgebraProblem2()]

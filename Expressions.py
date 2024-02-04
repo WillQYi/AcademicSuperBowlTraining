@@ -2,9 +2,15 @@
 def locationOperationValue(expression, center_X = int, center_Y = int):
 
     if (type(expression) is str):
+        if (expression in ["cX", "cx", "centerX", "centerx", "CenterX", "Centerx", "Cx", "CX", "center_X", "center_x", "Center_X", "Center_x"]):
+            return center_X
+        elif (expression in ["cY", "cy", "centerY", "centery", "CenterY", "Centery", "y", "CY", "center_Y", "center_y", "Center_Y", "Center_y"]):
+            return center_Y
         formatList = locationOperationFormatter(expression, center_X, center_Y)
     else:
         return expression
+    
+    #print(expression, type(expression))
 
     #print(formatList)
 
@@ -164,7 +170,7 @@ def locationOperationFormatter(string, center_X, center_Y):
             elif (substring == ""):
                 formatList.append(0)
             else:
-                formatList.append(int(substring))
+                formatList.append(float(substring))
             formatList.append(string[i])
             substring = ""
         else:
@@ -176,7 +182,7 @@ def locationOperationFormatter(string, center_X, center_Y):
     elif (substring == ""):
         formatList.append(0)
     else:
-        formatList.append(int(substring))
+        formatList.append(float(substring))
 
     return formatList
 

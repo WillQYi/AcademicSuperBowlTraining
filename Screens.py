@@ -21,8 +21,8 @@ class homescreen:
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
 
         titleTextSize = 70
-        self.textDrawer.add("2023-2024 BHSS Academic Super Bowl", 0, -260, titleTextSize, self.colors["darkBlue"], "center","ariel")
-        self.textDrawer.add("Math Training Tool", 0, -200, titleTextSize, self.colors["darkBlue"], "center","ariel")
+        self.textDrawer.add("2023-2024 BHSS Academic Super Bowl", "cX", "cY-260", titleTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Math Training Tool", "cX", "cY-200", titleTextSize, self.colors["darkBlue"],"ariel")
 
         ButtonTextSize = 50
         
@@ -66,7 +66,7 @@ class practiceSelectScreen:
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
 
         titleTextSize = 70
-        self.textDrawer.add("Select Practice", 0, -260, titleTextSize, self.colors["darkBlue"], "center","ariel")
+        self.textDrawer.add("Select Practice", "cX", "cY-260", titleTextSize, self.colors["darkBlue"], "ariel")
         
         #Utility Button Sizes
         homeButton = Elements.Button(screen, 500, -260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
@@ -155,7 +155,7 @@ class algebraScreen:
         self.titleTextSize = 50
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
-        self.textDrawer.add("Algebra Practice", 0, -1 * (self.center_Y) + 40, self.titleTextSize, self.colors["darkBlue"], "center","ariel")
+        self.textDrawer.add("Algebra Practice", "cX", 40, self.titleTextSize, self.colors["darkBlue"], "ariel")
 
         self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 80, 7, self.colors["darkBlue"])
         self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, "2*cY-200", 7, self.colors["darkBlue"])
@@ -165,16 +165,10 @@ class algebraScreen:
         self.loadProblem()
         self.Elements.append(self.problemDisplayer)
 
-        self.textBox = Elements.inputTextBox(screen, center_X, center_Y, 0, "cY-100", 300, 50, "x", "Type Answer")
-
         self.Elements.append(self.textDrawer)
         self.Elements.append(self.topDivider)
         self.Elements.append(self.bottomDivider)
-        self.Elements.append(self.textBox)
         self.Elements.append(self.problemNumberBox)
-
-        self.Interactive.append(self.textBox)
-        self.InteractiveText.append(self.textBox)
 
         self.draw()
 
@@ -187,8 +181,9 @@ class algebraScreen:
 
     def loadProblem(self):
 
-        self.problem = AlgebraProblems.problemList[0]
-        self.problemDisplayer.loadProblem("equations",self.problem.getQuestion())
+        self.problem = AlgebraProblems.problemList[1]
+        self.problemDisplayer.loadProblemDisplay(self.problem.problemDisplayType,self.problem.getQuestion())
+        self.problemDisplayer.loadProblemInput(self.problem.answerReceiver)
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X

@@ -44,6 +44,8 @@ class AlgebraProblem1:
         self.question = []
         self.answers = []
 
+        self.problemDisplayType = "equations"
+
         self.generateProblem()
         self.generateQuestionAndAnswer()
 
@@ -145,6 +147,8 @@ class AlgebraProblem2:
 
         self.question = []
         self.answers = []
+        
+        self.problemDisplayType = "equations"
         
         self.generateProblem()
         self.generateQuestionAndAnswer()

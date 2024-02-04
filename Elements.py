@@ -38,26 +38,27 @@ class TextDrawer:
         self.center_Y = center_Y
     
     #Creates a tuple that holds information about individual texts to draw
-    def add(self, string, X, Y, size, color, type, font):
-        self.Texts.append((string, X, Y, size, color, type, font))
+    def add(self, string, X, Y, size, color, font):
+        self.Texts.append((string, X, Y, size, color, font))
 
-    def drawOne(self, string, X, Y, size, color, type, font):
+    def drawOne(self, string, X, Y, size, color, font):
+
         if (font.endswith("ttf")):
             self.font = pygame.font.Font(font, size)
         else:
             self.font = pygame.font.SysFont(font, size)
         text = self.font.render(string, True, color)
         textRect = text.get_rect()
+    
+        xOp = Expressions.locationOperationValue(X, self.center_X, self.center_Y)
+        yOp = Expressions.locationOperationValue(Y, self.center_X, self.center_Y)
 
-        if (type == "center"):
-            textRect.center = (self.center_X+X,self.center_Y+Y)
-        elif (type == "origin"):
-            textRect.center = (X,Y)
+        textRect.center = (xOp,yOp)
         self.screen.blit(text, textRect)
 
     def draw(self):
         for i in range(len(self.Texts)):
-            self.drawOne(self.Texts[i][0],self.Texts[i][1],self.Texts[i][2],self.Texts[i][3],self.Texts[i][4],self.Texts[i][5],self.Texts[i][6])
+            self.drawOne(self.Texts[i][0],self.Texts[i][1],self.Texts[i][2],self.Texts[i][3],self.Texts[i][4],self.Texts[i][5])
 
     def getTexts(self):
         for textTuple in self.Texts:
@@ -401,29 +402,61 @@ class problemDisplayer():
 
         self.screen = screen
         self.color = color
+
+        self.center_X = center_X
+        self.center_Y = center_Y
         self.TextDrawer = TextDrawer(screen, center_X, center_Y)
         pass
 
-    def loadProblem(self, type, problem):
+    def loadProblemDisplay(self, type, problem):
         if (type == "equations"):
             
-            self.type = type
+            self.problemDisplayType = type
 
             spacing = 100
 
-            topHieght = -1*float((len(problem)-2))/2 * spacing
+            topHieght = -1*float((len(problem)-2))/2 * spacing - 50
 
             for i in range(len(problem)-1):
-                print(topHieght-spacing*i)
-                self.TextDrawer.add(problem[i], 0, topHieght+spacing*i, 60, self.color, "center", "ariel")
+                self.TextDrawer.add(problem[i], "cX", "cY+" + str(topHieght+spacing*i), 60, self.color, "ariel")
             
-            self.TextDrawer.add(problem[len(problem)-1], 200, 150, 60, self.color, "origin", "ariel")
+            self.TextDrawer.add(problem[len(problem)-1], 200, 150, 60, self.color, "ariel")
+
+    def loadProblemInput(self, type):
+        
+        self.inputType = type
+
+        self.inputElements = []
+
+        if (type[0] == "textBox"):
+            if (type[1] == 1):
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 0, "cY-100", 700, 50, "x", "Type Answer")
+                self.inputElements.append(self.textBox1)
+            elif (type[1] == 2):
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 375, "cY-100", 500, 50, "x", "Type Answer")
+                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, -375, "cY-100", 500, 50, "x", "Type Answer")
+                self.inputElements.append(self.textBox1)
+                self.inputElements.append(self.textBox2)
+            elif (type[1] == 3):
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 500, "cY-100", 500, 50, "x", "Type Answer")
+                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 0, "cY-100", 500, 50, "x", "Type Answer")
+                self.textBox3 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, -500, "cY-100", 500, 50, "x", "Type Answer")
+                
+                self.inputElements.append(self.textBox1)
+                self.inputElements.append(self.textBox2)
+                self.inputElements.append(self.textBox3)
     
     def draw(self):
-        if (self.type == "equations"):
+        if (self.problemDisplayType == "equations"):
             self.TextDrawer.draw()
+
+        for element in self.inputElements:
+            element.draw()
     
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
         self.TextDrawer.recenter(center_X, center_Y)
+
+        for element in self.inputElements:
+            element.recenter(center_X, center_Y)

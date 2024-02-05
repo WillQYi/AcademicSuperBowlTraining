@@ -97,23 +97,33 @@ class Button:
         #Location variables
         self.X = X
         self.Y = Y
+
         self.center_X = center_X
         self.center_Y = center_Y
+
+        xOp = Expressions.locationOperationValue(X, self.center_X, self.center_Y)
+        yOp = Expressions.locationOperationValue(Y, self.center_X, self.center_Y)
         self.sizeX = sizeX
 
         #Button Creation
-        self.ButtonRect = pygame.Rect(center_X+X-sizeX/2, center_Y+Y-sizeY/2, sizeX, sizeY)
+        self.hasThickness = False
+        if (thickness > 0):
+            self.ButtonRectOutside = pygame.Rect(center_X+xOp-sizeX/2, center_Y+yOp-sizeY/2, sizeX, sizeY)
+            self.hasThickness = True
+        self.ButtonRectInside = pygame.Rect(center_X+xOp-sizeX/2, center_Y+yOp-sizeY/2, sizeX, sizeY)
 
         self.labels = []
-        self.label = Elements.Label(screen, labelSize, labelType, center_X+X, center_Y+Y, string, color, 'ariel')
+        self.label = Elements.Label(screen, labelSize, labelType, center_X+xOp, center_Y+yOp, string, color[2], 'ariel')
         self.labels.append(self.label)
         if (not isWorking):
-            self.crossLine = Elements.Label(screen, thickness, "line", center_X+X, center_Y+Y, (sizeX, sizeY), color, 'ariel')
+            self.crossLine = Elements.Label(screen, thickness, "line", center_X+xOp, center_Y+yOp, (sizeX, sizeY), color[0], 'ariel')
             self.labels.append(self.crossLine)
 
     #Draws everything
     def draw(self):
-        pygame.draw.rect(self.screen, self.color, self.ButtonRect, self.thickness, self.curveRadius)
+        pygame.draw.rect(self.screen, self.color[1], self.ButtonRectInside, 0, self.curveRadius)
+        if (self.hasThickness):
+            pygame.draw.rect(self.screen, self.color[0], self.ButtonRectOutside, self.thickness, self.curveRadius)
         for label in self.labels:
             label.draw()
 
@@ -122,7 +132,9 @@ class Button:
             self.runTick += 1
             if (self.runTick == 10):
                 #Makes button large again
-                self.ButtonRect = self.ButtonRect.scale_by(10/9)
+                if (self.hasThickness):
+                    self.ButtonRectOutside = self.ButtonRectOutside.scale_by(10/9)
+                self.ButtonRectInside = self.ButtonRectInside.scale_by(10/9)
                 self.label.changeSize(10/9)
 
                 #Creates event to change screen
@@ -131,11 +143,14 @@ class Button:
                 pygame.event.post(CUSTOMEVENT)
                 self.runTick = 0
         else: 
-            self.ButtonRect = pygame.Rect(self.center_X+self.X-self.sizeX/2, self.center_Y+self.Y-self.sizeY/2, self.sizeX, self.sizeY)
+            xOp = Expressions.locationOperationValue(self.X, self.center_X, self.center_Y)
+            yOp = Expressions.locationOperationValue(self.Y, self.center_X, self.center_Y)
+            self.ButtonRectOutside = pygame.Rect(self.center_X+xOp-self.sizeX/2, self.center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
+            self.ButtonRectInside= pygame.Rect(self.center_X+xOp-self.sizeX/2, self.center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
 
     #Runs/check if clicked
     def clicked(self, mousePos):
-        if (self.ButtonRect.collidepoint(mousePos) and self.runTick == 0):
+        if (self.ButtonRectOutside.collidepoint(mousePos) and self.runTick == 0):
             if (self.isWorking):
                 self.runTick += 1
                 self.changeSize(9/10)
@@ -145,20 +160,27 @@ class Button:
 
     #Changes size of button
     def changeSize(self, scale):
-        self.ButtonRect = self.ButtonRect.scale_by(scale)
+        self.ButtonRectOutside = self.ButtonRectOutside.scale_by(scale)
+        self.ButtonRectInside = self.ButtonRectInside.scale_by(scale)
         self.label.changeSize(scale)
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
+        xOp = Expressions.locationOperationValue(self.X, self.center_X, self.center_Y)
+        yOp = Expressions.locationOperationValue(self.Y, self.center_X, self.center_Y)
         for label in self.labels:
-            label.recenter(center_X+self.X, center_Y+self.Y)
+            label.recenter(center_X+xOp, center_Y+yOp)
      
     def getPosition(self):
         return self.X, self.Y
 
     def getSize(self):
         return self.sizeX, self.sizeY
+    
+    def changeColor(self, color):
+        self.color = color
+
 
 #Creates a label object which can be stuck on things like buttons
 # not center or origin based, you put in the cords of the center of where you want to put the label
@@ -241,13 +263,11 @@ class Label:
             self.imageRect = self.image.get_rect()
             self.imageRect.center = (self.X, self.Y)
     
-    def change(self, change, string):
-        if (self.type == "text" and change == "text"):
-            self.text = self.font.render(string, True, self.color)
-        elif (self.type == "text" and change == "color"):
-            self.color = string
-        else:
-            pass
+    def changeText(self, text):
+        self.text = self.font.render(text, True, self.color)
+    
+    def changeColor(self, color):
+        self.color = color
 
     def recenter(self, X, Y):
         if (self.type == "text"):
@@ -267,6 +287,8 @@ class inputTextBox:
 
         self.screen = screen
         self.isActive = False
+        self.submitted = True
+        self.isCorrect = True
 
         self.X = X
         self.Y = Y
@@ -284,6 +306,7 @@ class inputTextBox:
         self.insideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
         self.outsideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
         self.activeRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
+        self.correctRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
 
         self.label = Elements.Label(screen, 20,"text",center_X+xOp, center_Y+yOp, self.textInside, (200,200,200), 'calibri')
         self.label.recenter(center_X+xOp-(self.sizeX/2-10-self.label.textRect.width/2), center_Y+yOp)
@@ -292,19 +315,30 @@ class inputTextBox:
 
     def draw(self):
         pygame.draw.rect(self.screen, (255,255,255), self.insideRect, 0, 3)
-        pygame.draw.rect(self.screen, (100,100,100), self.outsideRect, 3, 3)
+
+        if (self.submitted):
+            if (self.isCorrect):
+                pygame.draw.rect(self.screen, (140,250,150), self.correctRect, 0, 3)
+                self.label.changeColor((50, 150, 60))
+            else:
+                pygame.draw.rect(self.screen, (250,145,145), self.correctRect, 0, 3)
+                self.label.changeColor((170, 20, 20))
+
         if (self.isActive):
             pygame.draw.rect(self.screen, (55, 190, 245), self.activeRect, 3, 3)
         self.label.draw()
+
+        pygame.draw.rect(self.screen, (100,100,100), self.outsideRect, 3, 3)
+
         if (len(self.inputtedText) > 0):
-            self.label.change("text",self.inputtedText)
-            self.label.change("color",(0,0,0))
+            self.label.changeText(self.inputtedText)
+            self.label.changeColor((0,0,0))
         else:
             if (len(self.inputtedText) == 0):
-                self.label.change("text",self.textInside)
-                self.label.change("color",(200,200,200))
+                self.label.changeText(self.textInside)
+                self.label.changeColor((200,200,200))
             else: 
-                self.label.change("text","")
+                self.label.changeText("")
         pass
 
     def clicked(self, mousePos):
@@ -335,6 +369,7 @@ class inputTextBox:
         self.insideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
         self.outsideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
         self.activeRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
+        self.correctRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
         self.label.recenter(center_X+xOp-(self.sizeX/2-10-self.label.textRect.width/2), center_Y+yOp)
         pass 
 

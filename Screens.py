@@ -16,7 +16,7 @@ class homescreen:
         self.center_X = center_X
         self.center_Y = center_Y
 
-        self.colors = {"darkBlue":(53, 63, 112)}
+        self.colors = {"darkBlue":(53, 63, 112), "screenGrey": (230,230,230)}
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
 
@@ -25,9 +25,10 @@ class homescreen:
         self.textDrawer.add("Math Training Tool", "cX", "cY-200", titleTextSize, self.colors["darkBlue"],"ariel")
 
         ButtonTextSize = 50
-        
-        StartButton = Elements.Button(screen, 0, 0, 300, 150, self.colors["darkBlue"], 8, 10, "text", "Start", ButtonTextSize, center_X, center_Y, 4201, True)
-        creditsHelpButton = Elements.Button(screen, 0, 185, 300, 150, self.colors["darkBlue"], 8, 10, "text", "Credits/Help", ButtonTextSize, center_X, center_Y, 4199, True)
+        buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
+
+        StartButton = Elements.Button(screen, 0, 0, 300, 150, buttonColor, 8, 10, "text", "Start", ButtonTextSize, center_X, center_Y, 4201, True)
+        creditsHelpButton = Elements.Button(screen, 0, 185, 300, 150, buttonColor, 8, 10, "text", "Credits/Help", ButtonTextSize, center_X, center_Y, 4199, True)
 
         self.Elements.append(self.textDrawer)
         self.Elements.append(StartButton)
@@ -63,12 +64,14 @@ class creditsScreen:
         self.center_X = center_X
         self.center_Y = center_Y
 
-        self.colors = {"darkBlue":(53, 63, 112)}
+        self.colors = {"darkBlue":(53, 63, 112), "screenGrey": (230,230,230)}
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
         self.Elements.append(self.textDrawer)
 
-        homeButton = Elements.Button(screen, 500, -260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
+        buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
+
+        homeButton = Elements.Button(screen, "cX-100", "100-cY", 100, 100, buttonColor, 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
 
         self.Elements.append(homeButton)
         self.Interactive.append(homeButton)
@@ -76,18 +79,18 @@ class creditsScreen:
         titleTextSize = 70
         self.textDrawer.add("Created by:", 175, 50, titleTextSize, self.colors["darkBlue"],"ariel")
 
-        normalTextSize = 40
-        self.textDrawer.add("- An Kieu", 105, 100, normalTextSize, self.colors["darkBlue"],"ariel")
+        normalTextSize = 30
+        self.textDrawer.add("- An Kieu", 95, 100, normalTextSize, self.colors["darkBlue"],"ariel")
 
         self.textDrawer.add("BHSS 2023-2024 Math Team: ", 390, 200, titleTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("- An Kieu (Captian), Minh Huynh, Edward Choi, Jackson Fries, Jacob Hammond,", 585, 270, normalTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("Will Yi, Dylan Stringer, Shayan Shamsipour, Yelena Zhou, Yucelin Zhou", 540, 330, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- An Kieu (Captian), Minh Huynh, Edward Choi, Jackson Fries, Jacob Hammond,", 440, 270, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Will Yi, Dylan Stringer, Shayan Shamsipour, Yelena Zhou, Yucelin Zhou", 410, 320, normalTextSize, self.colors["darkBlue"],"ariel")
 
         self.textDrawer.add("Notes Link:", 165, 430, titleTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("- https://docs.google.com/document/d/1ockbV0BvivHAAlEOwTlSEGRIsPMJ869TA_Aa0GmViF4/edit?usp=sharing", 590, 490, normalTextSize-10, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- https://docs.google.com/document/d/1ockbV0BvivHAAlEOwTlSEGRIsPMJ869TA_Aa0GmViF4/edit?usp=sharing", 590, 490, normalTextSize, self.colors["darkBlue"],"ariel")
 
-        self.textDrawer.add("Assigned Subjects", 255, 590, titleTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("- https://docs.google.com/spreadsheets/d/18DLC50YC8_uU0_lGhbcC9ZMmexmqa_q2V47GzfwVNSE/edit#gid=0", 575, 650, normalTextSize-10, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Assigned Subjects:", 260, 590, titleTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- https://docs.google.com/spreadsheets/d/18DLC50YC8_uU0_lGhbcC9ZMmexmqa_q2V47GzfwVNSE/edit#gid=0", 575, 650, normalTextSize, self.colors["darkBlue"],"ariel")
 
 
         self.draw()
@@ -118,17 +121,19 @@ class practiceSelectScreen:
         self.center_X = center_X
         self.center_Y = center_Y
 
-        self.colors = {"darkBlue":(53, 63, 112)}
+        self.colors = {"darkBlue":(53, 63, 112), "screenGrey": (230,230,230)}
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
 
         titleTextSize = 70
         self.textDrawer.add("Select Practice", "cX", "cY-260", titleTextSize, self.colors["darkBlue"], "ariel")
+
+        buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
         
         #Utility Button Sizes
-        homeButton = Elements.Button(screen, 500, -260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
-        settingsButton = Elements.Button(screen, 500, 260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "settingsButton.png", 0.9, center_X, center_Y, 4200, False)
-        statsButton = Elements.Button(screen, -500, 260, 100, 100, self.colors["darkBlue"], 8, 10, "image", "statsButton.png", 0.9, center_X, center_Y, 4200, False)
+        homeButton = Elements.Button(screen, "cX-100", "100-cY", 100, 100, buttonColor, 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
+        settingsButton = Elements.Button(screen, "cX-100", "cY-100", 100, 100, buttonColor, 8, 10, "image", "settingsButton.png", 0.9, center_X, center_Y, 4200, False)
+        statsButton = Elements.Button(screen, "100-cX", "cY-100", 100, 100, buttonColor, 8, 10, "image", "statsButton.png", 0.9, center_X, center_Y, 4200, False)
 
         #Practice Button Sizes
         practiceButtonTextSize = 40
@@ -138,13 +143,13 @@ class practiceSelectScreen:
         practiceSpreadX = 400
         
         #Creating Practice Buttons
-        AlegbraButton = Elements.Button(screen, 0-practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Algebra", practiceButtonTextSize, center_X, center_Y, 4202, True)
-        GeometryButton = Elements.Button(screen, 0, 50-practiceSpreadY, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Geometry", practiceButtonTextSize, center_X, center_Y, 4203, False)
-        StatisticsButton = Elements.Button(screen, 0+practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Statistics", practiceButtonTextSize, center_X, center_Y, 4204, False)
-        LogarithmButton = Elements.Button(screen, 0-practiceSpreadX, 50, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Logarithms", practiceButtonTextSize, center_X, center_Y, 4205, False)
-        CalculusButton = Elements.Button(screen, 0, 50, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Calculus", practiceButtonTextSize, center_X, center_Y, 4206, False)
-        ModButton = Elements.Button(screen, 0+practiceSpreadX, 50, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Modulo Arithemtic", practiceButtonTextSize, center_X, center_Y, 4207, False)
-        DoomsButton = Elements.Button(screen, 0, 50+practiceSpreadY, practiceButtonX, practiceButtonY, self.colors["darkBlue"], 8, 10, "text", "Doomsday Rule", practiceButtonTextSize, center_X, center_Y, 4208, False)
+        AlegbraButton = Elements.Button(screen, 0-practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Algebra", practiceButtonTextSize, center_X, center_Y, 4202, True)
+        GeometryButton = Elements.Button(screen, 0, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Geometry", practiceButtonTextSize, center_X, center_Y, 4203, False)
+        StatisticsButton = Elements.Button(screen, 0+practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Statistics", practiceButtonTextSize, center_X, center_Y, 4204, False)
+        LogarithmButton = Elements.Button(screen, 0-practiceSpreadX, 50, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Logarithms", practiceButtonTextSize, center_X, center_Y, 4205, False)
+        CalculusButton = Elements.Button(screen, 0, 50, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Calculus", practiceButtonTextSize, center_X, center_Y, 4206, False)
+        ModButton = Elements.Button(screen, 0+practiceSpreadX, 50, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Modulo Arithemtic", practiceButtonTextSize, center_X, center_Y, 4207, False)
+        DoomsButton = Elements.Button(screen, 0, 50+practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Doomsday Rule", practiceButtonTextSize, center_X, center_Y, 4208, False)
         
         #Creating Utility Buttons
 
@@ -207,7 +212,7 @@ class algebraScreen:
 
         self.problemsDone = 0
 
-        self.colors = {"darkBlue":(53, 63, 112)}
+        self.colors = {"darkBlue": (53, 63, 112), "screenGrey": (230,230,230), "lightBlue":(38, 176, 237)}
 
         self.titleTextSize = 50
 
@@ -222,10 +227,17 @@ class algebraScreen:
         self.loadProblem()
         self.Elements.append(self.problemDisplayer)
 
-        menuButton = Elements.Button(screen, 550, -310, 68, 68, self.colors["darkBlue"], 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 4200, True)
+        buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
+
+        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 4200, True)
 
         self.Elements.append(menuButton)
         self.Interactive.append(menuButton)
+
+        checkButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "text", "Submit", 30, center_X, center_Y, 6900, True)
+
+        self.Elements.append(checkButton)
+        self.Interactive.append(checkButton)
 
         self.Elements.append(self.textDrawer)
         self.Elements.append(self.topDivider)
@@ -243,7 +255,7 @@ class algebraScreen:
 
     def loadProblem(self):
 
-        self.problem = AlgebraProblems.problemList[random.randint(0,1)]
+        self.problem = AlgebraProblems.problemList[0]
         self.problemDisplayer.loadProblemDisplay(self.problem.problemDisplayType,self.problem.getQuestion())
         self.problemDisplayer.loadProblemInput(self.problem.answerReceiver)
 

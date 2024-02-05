@@ -37,9 +37,12 @@ while running:
                     textbox.inputText(event)
 
         #Custom events
-        if event.type >= 4200 and event.type <= 4300:
+        if event.type >= 4100 and event.type <= 4300:
             if Screens.eventDict[event.type] == "home":
                 currScreen = Screens.homescreen(screen, center_X, center_Y)
+                continue
+            elif Screens.eventDict[event.type] == "credits":
+                currScreen = Screens.creditsScreen(screen, center_X, center_Y)
                 continue
             elif Screens.eventDict[event.type] == "pracSelect":
                 currScreen = Screens.practiceSelectScreen(screen, center_X, center_Y)

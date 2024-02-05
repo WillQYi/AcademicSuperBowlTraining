@@ -263,7 +263,7 @@ class Label:
 #Note that this is center-based 
 class inputTextBox:
 
-    def __init__(self, screen, center_X, center_Y, X, Y, sizeX, sizeY, textOutside, textInside):
+    def __init__(self, screen, center_X, center_Y, X, Y, sizeX, sizeY, textInside):
 
         self.screen = screen
         self.isActive = False
@@ -275,7 +275,6 @@ class inputTextBox:
         self.sizeX = sizeX
         self.sizeY = sizeY
 
-        self.textOutside = textOutside
         self.textInside = textInside
 
         self.inputtedText = ""
@@ -415,12 +414,12 @@ class problemDisplayer():
 
             spacing = 100
 
-            topHieght = -1*float((len(problem)-2))/2 * spacing - 50
+            topHieght = -1*float((len(problem)-2))/2 * spacing -25
 
             for i in range(len(problem)-1):
                 self.TextDrawer.add(problem[i], "cX", "cY+" + str(topHieght+spacing*i), 60, self.color, "ariel")
             
-            self.TextDrawer.add(problem[len(problem)-1], 200, 150, 60, self.color, "ariel")
+            self.TextDrawer.add(problem[len(problem)-1], 120+(len(problem[len(problem)-1])/2)*20, 175, 60, self.color, "ariel")
 
     def loadProblemInput(self, type):
         
@@ -430,17 +429,17 @@ class problemDisplayer():
 
         if (type[0] == "textBox"):
             if (type[1] == 1):
-                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 0, "cY-100", 700, 50, "x", "Type Answer")
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 0, "cY-88", 700, 50, "Type Answer")
                 self.inputElements.append(self.textBox1)
             elif (type[1] == 2):
-                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 375, "cY-100", 500, 50, "x", "Type Answer")
-                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, -375, "cY-100", 500, 50, "x", "Type Answer")
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 250, "cY-88", 400, 50, "Type Answer")
+                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, -250, "cY-88", 400, 50, "Type Answer")
                 self.inputElements.append(self.textBox1)
                 self.inputElements.append(self.textBox2)
             elif (type[1] == 3):
-                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 500, "cY-100", 300, 50, "x", "Type Answer")
-                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 0, "cY-100", 300, 50, "x", "Type Answer")
-                self.textBox3 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, -500, "cY-100", 300, 50, "x", "Type Answer")
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 400, "cY-88", 300, 50, "Type Answer")
+                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 0, "cY-88", 300, 50, "Type Answer")
+                self.textBox3 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, -400, "cY-88", 300, 50, "Type Answer")
 
                 self.inputElements.append(self.textBox1)
                 self.inputElements.append(self.textBox2)

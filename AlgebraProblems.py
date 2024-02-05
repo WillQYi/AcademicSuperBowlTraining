@@ -121,13 +121,13 @@ class AlgebraProblem1:
             self.answerReceiver = ("textBox",2)
         elif (choice <= 50):
             self.question.append("Find x+y")
-            self.answerReceiver = ("textBox",1)
+            self.answerReceiver = ("textBox",2)
         elif (choice <= 75):
             self.question.append("Find x-y")
-            self.answerReceiver = ("textBox",1)
+            self.answerReceiver = ("textBox",2)
         else:
             self.question.append("Find xy")
-            self.answerReceiver = ("textBox",1)
+            self.answerReceiver = ("textBox",2)
         
         return self.question
     
@@ -252,22 +252,22 @@ class AlgebraProblem2:
         choice = random.randint(1,100)
         if (choice <= 24):
             self.question.append("Find x,y,z")
-            self.answerReceiver = ("textBox",3)
+            self.answerReceiver = ("textBox",2)
         elif (choice <= 40):
             self.question.append("Find x+y+z")
-            self.answerReceiver = ("textBox",1)
+            self.answerReceiver = ("textBox",2)
         elif (choice <= 56):
             self.question.append("Find x-y+z")
-            self.answerReceiver = ("textBox",1)
+            self.answerReceiver = ("textBox",2)
         elif (choice <= 72):
             self.question.append("Find x+y-z")
-            self.answerReceiver = ("textBox",1) 
+            self.answerReceiver = ("textBox",2) 
         elif (choice <= 88):
             self.question.append("Find -x+y+z")
-            self.answerReceiver = ("textBox",1)      
+            self.answerReceiver = ("textBox",2)      
         else:
             self.question.append("Find xyz")
-            self.answerReceiver = ("textBox",1)
+            self.answerReceiver = ("textBox",2)
 
     def getQuestion(self):
         return self.question

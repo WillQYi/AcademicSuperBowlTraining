@@ -295,8 +295,6 @@ class ModProblem5:
         else:
             self.question.append("Compute lcm(" + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", " + str(self.factor*self.extra3))
 
-
-
     def checkCorrect(self):
         pass
         

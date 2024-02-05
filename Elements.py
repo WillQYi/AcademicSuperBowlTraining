@@ -438,10 +438,10 @@ class problemDisplayer():
                 self.inputElements.append(self.textBox1)
                 self.inputElements.append(self.textBox2)
             elif (type[1] == 3):
-                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 500, "cY-100", 500, 50, "x", "Type Answer")
-                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 0, "cY-100", 500, 50, "x", "Type Answer")
-                self.textBox3 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, -500, "cY-100", 500, 50, "x", "Type Answer")
-                
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 500, "cY-100", 300, 50, "x", "Type Answer")
+                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 0, "cY-100", 300, 50, "x", "Type Answer")
+                self.textBox3 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, -500, "cY-100", 300, 50, "x", "Type Answer")
+
                 self.inputElements.append(self.textBox1)
                 self.inputElements.append(self.textBox2)
                 self.inputElements.append(self.textBox3)

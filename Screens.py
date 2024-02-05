@@ -181,7 +181,7 @@ class algebraScreen:
 
     def loadProblem(self):
 
-        self.problem = AlgebraProblems.problemList[1]
+        self.problem = AlgebraProblems.problemList[random.randint(0,1)]
         self.problemDisplayer.loadProblemDisplay(self.problem.problemDisplayType,self.problem.getQuestion())
         self.problemDisplayer.loadProblemInput(self.problem.answerReceiver)
 

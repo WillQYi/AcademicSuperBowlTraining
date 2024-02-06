@@ -20,7 +20,11 @@ class AlgebraProblem1:
     def generateProblem(self):
         pass
 
-    def generateQuestion(self):
+    def generateQuestionAndAnswer(self):
+    
+        self.answers = []
+        self.question = []
+
         pass
 
     def checkCorrect(self):
@@ -85,12 +89,12 @@ class AlgebraProblem1:
             rangeAnswer = 50
             rangeCoefficient = 100
 
-        answerX = random.randint(-1 * rangeAnswer , rangeAnswer)
-        while (answerX == 0):
-            answerX = random.randint(-1 * rangeAnswer , rangeAnswer)
-        answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
-        while (answerY == 0):
-            answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
+        self.answerX = random.randint(-1 * rangeAnswer , rangeAnswer)
+        while (self.answerX == 0):
+            self.answerX = random.randint(-1 * rangeAnswer , rangeAnswer)
+        self.answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
+        while (self.answerY == 0):
+            self.answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
 
         #First equation coefficients
         coefficient1x = random.randint(-1*rangeCoefficient, rangeCoefficient)
@@ -108,27 +112,36 @@ class AlgebraProblem1:
         while (coefficient2y == 0):
             coefficient2y = random.randint(-1 * rangeAnswer , rangeAnswer)
         
-        LHS1 = answerX * coefficient1x + answerY * coefficient1y
-        LHS2 = answerX * coefficient2x + answerY * coefficient2y
+        LHS1 = self.answerX * coefficient1x + self.answerY * coefficient1y
+        LHS2 = self.answerX * coefficient2x + self.answerY * coefficient2y
 
         self.question.append(self.equationBuilder(coefficient1x, coefficient1y, LHS1))
         self.question.append(self.equationBuilder(coefficient2x, coefficient2y, LHS2))
 
     def generateQuestionAndAnswer(self):
+
+        self.answers = []
+
         choice = random.randint(1,100)
-        if (choice <= 25):
+        if (choice <= 100):
             self.question.append("Find x,y")
             self.answerReceiver = ("textBox",2)
+            self.answers.append(self.answerX)
+            self.answers.append(self.answerY)
         elif (choice <= 50):
             self.question.append("Find x+y")
-            self.answerReceiver = ("textBox",2)
+            self.answerReceiver = ("textBox",1)
+            self.answers.append(self.answerX+self.answerY)
         elif (choice <= 75):
             self.question.append("Find x-y")
-            self.answerReceiver = ("textBox",2)
+            self.answerReceiver = ("textBox",1)
+            self.answers.append(self.answerX-self.answerY)
         else:
             self.question.append("Find xy")
-            self.answerReceiver = ("textBox",2)
+            self.answerReceiver = ("textBox",1)
+            self.answers.append(self.answerX*self.answerY)
         
+        print(self.answers)
         return self.question
     
     def getQuestion(self):
@@ -137,8 +150,20 @@ class AlgebraProblem1:
     def getAnswer(self):
         return self.answers
 
-    def checkCorrect(self):
-        pass
+    def checkCorrect(self, answer):
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        print(correctList)
+
+        return correctList
 
 #Three linear equatons wtih integer solution 
 class AlgebraProblem2: 
@@ -197,15 +222,15 @@ class AlgebraProblem2:
             rangeAnswer = 15
             rangeCoefficient = 30
 
-        answerX = random.randint(-1 * rangeAnswer , rangeAnswer)
-        while (answerX == 0):
-            answerX = random.randint(-1 * rangeAnswer , rangeAnswer)
-        answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
-        while (answerY == 0):
-            answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
-        answerZ = random.randint(-1 * rangeAnswer , rangeAnswer)
-        while (answerZ == 0):
-            answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
+        self.answerX = random.randint(-1 * rangeAnswer , rangeAnswer)
+        while (self.answerX == 0):
+            self.answerX = random.randint(-1 * rangeAnswer , rangeAnswer)
+        self.answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
+        while (self.answerY == 0):
+            self.answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
+        self.answerZ = random.randint(-1 * rangeAnswer , rangeAnswer)
+        while (self.answerZ == 0):
+            self.answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
 
         #First equation coefficients
         coefficient1x = random.randint(-1*rangeCoefficient, rangeCoefficient)
@@ -240,15 +265,18 @@ class AlgebraProblem2:
         while (coefficient3z == 0):
             coefficient3z = random.randint(-1 * rangeAnswer , rangeAnswer)   
         
-        LHS1 = answerX * coefficient1x + answerY * coefficient1y + answerZ * coefficient1z
-        LHS2 = answerX * coefficient2x + answerY * coefficient2y + answerZ * coefficient2z
-        LHS3 = answerX * coefficient3x + answerY * coefficient3y + answerZ * coefficient3z
+        LHS1 = self.answerX * coefficient1x + self.answerY * coefficient1y + self.answerZ * coefficient1z
+        LHS2 = self.answerX * coefficient2x + self.answerY * coefficient2y + self.answerZ * coefficient2z
+        LHS3 = self.answerX * coefficient3x + self.answerY * coefficient3y + self.answerZ * coefficient3z
 
         self.question.append(self.equationBuilder(coefficient1x, coefficient1y, coefficient1z, LHS1))
         self.question.append(self.equationBuilder(coefficient2x, coefficient2y, coefficient2z, LHS2))
         self.question.append(self.equationBuilder(coefficient3x, coefficient3y, coefficient3z, LHS3))
     
     def generateQuestionAndAnswer(self):
+
+        self.answers = []
+
         choice = random.randint(1,100)
         if (choice <= 24):
             self.question.append("Find x,y,z")

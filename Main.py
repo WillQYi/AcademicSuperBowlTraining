@@ -52,7 +52,7 @@ while running:
                 continue
 
         if event.type >= 6900 and event.type <= 7000:
-            pass
+            currScreen.problemController.checkCorrect()
 
     #print("-----------")   
 

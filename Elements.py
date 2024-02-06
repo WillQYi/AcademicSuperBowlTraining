@@ -287,8 +287,8 @@ class inputTextBox:
 
         self.screen = screen
         self.isActive = False
-        self.submitted = True
-        self.isCorrect = True
+        self.submitted = False
+        self.isCorrect = False
 
         self.X = X
         self.Y = Y
@@ -324,11 +324,11 @@ class inputTextBox:
                 pygame.draw.rect(self.screen, (250,145,145), self.correctRect, 0, 3)
                 self.label.changeColor((170, 20, 20))
 
+        pygame.draw.rect(self.screen, (100,100,100), self.outsideRect, 3, 3)
+
         if (self.isActive):
             pygame.draw.rect(self.screen, (55, 190, 245), self.activeRect, 3, 3)
         self.label.draw()
-
-        pygame.draw.rect(self.screen, (100,100,100), self.outsideRect, 3, 3)
 
         if (len(self.inputtedText) > 0):
             self.label.changeText(self.inputtedText)
@@ -373,6 +373,11 @@ class inputTextBox:
         self.label.recenter(center_X+xOp-(self.sizeX/2-10-self.label.textRect.width/2), center_Y+yOp)
         pass 
 
+    def submit(self, isCorrect):
+        self.submitted = True
+        self.isCorrect = isCorrect
+        pass
+
 class divider:
 
     def __init__(self, screen, type, center_X, center_Y, cord, thickness, color):
@@ -407,6 +412,7 @@ class problemNumberBox:
     def __init__(self, screen, X, Y, sizeX, sizeY, problemNumber, color):
         
         self.screen = screen
+        self.submitted = False
 
         self.X = X
         self.Y = Y
@@ -430,31 +436,41 @@ class problemNumberBox:
         self.X = X
         self.Y = Y
 
-class problemDisplayer():
+class problemController():
 
     def __init__(self, screen, center_X, center_Y, color):
 
         self.screen = screen
         self.color = color
+        self.submitted = False
+
+        self.answer = []
 
         self.center_X = center_X
         self.center_Y = center_Y
         self.TextDrawer = TextDrawer(screen, center_X, center_Y)
         pass
 
-    def loadProblemDisplay(self, type, problem):
+    def loadProblemDisplay(self, problem):
+
+        self.problem = problem
+
+        question = problem.getQuestion()
+
+        type = problem.problemDisplayType
+
         if (type == "equations"):
             
-            self.problemDisplayType = type
+            self.questionDisplayType = type
 
             spacing = 100
 
-            topHieght = -1*float((len(problem)-2))/2 * spacing -25
+            topHieght = -1*float((len(question)-2))/2 * spacing -25
 
-            for i in range(len(problem)-1):
-                self.TextDrawer.add(problem[i], "cX", "cY+" + str(topHieght+spacing*i), 60, self.color, "ariel")
+            for i in range(len(question)-1):
+                self.TextDrawer.add(question[i], "cX", "cY+" + str(topHieght+spacing*i), 60, self.color, "ariel")
             
-            self.TextDrawer.add(problem[len(problem)-1], 120+(len(problem[len(problem)-1])/2)*20, 175, 60, self.color, "ariel")
+            self.TextDrawer.add(question[len(question)-1], 120+(len(question[len(question)-1])/2)*20, 175, 60, self.color, "ariel")
 
     def loadProblemInput(self, type):
         
@@ -479,9 +495,21 @@ class problemDisplayer():
                 self.inputElements.append(self.textBox1)
                 self.inputElements.append(self.textBox2)
                 self.inputElements.append(self.textBox3)
+
+    def checkCorrect(self):
+
+        #self.submitted = True
+        self.answer = []
+        for textbox in self.inputElements:
+            self.answer.append(textbox.inputtedText)
+        self.correctList = self.problem.checkCorrect(self.answer)
+        for i in range(len(self.correctList)):
+            print(self.correctList[i])
+            (self.inputElements[i]).submit(self.correctList[i])
+        pass
     
     def draw(self):
-        if (self.problemDisplayType == "equations"):
+        if (self.questionDisplayType == "equations"):
             self.TextDrawer.draw()
 
         for element in self.inputElements:

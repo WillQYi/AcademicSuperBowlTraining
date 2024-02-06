@@ -223,9 +223,9 @@ class algebraScreen:
         self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, "2*cY-175", 7, self.colors["darkBlue"])
         self.problemNumberBox = Elements.problemNumberBox(screen, 25, 140, 60, 60, str(self.problemsDone+1), self.colors["darkBlue"])
 
-        self.problemDisplayer = Elements.problemDisplayer(screen, self.center_X, self.center_Y, self.colors["darkBlue"])
+        self.problemController = Elements.problemController(screen, self.center_X, self.center_Y, self.colors["darkBlue"])
         self.loadProblem()
-        self.Elements.append(self.problemDisplayer)
+        self.Elements.append(self.problemController)
 
         buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
 
@@ -256,10 +256,10 @@ class algebraScreen:
     def loadProblem(self):
 
         self.problem = AlgebraProblems.problemList[0]
-        self.problemDisplayer.loadProblemDisplay(self.problem.problemDisplayType,self.problem.getQuestion())
-        self.problemDisplayer.loadProblemInput(self.problem.answerReceiver)
+        self.problemController.loadProblemDisplay(self.problem)
+        self.problemController.loadProblemInput(self.problem.answerReceiver)
 
-        for textbox in self.problemDisplayer.inputElements:
+        for textbox in self.problemController.inputElements:
             self.Interactive.append(textbox)
             self.InteractiveText.append(textbox)
 

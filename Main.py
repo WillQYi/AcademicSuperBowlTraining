@@ -30,7 +30,6 @@ while running:
             for Button in currScreen.Interactive:
                 Button.clicked(mousePos)
 
-        
         if event.type == pygame.KEYDOWN:
             for textbox in currScreen.InteractiveText:
                 if (textbox.isActive):
@@ -52,7 +51,9 @@ while running:
                 continue
 
         if event.type >= 6900 and event.type <= 7000:
-            currScreen.problemController.checkCorrect()
+            if (Screens.eventDict[event.type] == "answerInputted"):
+                currScreen.problemController.checkCorrect()
+                currScreen.swapButton()
 
     #print("-----------")   
 

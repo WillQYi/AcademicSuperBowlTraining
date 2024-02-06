@@ -123,7 +123,7 @@ class AlgebraProblem1:
         self.answers = []
 
         choice = random.randint(1,100)
-        if (choice <= 100):
+        if (choice <= 25):
             self.question.append("Find x,y")
             self.answerReceiver = ("textBox",2)
             self.answers.append(self.answerX)
@@ -140,7 +140,7 @@ class AlgebraProblem1:
             self.question.append("Find xy")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX*self.answerY)
-        
+
         print(self.answers)
         return self.question
     
@@ -154,6 +154,7 @@ class AlgebraProblem1:
         correctList = []
         for i in range(len(answer)):
             try:
+                print(abs(float(self.answers[i]) - float(answer[i])))
                 if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
                     correctList.append(False)
                 else:

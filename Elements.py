@@ -502,7 +502,9 @@ class problemController():
         self.answer = []
         for textbox in self.inputElements:
             self.answer.append(textbox.inputtedText)
+        self.answer.reverse()
         self.correctList = self.problem.checkCorrect(self.answer)
+        print(self.answer)
         for i in range(len(self.correctList)):
             print(self.correctList[i])
             (self.inputElements[i]).submit(self.correctList[i])

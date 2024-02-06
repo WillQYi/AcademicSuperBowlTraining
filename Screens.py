@@ -3,7 +3,7 @@ import Elements
 import random
 import AlgebraProblems
 
-eventDict = {4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted"}
+eventDict = {4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted", 6901: "newProblem"}
 
 class homescreen:
 
@@ -229,15 +229,18 @@ class algebraScreen:
 
         buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
 
-        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 4200, True)
+        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 4201, True)
 
         self.Elements.append(menuButton)
         self.Interactive.append(menuButton)
 
-        checkButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "text", "Submit", 30, center_X, center_Y, 6900, True)
+        self.checkButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "text", "Submit", 30, center_X, center_Y, 6900, True)
+        self.nextButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "image", "arrowButton.png", 0.5, center_X, center_Y, 6900, True)
 
-        self.Elements.append(checkButton)
-        self.Interactive.append(checkButton)
+        self.Elements.append(self.checkButton)
+        self.Interactive.append(self.checkButton)
+
+        self.Interactive.append(self.nextButton)
 
         self.Elements.append(self.textDrawer)
         self.Elements.append(self.topDivider)
@@ -262,6 +265,15 @@ class algebraScreen:
         for textbox in self.problemController.inputElements:
             self.Interactive.append(textbox)
             self.InteractiveText.append(textbox)
+
+    def swapButton(self):
+        if (self.checkButton in self.Interactive):
+            self.Elements.remove(self.checkButton)
+            self.Elements.append(self.nextButton)
+            print("Test")
+        else:
+            self.Elements.remove(self.nextButton)
+            self.Elements.append(self.checkButton)
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X

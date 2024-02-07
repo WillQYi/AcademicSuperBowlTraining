@@ -6,6 +6,31 @@ import ModProblems
 
 eventDict = {4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted", 6901: "newProblem"}
 
+class testScreen:
+
+    def __init__(self, screen, center_X, center_Y):
+
+        self.Elements = []
+        self.Interactive = []
+        self.InteractiveText = []
+
+        self.center_X = center_X
+        self.center_Y = center_Y
+
+    def run(self):
+        self.draw()
+
+    def draw(self):
+        for element in self.Elements:
+            element.draw()
+
+    def recenter(self, center_X, center_Y):
+        self.center_X = center_X
+        self.center_Y = center_Y
+        self.textDrawer.recenter(center_X, center_Y)
+        for Elements in self.Elements:
+            Elements.recenter(center_X, center_Y)
+
 class homescreen:
 
     def __init__(self, screen, center_X, center_Y):

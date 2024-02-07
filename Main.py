@@ -12,10 +12,12 @@ center_X = 640
 center_Y = 360
 currScreen = Screens.homescreen(screen, center_X, center_Y)
 
+tabDown = False
+
 while running:
     #Checks for user interactions
     for event in pygame.event.get():
-        #print(event)
+        print(event)
         if event.type == pygame.QUIT:
             running = False
 
@@ -34,6 +36,21 @@ while running:
             for textbox in currScreen.InteractiveText:
                 if (textbox.isActive):
                     textbox.inputText(event)
+
+            if (event.key == pygame.K_LCTRL or event.key == pygame.K_LCTRL):
+                tabDown = True
+                homeScreenOperPart1 = True
+
+            if (tabDown and event.key == pygame.K_t):
+                currScreen = Screens.testScreen(screen, center_X, center_Y)
+            elif (tabDown and event.key == pygame.K_h):
+                currScreen = Screens.homescreen(screen, center_X, center_Y)
+            elif (tabDown and event.key == pygame.K_p):
+                currScreen = Screens.practiceSelectScreen(screen, center_X, center_Y)
+
+        if event.type == pygame.KEYUP:
+            if (event.key == pygame.K_LCTRL or event.key == pygame.K_LCTRL):
+                tabDown = False
 
         #Custom events
         if event.type >= 4100 and event.type <= 4300:

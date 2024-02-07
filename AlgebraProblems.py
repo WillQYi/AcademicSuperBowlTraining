@@ -148,7 +148,6 @@ class AlgebraProblem1:
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX*self.answerY)
 
-        print(self.answers)
         return self.question
     
     def getQuestion(self):

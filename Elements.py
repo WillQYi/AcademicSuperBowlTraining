@@ -181,6 +181,11 @@ class Button:
     def changeColor(self, color):
         self.color = color
 
+    def changeLabel(self, change, otherInformation):
+        if (change == "text"):
+            self.label.changeText(otherInformation)
+        if (change == "image"):
+            self.label.changeImage(otherInformation)
 
 #Creates a label object which can be stuck on things like buttons
 # not center or origin based, you put in the cords of the center of where you want to put the label
@@ -266,6 +271,9 @@ class Label:
     def changeText(self, text):
         self.text = self.font.render(text, True, self.color)
     
+    def changeImage(self, imagePath):
+        self.string = imagePath
+
     def changeColor(self, color):
         self.color = color
 
@@ -445,11 +453,18 @@ class problemController():
         self.submitted = False
 
         self.answer = []
+        self.inputElements = []
 
         self.center_X = center_X
         self.center_Y = center_Y
         self.TextDrawer = TextDrawer(screen, center_X, center_Y)
         pass
+
+    def reset(self):
+
+        self.answer = []
+        del self.inputElements[:]
+        self.TextDrawer.clear()
 
     def loadProblemDisplay(self, problem):
 
@@ -459,24 +474,29 @@ class problemController():
 
         type = problem.problemDisplayType
 
+        self.questionDisplayType = type
+
         if (type == "equations"):
+
+            if (len(question) > 1):
+
+                spacing = 100
+
+                topHieght = -1*float((len(question)-2))/2 * spacing -25
+
+                for i in range(len(question)-1):
+                    self.TextDrawer.add(question[i], "cX", "cY+" + str(topHieght+spacing*i), 60, self.color, "ariel")
+
+                self.TextDrawer.add(question[len(question)-1], 120+(len(question[len(question)-1])/2)*25, 175, 60, self.color, "ariel")
             
-            self.questionDisplayType = type
-
-            spacing = 100
-
-            topHieght = -1*float((len(question)-2))/2 * spacing -25
-
-            for i in range(len(question)-1):
-                self.TextDrawer.add(question[i], "cX", "cY+" + str(topHieght+spacing*i), 60, self.color, "ariel")
-            
-            self.TextDrawer.add(question[len(question)-1], 120+(len(question[len(question)-1])/2)*20, 175, 60, self.color, "ariel")
+            else:
+                self.TextDrawer.add(question[0], "cX", "cY", 60, self.color, "ariel")
 
     def loadProblemInput(self, type):
         
         self.inputType = type
 
-        self.inputElements = []
+        del self.inputElements[:]
 
         if (type[0] == "textBox"):
             if (type[1] == 1):
@@ -498,15 +518,14 @@ class problemController():
 
     def checkCorrect(self):
 
-        #self.submitted = True
+        self.submitted = True
+
         self.answer = []
         for textbox in self.inputElements:
             self.answer.append(textbox.inputtedText)
         self.answer.reverse()
         self.correctList = self.problem.checkCorrect(self.answer)
-        print(self.answer)
         for i in range(len(self.correctList)):
-            print(self.correctList[i])
             (self.inputElements[i]).submit(self.correctList[i])
         pass
     

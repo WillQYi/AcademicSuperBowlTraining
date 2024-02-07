@@ -50,10 +50,17 @@ class AlgebraProblem1:
 
         self.problemDisplayType = "equations"
 
-        self.generateProblem()
-        self.generateQuestionAndAnswer()
+        self.create()
 
         pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
 
     def equationBuilder(self, coefficient1, coefficient2, LHS):
         equationString = ""
@@ -154,15 +161,13 @@ class AlgebraProblem1:
         correctList = []
         for i in range(len(answer)):
             try:
-                print(abs(float(self.answers[i]) - float(answer[i])))
+                #print(abs(float(self.answers[i]) - float(answer[i])))
                 if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
                     correctList.append(False)
                 else:
                     correctList.append(True)
             except:
                 correctList.append(False)
-
-        print(correctList)
 
         return correctList
 
@@ -173,13 +178,20 @@ class AlgebraProblem2:
 
         self.question = []
         self.answers = []
-        
+
         self.problemDisplayType = "equations"
-        
-        self.generateProblem()
-        self.generateQuestionAndAnswer()
+
+        self.create()
 
         pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
 
     def equationBuilder(self, coefficient1, coefficient2, coefficient3, LHS):
         equationString = ""
@@ -281,22 +293,30 @@ class AlgebraProblem2:
         choice = random.randint(1,100)
         if (choice <= 24):
             self.question.append("Find x,y,z")
-            self.answerReceiver = ("textBox",2)
+            self.answerReceiver = ("textBox",3)
+            self.answers.append(self.answerX)
+            self.answers.append(self.answerY)
+            self.answers.append(self.answerZ)
         elif (choice <= 40):
             self.question.append("Find x+y+z")
-            self.answerReceiver = ("textBox",2)
+            self.answerReceiver = ("textBox",1)
+            self.answers.append(self.answerX+self.answerY+self.answerZ)
         elif (choice <= 56):
             self.question.append("Find x-y+z")
-            self.answerReceiver = ("textBox",2)
+            self.answerReceiver = ("textBox",1)
+            self.answers.append(self.answerX-self.answerY+self.answerZ)
         elif (choice <= 72):
             self.question.append("Find x+y-z")
-            self.answerReceiver = ("textBox",2) 
+            self.answerReceiver = ("textBox",1)
+            self.answers.append(self.answerX+self.answerY-self.answerZ) 
         elif (choice <= 88):
             self.question.append("Find -x+y+z")
-            self.answerReceiver = ("textBox",2)      
+            self.answerReceiver = ("textBox",1)      
+            self.answers.append(-1 * self.answerX+self.answerY+self.answerZ)
         else:
             self.question.append("Find xyz")
-            self.answerReceiver = ("textBox",2)
+            self.answerReceiver = ("textBox",1)
+            self.answers.append(self.answerX*self.answerY*self.answerZ)
 
     def getQuestion(self):
         return self.question
@@ -304,8 +324,19 @@ class AlgebraProblem2:
     def getAnswer(self):
         return self.answers
 
-    def checkCorrect(self):
-        pass
+    def checkCorrect(self, answer):
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                #print(abs(float(self.answers[i]) - float(answer[i])))
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        return correctList
 
     def display(self):
         pass

@@ -22,11 +22,23 @@ class ModProblem1:
     def generateProblem(self):
         pass
 
-    def generateQuestion(self):
+    def generateQuestionAndAnswer(self):
         pass
 
-    def checkCorrect(self):
-        pass
+        def checkCorrect(self, answer):
+        
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                #print(abs(float(self.answers[i]) - float(answer[i])))
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        return correctList
         
     def getQuestion(self):
         return self.question
@@ -46,10 +58,19 @@ class ModProblem1:
         self.question = []
         self.answers = []
         
-        self.generateProblem()
-        self.generateQuestion()
+        self.problemDisplayType = "equations"
+
+        self.create()
 
         pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
     
     def generateProblem(self):
 
@@ -67,14 +88,29 @@ class ModProblem1:
                 self.answer = i
         pass
 
-    def generateQuestion(self):
+    def generateQuestionAndAnswer(self):
         
         self.question.append(str(self.remainder1)+" (mod "+str(self.mod1)+")")
         self.question.append(str(self.remainder2)+" (mod "+str(self.mod2)+")")
         self.question.append("Find the smallest positive integer that is")
 
-    def checkCorrect(self):
-        pass
+        self.answerReceiver = ("textBox",1)
+        self.answers.append(self.answer)
+
+    def checkCorrect(self, answer):
+
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                #print(abs(float(self.answers[i]) - float(answer[i])))
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        return correctList
         
     def getQuestion(self):
         return self.question
@@ -93,10 +129,19 @@ class ModProblem2:
         self.question = []
         self.answers = []
         
-        self.generateProblem()
-        self.generateQuestion()
+        self.problemDisplayType = "equations"
+
+        self.create()
 
         pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
     
     def generateProblem(self):
 
@@ -110,12 +155,27 @@ class ModProblem2:
         self.answer = self.factor
         pass
 
-    def generateQuestion(self):
+    def generateQuestionAndAnswer(self):
         
         self.question.append("Find the gcd of " + str(self.factor*self.extra1) + " and " + str(self.factor*self.extra2))
 
-    def checkCorrect(self):
-        pass
+        self.answerReceiver = ("textBox",1)
+        self.answers.append(self.answer)
+
+    def checkCorrect(self, answer):
+
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                #print(abs(float(self.answers[i]) - float(answer[i])))
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        return correctList
         
     def getQuestion(self):
         return self.question
@@ -134,10 +194,19 @@ class ModProblem3:
         self.question = []
         self.answers = []
         
-        self.generateProblem()
-        self.generateQuestion()
+        self.problemDisplayType = "equations"
+
+        self.create()
 
         pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
     
     def generateProblem(self):
 
@@ -155,12 +224,27 @@ class ModProblem3:
         self.answer = self.factor
         pass
 
-    def generateQuestion(self):
+    def generateQuestionAndAnswer(self):
         
         self.question.append("Find the gcd of " + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", and " + str(self.factor*self.extra3))
 
-    def checkCorrect(self):
-        pass
+        self.answerReceiver = ("textBox",1)
+        self.answers.append(self.answer)
+
+    def checkCorrect(self, answer):
+
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                #print(abs(float(self.answers[i]) - float(answer[i])))
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+            
+        return correctList
         
     def getQuestion(self):
         return self.question
@@ -178,10 +262,19 @@ class ModProblem4:
         self.question = []
         self.answers = []
         
-        self.generateProblem()
-        self.generateQuestion()
+        self.problemDisplayType = "equations"
+
+        self.create()
 
         pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
     
     def generateProblem(self):
 
@@ -195,12 +288,27 @@ class ModProblem4:
         self.answer = self.factor * self.extra1 * self.extra2
         pass
 
-    def generateQuestion(self):
+    def generateQuestionAndAnswer(self):
         
         self.question.append("Find the lcm of " + str(self.factor*self.extra1) + " and " + str(self.factor*self.extra2))
 
-    def checkCorrect(self):
-        pass
+        self.answerReceiver = ("textBox",1)
+        self.answers.append(self.answer)
+
+    def checkCorrect(self, answer):
+
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                #print(abs(float(self.answers[i]) - float(answer[i])))
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        return correctList
         
     def getQuestion(self):
         return self.question
@@ -219,10 +327,19 @@ class ModProblem3:
         self.question = []
         self.answers = []
         
-        self.generateProblem()
-        self.generateQuestion()
+        self.problemDisplayType = "equations"
+
+        self.create()
 
         pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
     
     def generateProblem(self):
 
@@ -240,12 +357,26 @@ class ModProblem3:
         self.answer = self.factor
         pass
 
-    def generateQuestion(self):
+    def generateQuestionAndAnswer(self):
         
         self.question.append("Find the gcd of " + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", and " + str(self.factor*self.extra3))
 
-    def checkCorrect(self):
-        pass
+        self.answerReceiver = ("textBox",1)
+        self.answers.append(self.answer)
+
+    def checkCorrect(self, answer):
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                #print(abs(float(self.answers[i]) - float(answer[i])))
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        return correctList
         
     def getQuestion(self):
         return self.question
@@ -264,10 +395,19 @@ class ModProblem5:
         self.question = []
         self.answers = []
         
-        self.generateProblem()
-        self.generateQuestion()
+        self.problemDisplayType = "equations"
+
+        self.create()
 
         pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
     
     def generateProblem(self):
 
@@ -285,7 +425,7 @@ class ModProblem5:
         self.answer = self.factor * self.extra1 * self.extra2 * self.extra3
         pass
 
-    def generateQuestion(self):
+    def generateQuestionAndAnswer(self):
         
         choice = random.randint(1,3)
         if (choice == 1):
@@ -293,10 +433,25 @@ class ModProblem5:
         elif (choice == 2):
             self.question.append("Find the least common multiple of " + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", and " + str(self.factor*self.extra3))
         else:
-            self.question.append("Compute lcm(" + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", " + str(self.factor*self.extra3))
+            self.question.append("Compute lcm(" + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", " + str(self.factor*self.extra3)+ ")")
 
-    def checkCorrect(self):
-        pass
+        self.answerReceiver = ("textBox",1)
+        self.answers.append(self.answer)
+
+    def checkCorrect(self, answer):
+        
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                #print(abs(float(self.answers[i]) - float(answer[i])))
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        return correctList
         
     def getQuestion(self):
         return self.question
@@ -309,4 +464,4 @@ class ModProblem5:
 
 problemList = [ModProblem1(), ModProblem2(), ModProblem3(), ModProblem4(), ModProblem5()]
 
-print(problemList[4].getQuestion())
+#print(problemList[4].getQuestion())

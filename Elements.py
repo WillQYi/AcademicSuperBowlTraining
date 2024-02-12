@@ -65,6 +65,19 @@ class TextDrawer:
             print(textTuple)
         return self.Texts
     
+    def findSizeOfTextRect(self, string, size, font):
+
+        testFont = pygame.font.SysFont(font, size)
+
+        text = testFont.render(string, True, (0,0,0))
+        textRect = text.get_rect()
+
+        print(textRect.size)
+        print(string)
+        print("-----")
+
+        return textRect.size[0]
+
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
@@ -498,9 +511,19 @@ class problemController():
 
         del self.inputElements[:]
 
+        font = 40
+
         if (type[0] == "textBox"):
             if (type[1] == 1):
-                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 0, "cY-88", 700, 50, "Type Answer")
+                text = "Answer: "
+                lengthFirstText = self.TextDrawer.findSizeOfTextRect(text, font, "ariel")
+                self.TextDrawer.add(text, 50 + lengthFirstText/2, "2*cY-88", font, self.color, "ariel")
+                currEnd = 50 + lengthFirstText
+                lengthTextbox = 2 * self.center_X - 250 - lengthFirstText
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, str(lengthTextbox/2)+"-cX+"+str(currEnd), "cY-88", lengthTextbox, 50, "Type Answer")
+                print(str(lengthTextbox/2)+"-cX+"+str(currEnd))
+                print(self.center_X)
+                print(Expressions.locationOperationValue((str(lengthTextbox/2)+"-cX+"+str(currEnd)),self.center_X,self.center_Y))
                 self.inputElements.append(self.textBox1)
             elif (type[1] == 2):
                 self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 250, "cY-88", 400, 50, "Type Answer")

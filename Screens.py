@@ -3,6 +3,7 @@ import Elements
 import random
 import AlgebraProblems
 import ModProblems
+import Expressions
 
 eventDict = {4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted", 6901: "newProblem"}
 
@@ -262,6 +263,12 @@ class algebraScreen:
 
         self.checkButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "text", "Submit", 30, center_X, center_Y, 6900, True)
         self.nextButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "image", "arrowButton.png", 0.3, center_X, center_Y, 6901, True)
+
+        '''
+        length = Expressions.locationOperationValue("2*cX-250",self.center_X,self.center_Y)
+        self.lookButton = Elements.Button(self.screen, str(length/2)+"+50-cX", "cY-88", length, 68, ((0,0,0),(0,0,0),(0,0,0)), 10, 0, "text", "", 30, self.center_X, self.center_Y, 12341923874, True)
+        self.Elements.append(self.lookButton)
+        '''
 
         self.Elements.append(self.checkButton)
         self.Interactive.append(self.checkButton)

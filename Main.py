@@ -23,8 +23,14 @@ while running:
 
         #Window size is changed
         if event.type == 32778:
-            center_X = pygame.display.get_window_size()[0]/2
-            center_Y = pygame.display.get_window_size()[1]/2
+            if (pygame.display.get_window_size()[0] < 1280):
+                center_X = 640
+            else:
+                center_X = pygame.display.get_window_size()[0]/2
+            if (pygame.display.get_window_size()[1] < 720):
+                center_Y = 360
+            else:
+                center_Y = pygame.display.get_window_size()[1]/2
             currScreen.recenter(center_X,center_Y)
 
         if event.type == pygame.MOUSEBUTTONUP:

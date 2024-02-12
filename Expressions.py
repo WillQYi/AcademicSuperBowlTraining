@@ -187,4 +187,4 @@ def locationOperationFormatter(string, center_X, center_Y):
     return formatList
 
 #Testing
-#print(locationOperationValue("5*5+10/cY + 100 -3^5", 500, 300))
+#print(locationOperationValue("454.5+cX+171", 500, 300))

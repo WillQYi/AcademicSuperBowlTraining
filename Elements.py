@@ -72,10 +72,6 @@ class TextDrawer:
         text = testFont.render(string, True, (0,0,0))
         textRect = text.get_rect()
 
-        print(textRect.size)
-        print(string)
-        print("-----")
-
         return textRect.size[0]
 
     def recenter(self, center_X, center_Y):
@@ -500,7 +496,7 @@ class problemController():
                 for i in range(len(question)-1):
                     self.TextDrawer.add(question[i], "cX", "cY+" + str(topHieght+spacing*i), 60, self.color, "ariel")
 
-                self.TextDrawer.add(question[len(question)-1], 120+(len(question[len(question)-1])/2)*25, 175, 60, self.color, "ariel")
+                self.TextDrawer.add(question[len(question)-1], 120+(self.TextDrawer.findSizeOfTextRect(question[len(question)-1], 60, "ariel"))/2, 175, 60, self.color, "ariel")
             
             else:
                 self.TextDrawer.add(question[0], "cX", "cY", 60, self.color, "ariel")
@@ -515,25 +511,92 @@ class problemController():
 
         if (type[0] == "textBox"):
             if (type[1] == 1):
-                text = "Answer: "
+                text = self.problem.inputTexts[0]
+
+                currEnd  = 50
                 lengthFirstText = self.TextDrawer.findSizeOfTextRect(text, font, "ariel")
-                self.TextDrawer.add(text, 50 + lengthFirstText/2, "2*cY-88", font, self.color, "ariel")
-                currEnd = 50 + lengthFirstText
-                lengthTextbox = 2 * self.center_X - 250 - lengthFirstText
-                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, str(lengthTextbox/2)+"-cX+"+str(currEnd), "cY-88", lengthTextbox, 50, "Type Answer")
-                print(str(lengthTextbox/2)+"-cX+"+str(currEnd))
-                print(self.center_X)
-                print(Expressions.locationOperationValue((str(lengthTextbox/2)+"-cX+"+str(currEnd)),self.center_X,self.center_Y))
+                self.TextDrawer.add(text, currEnd + lengthFirstText/2, "2*cY-88", font, self.color, "ariel")
+                currEnd += lengthFirstText
+                currEnd += 30 #Spacer between outside text and textbox
+
+                lengthTextbox = 2 * self.center_X - 250 - lengthFirstText - 30 #Accounting for difference
+
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
                 self.inputElements.append(self.textBox1)
+
             elif (type[1] == 2):
-                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 250, "cY-88", 400, 50, "Type Answer")
-                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, -250, "cY-88", 400, 50, "Type Answer")
+                
+                #Finding sizes
+                currEnd = 50
+                text1 = text = self.problem.inputTexts[0]
+                lengthFirstText = self.TextDrawer.findSizeOfTextRect(text1, font, "ariel")
+
+                text2 = text = self.problem.inputTexts[1]
+                lengthSecondText = self.TextDrawer.findSizeOfTextRect(text2, font, "ariel")
+
+                lengthTextbox = (2 * self.center_X - 250 - lengthFirstText - lengthSecondText - 20*2 - 50)/2
+
+                #Drawing texts and boxes
+                self.TextDrawer.add(text1, currEnd + lengthFirstText/2, "2*cY-88", font, self.color, "ariel")
+
+                currEnd += lengthFirstText
+                currEnd += 20
+
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
+
+                currEnd += lengthTextbox
+                currEnd += 50
+
+                self.TextDrawer.add(text2, currEnd + lengthSecondText/2, "2*cY-88", font, self.color, "ariel")
+
+                currEnd += lengthSecondText
+                currEnd += 20
+
+                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
                 self.inputElements.append(self.textBox1)
                 self.inputElements.append(self.textBox2)
             elif (type[1] == 3):
-                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 400, "cY-88", 300, 50, "Type Answer")
-                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, 0, "cY-88", 300, 50, "Type Answer")
-                self.textBox3 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, -400, "cY-88", 300, 50, "Type Answer")
+
+                #Finding sizes
+                currEnd = 50
+                text1 = text = self.problem.inputTexts[0]
+                lengthFirstText = self.TextDrawer.findSizeOfTextRect(text1, font, "ariel")
+
+                text2 = text = self.problem.inputTexts[1]
+                lengthSecondText = self.TextDrawer.findSizeOfTextRect(text2, font, "ariel")
+
+                text3 = text = self.problem.inputTexts[2]
+                lengthThirdText = self.TextDrawer.findSizeOfTextRect(text3, font, "ariel")
+
+                lengthTextbox = (2 * self.center_X - 250 - lengthFirstText - lengthSecondText - lengthThirdText - 20*3 - 50*2)/3
+
+                #Drawing texts and boxes
+                self.TextDrawer.add(text1, currEnd + lengthFirstText/2, "2*cY-88", font, self.color, "ariel")
+
+                currEnd += lengthFirstText
+                currEnd += 20
+
+                self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
+
+                currEnd += lengthTextbox
+                currEnd += 50
+
+                self.TextDrawer.add(text2, currEnd + lengthSecondText/2, "2*cY-88", font, self.color, "ariel")
+
+                currEnd += lengthSecondText
+                currEnd += 20
+
+                self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
+                
+                currEnd += lengthTextbox
+                currEnd += 50
+
+                self.TextDrawer.add(text3, currEnd + lengthThirdText/2, "2*cY-88", font, self.color, "ariel")
+
+                currEnd += lengthThirdText
+                currEnd += 20
+
+                self.textBox3 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
 
                 self.inputElements.append(self.textBox1)
                 self.inputElements.append(self.textBox2)

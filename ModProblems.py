@@ -57,6 +57,7 @@ class ModProblem1:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
         
         self.problemDisplayType = "equations"
 
@@ -68,6 +69,7 @@ class ModProblem1:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
 
         self.generateProblem()
         self.generateQuestionAndAnswer()
@@ -96,6 +98,7 @@ class ModProblem1:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
+        self.inputTexts.append("Answer:")
 
     def checkCorrect(self, answer):
 
@@ -128,6 +131,7 @@ class ModProblem2:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
         
         self.problemDisplayType = "equations"
 
@@ -139,6 +143,7 @@ class ModProblem2:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
 
         self.generateProblem()
         self.generateQuestionAndAnswer()
@@ -161,6 +166,7 @@ class ModProblem2:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
+        self.inputTexts.append("Answer:")
 
     def checkCorrect(self, answer):
 
@@ -193,6 +199,7 @@ class ModProblem3:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
         
         self.problemDisplayType = "equations"
 
@@ -204,6 +211,7 @@ class ModProblem3:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
 
         self.generateProblem()
         self.generateQuestionAndAnswer()
@@ -230,6 +238,7 @@ class ModProblem3:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
+        self.inputTexts.append("Answer:")
 
     def checkCorrect(self, answer):
 
@@ -261,6 +270,7 @@ class ModProblem4:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
         
         self.problemDisplayType = "equations"
 
@@ -272,6 +282,7 @@ class ModProblem4:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
 
         self.generateProblem()
         self.generateQuestionAndAnswer()
@@ -294,6 +305,7 @@ class ModProblem4:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
+        self.inputTexts.append("Answer:")
 
     def checkCorrect(self, answer):
 
@@ -326,6 +338,7 @@ class ModProblem3:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
         
         self.problemDisplayType = "equations"
 
@@ -337,6 +350,7 @@ class ModProblem3:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
 
         self.generateProblem()
         self.generateQuestionAndAnswer()
@@ -363,6 +377,7 @@ class ModProblem3:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
+        self.inputTexts.append("Answer:")
 
     def checkCorrect(self, answer):
         correctList = []
@@ -394,6 +409,7 @@ class ModProblem5:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
         
         self.problemDisplayType = "equations"
 
@@ -405,6 +421,7 @@ class ModProblem5:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
 
         self.generateProblem()
         self.generateQuestionAndAnswer()
@@ -437,6 +454,7 @@ class ModProblem5:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
+        self.inputTexts.append("Answer:")
 
     def checkCorrect(self, answer):
         

@@ -11,6 +11,7 @@ class AlgebraProblem1:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
         
         self.generateProblem()
         self.generateQuestionAndAnswer()
@@ -24,6 +25,7 @@ class AlgebraProblem1:
     
         self.answers = []
         self.question = []
+        self.inputTexts = []
 
         pass
 
@@ -47,6 +49,7 @@ class AlgebraProblem1:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
 
         self.problemDisplayType = "equations"
 
@@ -58,6 +61,7 @@ class AlgebraProblem1:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
 
         self.generateProblem()
         self.generateQuestionAndAnswer()
@@ -128,6 +132,7 @@ class AlgebraProblem1:
     def generateQuestionAndAnswer(self):
 
         self.answers = []
+        self.inputTexts = []
 
         choice = random.randint(1,100)
         if (choice <= 25):
@@ -135,18 +140,23 @@ class AlgebraProblem1:
             self.answerReceiver = ("textBox",2)
             self.answers.append(self.answerX)
             self.answers.append(self.answerY)
+            self.inputTexts.append("x:")
+            self.inputTexts.append("y:")
         elif (choice <= 50):
             self.question.append("Find x+y")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX+self.answerY)
+            self.inputTexts.append("Answer:")
         elif (choice <= 75):
             self.question.append("Find x-y")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX-self.answerY)
+            self.inputTexts.append("Answer:")
         else:
             self.question.append("Find xy")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX*self.answerY)
+            self.inputTexts.append("Answer:")
 
         return self.question
     
@@ -177,6 +187,7 @@ class AlgebraProblem2:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
 
         self.problemDisplayType = "equations"
 
@@ -188,6 +199,7 @@ class AlgebraProblem2:
 
         self.question = []
         self.answers = []
+        self.inputTexts = []
 
         self.generateProblem()
         self.generateQuestionAndAnswer()
@@ -288,6 +300,7 @@ class AlgebraProblem2:
     def generateQuestionAndAnswer(self):
 
         self.answers = []
+        self.inputTexts = []
 
         choice = random.randint(1,100)
         if (choice <= 24):
@@ -296,26 +309,34 @@ class AlgebraProblem2:
             self.answers.append(self.answerX)
             self.answers.append(self.answerY)
             self.answers.append(self.answerZ)
+            self.inputTexts.append("x:")
+            self.inputTexts.append("y:")
+            self.inputTexts.append("z:")
         elif (choice <= 40):
             self.question.append("Find x+y+z")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX+self.answerY+self.answerZ)
+            self.inputTexts.append("Answer:")
         elif (choice <= 56):
             self.question.append("Find x-y+z")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX-self.answerY+self.answerZ)
+            self.inputTexts.append("Answer:")
         elif (choice <= 72):
             self.question.append("Find x+y-z")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX+self.answerY-self.answerZ) 
+            self.inputTexts.append("Answer:")
         elif (choice <= 88):
             self.question.append("Find -x+y+z")
             self.answerReceiver = ("textBox",1)      
             self.answers.append(-1 * self.answerX+self.answerY+self.answerZ)
+            self.inputTexts.append("Answer:")
         else:
             self.question.append("Find xyz")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX*self.answerY*self.answerZ)
+            self.inputTexts.append("Answer:")
 
     def getQuestion(self):
         return self.question

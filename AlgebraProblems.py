@@ -51,7 +51,7 @@ class AlgebraProblem1:
         self.answers = []
         self.inputTexts = []
 
-        self.problemDisplayType = "equations"
+        self.problemDisplayType = "lines"
 
         self.create()
 
@@ -189,7 +189,7 @@ class AlgebraProblem2:
         self.answers = []
         self.inputTexts = []
 
-        self.problemDisplayType = "equations"
+        self.problemDisplayType = "lines"
 
         self.create()
 

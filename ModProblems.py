@@ -59,7 +59,7 @@ class ModProblem1:
         self.answers = []
         self.inputTexts = []
         
-        self.problemDisplayType = "equations"
+        self.problemDisplayType = "lines"
 
         self.create()
 
@@ -133,7 +133,7 @@ class ModProblem2:
         self.answers = []
         self.inputTexts = []
         
-        self.problemDisplayType = "equations"
+        self.problemDisplayType = "lines"
 
         self.create()
 
@@ -201,7 +201,7 @@ class ModProblem3:
         self.answers = []
         self.inputTexts = []
         
-        self.problemDisplayType = "equations"
+        self.problemDisplayType = "lines"
 
         self.create()
 
@@ -272,7 +272,7 @@ class ModProblem4:
         self.answers = []
         self.inputTexts = []
         
-        self.problemDisplayType = "equations"
+        self.problemDisplayType = "lines"
 
         self.create()
 
@@ -340,7 +340,7 @@ class ModProblem3:
         self.answers = []
         self.inputTexts = []
         
-        self.problemDisplayType = "equations"
+        self.problemDisplayType = "lines"
 
         self.create()
 
@@ -411,7 +411,7 @@ class ModProblem5:
         self.answers = []
         self.inputTexts = []
         
-        self.problemDisplayType = "equations"
+        self.problemDisplayType = "lines"
 
         self.create()
 

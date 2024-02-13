@@ -485,7 +485,7 @@ class problemController():
 
         self.questionDisplayType = type
 
-        if (type == "equations"):
+        if (type == "lines"):
 
             if (len(question) > 1):
 
@@ -611,12 +611,16 @@ class problemController():
             self.answer.append(textbox.inputtedText)
         self.answer.reverse()
         self.correctList = self.problem.checkCorrect(self.answer)
-        for i in range(len(self.correctList)):
-            (self.inputElements[i]).submit(self.correctList[i])
+        if (type(self.correctList) == bool):
+            for i in range(len(self.inputElements)):
+                (self.inputElements[i]).submit(self.correctList)
+        else:
+            for i in range(len(self.correctList)):
+                (self.inputElements[i]).submit(self.correctList[i])
         pass
     
     def draw(self):
-        if (self.questionDisplayType == "equations"):
+        if (self.questionDisplayType == "lines"):
             self.TextDrawer.draw()
 
         for element in self.inputElements:

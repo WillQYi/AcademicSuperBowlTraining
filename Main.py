@@ -75,6 +75,9 @@ while running:
             elif Screens.eventDict[event.type] == "mod":
                 currScreen = Screens.modScreen(screen, center_X, center_Y)
                 continue
+            elif Screens.eventDict[event.type] == "dooms":
+                currScreen = Screens.doomScreen(screen, center_X, center_Y)
+                continue
 
         if event.type >= 6900 and event.type <= 7000:
             if (Screens.eventDict[event.type] == "answerInputted"):

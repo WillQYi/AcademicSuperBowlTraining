@@ -6,7 +6,7 @@ import ModProblems
 import DoomProblems
 import Expressions
 
-eventDict = {4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted", 6901: "newProblem"}
+eventDict = {3799: "popUpExit", 3800: "popUpInPractice", 3801: "checkExit", 3802: "popUpSettings", 4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted", 6901: "newProblem"}
 
 class testScreen:
 
@@ -257,7 +257,7 @@ class algebraScreen:
 
         buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
 
-        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 4201, True)
+        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 3800, True)
 
         self.Elements.append(menuButton)
         self.Interactive.append(menuButton)
@@ -347,7 +347,7 @@ class modScreen:
         self.titleTextSize = 50
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
-        self.textDrawer.add("Modular Arithemtic Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+        self.textDrawer.add("Modular Arithmetic Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
 
         self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 95, 7, self.colors["darkBlue"])
         self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, "2*cY-175", 7, self.colors["darkBlue"])

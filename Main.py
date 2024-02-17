@@ -1,6 +1,7 @@
 import pygame
 import Elements
 import Screens
+import PopUp
 
 pygame.init()
 screen = pygame.display.set_mode((1280,720),pygame.RESIZABLE)
@@ -11,8 +12,10 @@ Buttons = []
 center_X = 640
 center_Y = 360
 currScreen = Screens.homescreen(screen, center_X, center_Y)
+popUp = PopUp.popUpInPracticeMenu(screen, center_X, center_Y)
 
 tabDown = False
+popUpActive = False
 
 while running:
     #Checks for user interactions
@@ -59,6 +62,14 @@ while running:
                 tabDown = False
 
         #Custom events
+                
+        if event.type >= 3700 and event.type <= 3900:
+            popUpActive = True
+            if (Screens.eventDict[event.type] == "popUpExit"):
+                popUpActive = False
+            elif (Screens.eventDict[event.type] == "popUpInPractice"):
+                popUp = PopUp.popUpInPracticeMenu(screen, center_X, center_Y)
+
         if event.type >= 4100 and event.type <= 4300:
             if Screens.eventDict[event.type] == "home":
                 currScreen = Screens.homescreen(screen, center_X, center_Y)
@@ -92,6 +103,8 @@ while running:
     screen.fill((230,230,230))
     
     currScreen.run()
+    if (popUpActive):
+        popUp.draw()
 
     pygame.display.flip()
 

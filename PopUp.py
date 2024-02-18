@@ -40,19 +40,22 @@ class popUpInPracticeMenu:
 
         self.Elements = []
 
+        self.screenShader = Elements.screenShader(screen, center_X, center_Y)
+        self.Elements.append(self.screenShader)
+
         self.popUpRect = popUpRect(screen, center_X, center_Y, self.colors, 400, 400)
         self.Elements.append(self.popUpRect)
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
         self.Elements.append(self.popUpRect)
         
-        self.textDrawer.add("Menu", "cX", "cy-140", 50, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Menu", "cX", "cy-155", 50, self.colors["darkBlue"],"ariel")
         self.Elements.append(self.textDrawer)
 
         buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
 
-        self.exitButton = Elements.Button(screen, 75, 125, 100, 50, buttonColor, 6, 10, "text", "Exit", 30, center_X, center_Y, 3800, True)
-        self.returnButton = Elements.Button(screen, -75, 125, 100, 50, buttonColor, 6, 10, "text", "Done", 30, center_X, center_Y, 3800, True)
+        self.exitButton = Elements.Button(screen, 75, 150, 100, 50, buttonColor, 6, 10, "text", "Exit", 30, center_X, center_Y, 4201, True)
+        self.returnButton = Elements.Button(screen, -75, 150, 100, 50, buttonColor, 6, 10, "text", "Done", 30, center_X, center_Y, 3799, True)
 
         self.Elements.append(self.exitButton)
         self.Elements.append(self.returnButton)
@@ -66,11 +69,8 @@ class popUpInPracticeMenu:
         for element in self.Elements:
             element.draw()
 
-    def interacted(self):
-        pass
-
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
-        for element in Elements:
-            element.recenter()
+        for element in self.Elements:
+            element.recenter(center_X,center_Y)

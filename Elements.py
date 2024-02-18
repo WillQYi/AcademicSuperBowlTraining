@@ -449,6 +449,11 @@ class problemNumberBox:
         pygame.draw.rect(self.screen, self.color, self.boxOutlineRect, 7, 0)
         self.label.draw()
 
+    def changeNumber(self, number):
+
+        self.label = Elements.Label(self.screen, 30, "text", self.X+self.sizeX/2, self.Y+self.sizeY/2, str(number), self.color, 'ariel')
+
+
     def recenter(self, X, Y):
         self.X = X
         self.Y = Y
@@ -633,3 +638,25 @@ class problemController():
 
         for element in self.inputElements:
             element.recenter(center_X, center_Y)
+
+class screenShader:
+
+    def __init__(self, screen, center_X, center_Y):
+
+        self.screen = screen
+
+        self.surface = pygame.Surface((2*center_X,2*center_Y), pygame.SRCALPHA)
+
+        self.rect = pygame.Rect(0,0,2*center_X,2*center_Y)
+
+    def draw(self):
+
+        self.screen.blit(self.surface, (0,0))
+        pygame.draw.rect(self.surface, (0,0,0,50), self.rect, 0, 0)
+
+    def recenter(self, center_X, center_Y):
+        self.center_X = center_X
+        self.center_Y = center_Y
+
+    def clicked(self):
+        pass

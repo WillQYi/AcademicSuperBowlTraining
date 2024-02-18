@@ -4,7 +4,7 @@ import Screens
 import PopUp
 
 pygame.init()
-screen = pygame.display.set_mode((1280,720),pygame.RESIZABLE)
+screen = pygame.display.set_mode((1280,720), pygame.RESIZABLE)
 clock = pygame.time.Clock()
 running = True
 Buttons = []
@@ -35,11 +35,16 @@ while running:
             else:
                 center_Y = pygame.display.get_window_size()[1]/2
             currScreen.recenter(center_X,center_Y)
+            popUp.recenter(center_X, center_Y)
 
         if event.type == pygame.MOUSEBUTTONUP:
             mousePos = pygame.mouse.get_pos()
-            for Button in currScreen.Interactive:
-                Button.clicked(mousePos)
+            for interactive in currScreen.Interactive:
+                interactive.clicked(mousePos)
+            if (popUpActive):
+                for interactive in popUp.Interactive:
+                    interactive.clicked(mousePos)
+
 
         if event.type == pygame.KEYDOWN:
             for textbox in currScreen.InteractiveText:
@@ -71,6 +76,7 @@ while running:
                 popUp = PopUp.popUpInPracticeMenu(screen, center_X, center_Y)
 
         if event.type >= 4100 and event.type <= 4300:
+            popUpActive = False
             if Screens.eventDict[event.type] == "home":
                 currScreen = Screens.homescreen(screen, center_X, center_Y)
                 continue
@@ -99,7 +105,7 @@ while running:
 
 
     #print("-----------")   
-
+            
     screen.fill((230,230,230))
     
     currScreen.run()

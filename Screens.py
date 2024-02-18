@@ -12,6 +12,8 @@ class testScreen:
 
     def __init__(self, screen, center_X, center_Y):
 
+        self.screen = screen
+
         self.Elements = []
         self.Interactive = []
         self.InteractiveText = []
@@ -19,19 +21,29 @@ class testScreen:
         self.center_X = center_X
         self.center_Y = center_Y
 
+        self.rect = pygame.Rect(0,0,2*center_X,2*center_Y)
+
+        self.surface = pygame.Surface((2*center_X,2*center_Y), pygame.SRCALPHA)
+
     def run(self):
         self.draw()
 
     def draw(self):
+        self.screen.blit(self.surface, (0,0))
+        pygame.draw.rect(self.surface, (0,0,0,50), self.rect, 0, 0)
+        '''
         for element in self.Elements:
             element.draw()
+        '''
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
+        '''
         self.textDrawer.recenter(center_X, center_Y)
         for Elements in self.Elements:
             Elements.recenter(center_X, center_Y)
+        '''
 
 class homescreen:
 
@@ -249,7 +261,7 @@ class algebraScreen:
 
         self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 95, 7, self.colors["darkBlue"])
         self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, "2*cY-175", 7, self.colors["darkBlue"])
-        self.problemNumberBox = Elements.problemNumberBox(screen, 25, 140, 60, 60, str(self.problemsDone+1), self.colors["darkBlue"])
+        self.problemNumberBox = Elements.problemNumberBox(screen, 25, 140, 60, 60, str(self.problemsDone), self.colors["darkBlue"])
 
         self.problemController = Elements.problemController(screen, self.center_X, self.center_Y, self.colors["darkBlue"])
         self.loadProblem()
@@ -264,12 +276,6 @@ class algebraScreen:
 
         self.checkButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "text", "Submit", 30, center_X, center_Y, 6900, True)
         self.nextButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "image", "arrowButton.png", 0.3, center_X, center_Y, 6901, True)
-
-        '''
-        length = Expressions.locationOperationValue("2*cX-250",self.center_X,self.center_Y)
-        self.lookButton = Elements.Button(self.screen, str(length/2)+"+50-cX", "cY-88", length, 68, ((0,0,0),(0,0,0),(0,0,0)), 10, 0, "text", "", 30, self.center_X, self.center_Y, 12341923874, True)
-        self.Elements.append(self.lookButton)
-        '''
 
         self.Elements.append(self.checkButton)
         self.Interactive.append(self.checkButton)
@@ -289,6 +295,9 @@ class algebraScreen:
             element.draw()
 
     def loadProblem(self):
+
+        self.problemsDone += 1
+        self.problemNumberBox.changeNumber(self.problemsDone)
         
         try:
             for textbox in self.problemController.inputElements:
@@ -359,7 +368,7 @@ class modScreen:
 
         buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
 
-        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 4201, True)
+        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 3800, True)
 
         self.Elements.append(menuButton)
         self.Interactive.append(menuButton)
@@ -385,6 +394,9 @@ class modScreen:
             element.draw()
 
     def loadProblem(self):
+
+        self.problemsDone += 1
+        self.problemNumberBox.changeNumber(self.problemsDone)
         
         try:
             for textbox in self.problemController.inputElements:
@@ -455,7 +467,7 @@ class doomScreen:
 
         buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
 
-        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 4201, True)
+        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 3800, True)
 
         self.Elements.append(menuButton)
         self.Interactive.append(menuButton)
@@ -481,6 +493,9 @@ class doomScreen:
             element.draw()
 
     def loadProblem(self):
+
+        self.problemsDone += 1
+        self.problemNumberBox.changeNumber(self.problemsDone)
         
         try:
             for textbox in self.problemController.inputElements:

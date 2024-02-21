@@ -45,7 +45,6 @@ while running:
                 for interactive in popUp.Interactive:
                     interactive.clicked(mousePos)
 
-
         if event.type == pygame.KEYDOWN:
             for textbox in currScreen.InteractiveText:
                 if (textbox.isActive):
@@ -67,14 +66,18 @@ while running:
                 tabDown = False
 
         #Custom events
-                
+            
+        #Pop Ups
         if event.type >= 3700 and event.type <= 3900:
             popUpActive = True
             if (Screens.eventDict[event.type] == "popUpExit"):
                 popUpActive = False
             elif (Screens.eventDict[event.type] == "popUpInPractice"):
                 popUp = PopUp.popUpInPracticeMenu(screen, center_X, center_Y)
+            elif (Screens.eventDict[event.type] == "popUpSettings"):
+                popUp = PopUp.popUpSettings(screen, center_X, center_Y)
 
+        #Screens
         if event.type >= 4100 and event.type <= 4300:
             popUpActive = False
             if Screens.eventDict[event.type] == "home":

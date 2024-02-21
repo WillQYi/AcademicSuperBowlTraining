@@ -21,29 +21,24 @@ class testScreen:
         self.center_X = center_X
         self.center_Y = center_Y
 
-        self.rect = pygame.Rect(0,0,2*center_X,2*center_Y)
-
-        self.surface = pygame.Surface((2*center_X,2*center_Y), pygame.SRCALPHA)
+        self.switch = Elements.switch(screen, 200, 200, center_X, center_Y, 70, True, "test", Elements.colors, True)
+        self.Elements.append(self.switch)
 
     def run(self):
         self.draw()
 
     def draw(self):
-        self.screen.blit(self.surface, (0,0))
-        pygame.draw.rect(self.surface, (0,0,0,50), self.rect, 0, 0)
-        '''
+        
         for element in self.Elements:
             element.draw()
-        '''
+        
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
-        '''
-        self.textDrawer.recenter(center_X, center_Y)
         for Elements in self.Elements:
             Elements.recenter(center_X, center_Y)
-        '''
+        
 
 class homescreen:
 
@@ -172,7 +167,7 @@ class practiceSelectScreen:
         
         #Utility Button Sizes
         homeButton = Elements.Button(screen, "cX-100", "100-cY", 100, 100, buttonColor, 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
-        settingsButton = Elements.Button(screen, "cX-100", "cY-100", 100, 100, buttonColor, 8, 10, "image", "settingsButton.png", 0.9, center_X, center_Y, 4200, False)
+        settingsButton = Elements.Button(screen, "cX-100", "cY-100", 100, 100, buttonColor, 8, 10, "image", "settingsButton.png", 0.9, center_X, center_Y, 3802, True)
         statsButton = Elements.Button(screen, "100-cX", "cY-100", 100, 100, buttonColor, 8, 10, "image", "statsButton.png", 0.9, center_X, center_Y, 4200, False)
 
         #Practice Button Sizes

@@ -29,6 +29,8 @@ class Element:
         self.center_Y = Y
 '''
 
+colors = {"darkBlue":(53, 63, 112), "screenGrey": (230,230,230)}
+
 class TextDrawer:
 
     def __init__(self, screen, center_X, center_Y):
@@ -641,13 +643,17 @@ class problemController():
 
 class screenShader:
 
-    def __init__(self, screen, center_X, center_Y):
+    def __init__(self, screen, center_X, center_Y, event, popUpRect):
 
         self.screen = screen
 
         self.surface = pygame.Surface((2*center_X,2*center_Y), pygame.SRCALPHA)
 
         self.rect = pygame.Rect(0,0,2*center_X,2*center_Y)
+        
+        self.event = event
+
+        self.popUpRect = popUpRect
 
     def draw(self):
 
@@ -657,6 +663,62 @@ class screenShader:
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
+        self.surface = pygame.Surface((2*center_X,2*center_Y), pygame.SRCALPHA)
+        self.rect = pygame.Rect(0,0,2*center_X,2*center_Y)
 
-    def clicked(self):
-        pass
+    def clicked(self, mousePos):
+        if (self.rect.collidepoint(mousePos) and not self.popUpRect.collidepoint(mousePos)):
+            CUSTOMEVENT = pygame.event.Event(self.event)
+            pygame.event.post(CUSTOMEVENT)
+            return True
+        else:
+            return False
+        
+class switch:
+
+    def __init__(self, screen, X, Y, center_X, center_Y, size, state, text, colors, working):
+        
+        self.screen = screen
+
+        self.center_X = center_X
+        self.center_Y = center_Y
+
+        self.X = X
+        self.Y = Y
+
+        self.size = size
+
+        xOp = Expressions.locationOperationValue(self.X, center_X, center_Y)
+        yOp = Expressions.locationOperationValue(self.Y, center_X, center_Y)
+
+        self.backRect = pygame.Rect(xOp-self.size, yOp-self.size/2, 2*self.size, self.size)
+
+        self.moveRect = pygame.Rect(xOp-3, yOp-self.size/2, self.size+1, self.size)
+
+        self.isOn = state
+
+        self.text = text
+
+        self.colors = colors
+
+        self.working = working
+
+        self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
+
+        self.textDrawer.add("ON", xOp-self.size/2+5, yOp, 20, (200,200,200), "ariel")
+
+        self.textDrawer.add("OFF", xOp+self.size/2-5, yOp, 20, (100,100,100), "ariel")
+
+
+    def draw(self):
+        pygame.draw.rect(self.screen, (255,255,255), self.backRect, 0, 10)
+        pygame.draw.rect(self.screen, (175,175,175), self.moveRect, 0, 10)
+        pygame.draw.rect(self.screen, self.colors["darkBlue"], self.moveRect, 7, 10)
+        pygame.draw.rect(self.screen, self.colors["darkBlue"], self.backRect, 7, 10)
+        self.textDrawer.draw()
+
+    def recenter(self, center_X, center_Y):
+        self.center_X = center_X
+        self.center_Y = center_Y
+        xOp = Expressions.locationOperationValue(self.X, center_X, center_Y)
+        yOp = Expressions.locationOperationValue(self.Y, center_X, center_Y)

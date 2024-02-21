@@ -27,6 +27,9 @@ class popUpRect:
         self.center_Y = center_Y
         self.rect = pygame.Rect(center_X-self.sizeX/2, center_Y-self.sizeY/2, self.sizeX, self.sizeY)
 
+    def getRect(self):
+        return self.rect
+
 class popUpInPracticeMenu:
 
     def __init__(self, screen, center_X, center_Y):
@@ -39,12 +42,15 @@ class popUpInPracticeMenu:
         self.center_Y = center_Y
 
         self.Elements = []
-
-        self.screenShader = Elements.screenShader(screen, center_X, center_Y)
-        self.Elements.append(self.screenShader)
+        self.Interactive = []
 
         self.popUpRect = popUpRect(screen, center_X, center_Y, self.colors, 400, 400)
         self.Elements.append(self.popUpRect)
+
+        self.screenShader = Elements.screenShader(screen, center_X, center_Y, 3799, self.popUpRect.getRect())
+        self.Elements.append(self.screenShader)
+        self.Interactive.append(self.screenShader)
+
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
         self.Elements.append(self.popUpRect)
@@ -60,7 +66,54 @@ class popUpInPracticeMenu:
         self.Elements.append(self.exitButton)
         self.Elements.append(self.returnButton)
 
+        self.Interactive.append(self.exitButton)
+        self.Interactive.append(self.returnButton)
+
+    def draw(self):
+        for element in self.Elements:
+            element.draw()
+
+    def recenter(self, center_X, center_Y):
+        self.center_X = center_X
+        self.center_Y = center_Y
+        for element in self.Elements:
+            element.recenter(center_X,center_Y)
+
+class popUpSettings:
+
+    def __init__(self, screen, center_X, center_Y):
+
+        self.screen = screen
+
+        self.colors = {"darkBlue":(53, 63, 112), "screenGrey": (230,230,230)}
+
+        self.center_X = center_X
+        self.center_Y = center_Y
+
+        self.Elements = []
         self.Interactive = []
+
+        self.popUpRect = popUpRect(screen, center_X, center_Y, self.colors, 1000, 600)
+        self.Elements.append(self.popUpRect)
+
+        self.screenShader = Elements.screenShader(screen, center_X, center_Y, 3799, self.popUpRect.getRect())
+        self.Elements.append(self.screenShader)
+        self.Interactive.append(self.screenShader)
+
+
+        self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
+        self.Elements.append(self.popUpRect)
+        
+        self.textDrawer.add("Settings", "cX", "cy-245", 70, self.colors["darkBlue"],"ariel")
+        self.Elements.append(self.textDrawer)
+
+        buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
+
+        self.exitButton = Elements.Button(screen, 400, 250, 100, 50, buttonColor, 6, 10, "text", "Exit", 30, center_X, center_Y, 4201, True)
+        self.returnButton = Elements.Button(screen, -400, 250, 100, 50, buttonColor, 6, 10, "text", "Done", 30, center_X, center_Y, 3799, True)
+
+        self.Elements.append(self.exitButton)
+        self.Elements.append(self.returnButton)
 
         self.Interactive.append(self.exitButton)
         self.Interactive.append(self.returnButton)
@@ -74,3 +127,4 @@ class popUpInPracticeMenu:
         self.center_Y = center_Y
         for element in self.Elements:
             element.recenter(center_X,center_Y)
+

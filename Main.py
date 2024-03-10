@@ -89,14 +89,8 @@ while running:
             elif Screens.eventDict[event.type] == "pracSelect":
                 currScreen = Screens.practiceSelectScreen(screen, center_X, center_Y)
                 continue
-            elif Screens.eventDict[event.type] == "algebra":
-                currScreen = Screens.algebraScreen(screen, center_X, center_Y)
-                continue
-            elif Screens.eventDict[event.type] == "mod":
-                currScreen = Screens.modScreen(screen, center_X, center_Y)
-                continue
-            elif Screens.eventDict[event.type] == "dooms":
-                currScreen = Screens.doomScreen(screen, center_X, center_Y)
+            elif event.type >= 4202 and event.type <= 4208:
+                currScreen = Screens.problemScreen(screen, center_X, center_Y, event.type)
                 continue
 
         if event.type >= 6900 and event.type <= 7000:

@@ -98,7 +98,7 @@ class ModProblem1:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
-        self.inputTexts.append("Answer:")
+        self.inputTexts.append("Smallest Integer:")
 
     def checkCorrect(self, answer):
 
@@ -166,7 +166,7 @@ class ModProblem2:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
-        self.inputTexts.append("Answer:")
+        self.inputTexts.append("GCD:")
 
     def checkCorrect(self, answer):
 
@@ -238,7 +238,7 @@ class ModProblem3:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
-        self.inputTexts.append("Answer:")
+        self.inputTexts.append("GCD:")
 
     def checkCorrect(self, answer):
 
@@ -305,7 +305,7 @@ class ModProblem4:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
-        self.inputTexts.append("Answer:")
+        self.inputTexts.append("LCM:")
 
     def checkCorrect(self, answer):
 
@@ -377,7 +377,7 @@ class ModProblem3:
 
         self.answerReceiver = ("textBox",1)
         self.answers.append(self.answer)
-        self.inputTexts.append("Answer:")
+        self.inputTexts.append("LCM:")
 
     def checkCorrect(self, answer):
         correctList = []
@@ -453,6 +453,84 @@ class ModProblem5:
             self.question.append("Compute lcm(" + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", " + str(self.factor*self.extra3)+ ")")
 
         self.answerReceiver = ("textBox",1)
+        self.answers.append(self.answer)
+        self.inputTexts.append("Answer:")
+
+    def checkCorrect(self, answer):
+        
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                #print(abs(float(self.answers[i]) - float(answer[i])))
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        return correctList
+        
+    def getQuestion(self):
+        return self.question
+
+    def getAnswer(self):
+        return self.answers
+        
+    def display(self):
+        pass
+
+# Diophantine Equations Problems
+class ModProblem6: 
+
+    def __init__(self):
+
+        self.question = []
+        self.answers = []
+        self.inputTexts = []
+        
+        self.problemDisplayType = "lines"
+
+        self.create()
+
+        pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+        self.inputTexts = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
+    
+    def generateProblem(self):
+
+        self.factor = random.randint(1,300)
+        self.extra1 = random.randint(1,300)
+        self.extra2 = random.randint(1,300)
+        self.extra3 = random.randint(1,300)
+
+        while (math.gcd(self.extra1, self.extra2) != 1):
+            self.extra2 = random.randint(1,300)
+
+        while (math.gcd(self.extra2, self.extra3) != 1 and math.gcd(self.extra1, self.extra3) != 1):
+            self.extra3 = random.randint(1,300)
+
+        self.answer = self.factor * self.extra1 * self.extra2 * self.extra3
+        pass
+
+    def generateQuestionAndAnswer(self):
+        
+        choice = random.randint(1,3)
+        if (choice == 1):
+            self.question.append("Find the lcm of " + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", and " + str(self.factor*self.extra3))
+        elif (choice == 2):
+            self.question.append("Find the least common multiple of " + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", and " + str(self.factor*self.extra3))
+        else:
+            self.question.append("Compute lcm(" + str(self.factor*self.extra1) + ", " + str(self.factor*self.extra2) + ", " + str(self.factor*self.extra3)+ ")")
+
+        self.answerReceiver = ("textBox",2)
         self.answers.append(self.answer)
         self.inputTexts.append("Answer:")
 

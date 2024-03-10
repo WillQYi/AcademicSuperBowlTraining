@@ -146,17 +146,17 @@ class AlgebraProblem1:
             self.question.append("Find x+y")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX+self.answerY)
-            self.inputTexts.append("Answer:")
+            self.inputTexts.append("x+y:")
         elif (choice <= 75):
             self.question.append("Find x-y")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX-self.answerY)
-            self.inputTexts.append("Answer:")
+            self.inputTexts.append("x-y:")
         else:
             self.question.append("Find xy")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX*self.answerY)
-            self.inputTexts.append("Answer:")
+            self.inputTexts.append("xy:")
 
         return self.question
     
@@ -316,27 +316,27 @@ class AlgebraProblem2:
             self.question.append("Find x+y+z")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX+self.answerY+self.answerZ)
-            self.inputTexts.append("Answer:")
+            self.inputTexts.append("x+y+z:")
         elif (choice <= 56):
             self.question.append("Find x-y+z")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX-self.answerY+self.answerZ)
-            self.inputTexts.append("Answer:")
+            self.inputTexts.append("x-y+z:")
         elif (choice <= 72):
             self.question.append("Find x+y-z")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX+self.answerY-self.answerZ) 
-            self.inputTexts.append("Answer:")
+            self.inputTexts.append("x+y-z:")
         elif (choice <= 88):
             self.question.append("Find -x+y+z")
             self.answerReceiver = ("textBox",1)      
             self.answers.append(-1 * self.answerX+self.answerY+self.answerZ)
-            self.inputTexts.append("Answer:")
+            self.inputTexts.append("-x+y+z:")
         else:
             self.question.append("Find xyz")
             self.answerReceiver = ("textBox",1)
             self.answers.append(self.answerX*self.answerY*self.answerZ)
-            self.inputTexts.append("Answer:")
+            self.inputTexts.append("xyz:")
 
     def getQuestion(self):
         return self.question
@@ -360,8 +360,158 @@ class AlgebraProblem2:
 
     def display(self):
         pass
+    
+# 2 variable, 
+class AlgebraProblem3:
+
+    def __init__(self):
+
+        self.question = []
+        self.answers = []
+        self.inputTexts = []
+
+        self.problemDisplayType = "lines"
+
+        self.create()
+
+        pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+        self.inputTexts = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
+
+    def equationBuilder1(self, coefficient1, coefficient2, LHS):
+        equationString = ""
+        if (coefficient1 == 1):
+            pass
+        elif (coefficient1 == -1):
+            equationString += "-"
+        else:
+            equationString += str(coefficient1)
+
+        if (abs(coefficient2) == 1):
+            equationString += "x + "
+        elif (coefficient2 == -1):
+            equationString += "x - "
+        elif(coefficient2 < 0):
+            equationString += "x - " + str(abs(coefficient2))
+        else:
+            equationString += "x + " + str(coefficient2)
+
+        equationString += "y = " + str(LHS)
+
+        return equationString
+
+    def equationBuilder2(self, coefficient1, LHS):
+        equationString = ""
+        if (coefficient1 == 1):
+            pass
+        elif (coefficient1 == -1):
+            equationString += "-"
+        else:
+            equationString += str(coefficient1)
+
+        equationString += "xy"
+
+        equationString += " = " + str(LHS)
+
+        return equationString
+    
+    '''
+    def equationBuilder3(self, coefficient1, coefficient2, variable, LHS):
+        equationString = ""
+
+        if (coefficient1 == 1):
+            pass
+        elif (coefficient1 == -1):
+            equationString += "-"
+        else:
+            equationString += str(coefficient1)
+
+        equationString += "xy"
+
+        equationString += " = " + str(LHS)
+
+        return equationString
+    '''
+    
+    def generateProblem(self):
+        
+        multiplier = False
+
+        choice = random.randint(1,100)
+        if (choice <= 90):
+            rangeAnswer = 10
+            rangeCoefficient = 15
+        else:
+            rangeAnswer = 15
+            rangeCoefficient = 30
+
+        self.answerX = random.randint(-1 * rangeAnswer , rangeAnswer)
+        while (self.answerX == 0):
+            self.answerX = random.randint(-1 * rangeAnswer , rangeAnswer)
+        self.answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
+        while (self.answerY == 0):
+            self.answerY = random.randint(-1 * rangeAnswer , rangeAnswer)
+
+        #First equation coefficients
+        coefficient1 = random.randint(-1*rangeCoefficient, rangeCoefficient)
+        while (coefficient1 == 0):
+            coefficient11 = random.randint(-1 * rangeAnswer , rangeAnswer)
+
+        #Second equation coefficients
+        coefficient2x = random.randint(-1*rangeCoefficient, rangeCoefficient)
+        while (coefficient2x == 0):
+            coefficient2x = random.randint(-1 * rangeAnswer , rangeAnswer)
+        coefficient2y = random.randint(-1*rangeCoefficient, rangeCoefficient)
+        while (coefficient2y == 0):
+            coefficient2y = random.randint(-1 * rangeAnswer , rangeAnswer)
+        
+        LHS1 = self.answerX * coefficient1 * self.answerY
+        LHS2 = self.answerX * coefficient2x + self.answerY * coefficient2y
+
+        self.question.append(self.equationBuilder2(coefficient1, LHS1))
+        self.question.append(self.equationBuilder1(coefficient2x, coefficient2y, LHS2))
+    
+    def generateQuestionAndAnswer(self):
+
+        self.answers = []
+        self.inputTexts = []
+
+        choice = random.randint(1,100)
+        if (choice <= 100):
+            self.question.append("Find x,y")
+            self.answerReceiver = ("textBox",2)
+            self.answers.append(self.answerX)
+            self.answers.append(self.answerY)
+            self.inputTexts.append("x:")
+            self.inputTexts.append("y:")
+
+    def checkCorrect(self, answer):
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.001):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        return correctList
+
+    def getQuestion(self):
+        return self.question
+
+    def getAnswer(self):
+        return self.answers
+
+problemList = [AlgebraProblem1(), AlgebraProblem2(), AlgebraProblem3()]
 
 #print(pygame.font.get_fonts())
 #problem = print(AlgebraProblem1().getQuestion())
-
-problemList = [AlgebraProblem1(), AlgebraProblem2()]

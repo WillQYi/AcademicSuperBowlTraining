@@ -52,8 +52,8 @@ class TextDrawer:
         text = self.font.render(string, True, color)
         textRect = text.get_rect()
     
-        xOp = Expressions.locationOperationValue(X, self.center_X, self.center_Y)
-        yOp = Expressions.locationOperationValue(Y, self.center_X, self.center_Y)
+        xOp = Expressions.locationExpressionValue(X, self.center_X, self.center_Y)
+        yOp = Expressions.locationExpressionValue(Y, self.center_X, self.center_Y)
 
         textRect.center = (xOp,yOp)
         self.screen.blit(text, textRect)
@@ -112,8 +112,8 @@ class Button:
         self.center_X = center_X
         self.center_Y = center_Y
 
-        xOp = Expressions.locationOperationValue(X, self.center_X, self.center_Y)
-        yOp = Expressions.locationOperationValue(Y, self.center_X, self.center_Y)
+        xOp = Expressions.locationExpressionValue(X, self.center_X, self.center_Y)
+        yOp = Expressions.locationExpressionValue(Y, self.center_X, self.center_Y)
         self.sizeX = sizeX
 
         #Button Creation
@@ -154,8 +154,8 @@ class Button:
                 pygame.event.post(CUSTOMEVENT)
                 self.runTick = 0
         else: 
-            xOp = Expressions.locationOperationValue(self.X, self.center_X, self.center_Y)
-            yOp = Expressions.locationOperationValue(self.Y, self.center_X, self.center_Y)
+            xOp = Expressions.locationExpressionValue(self.X, self.center_X, self.center_Y)
+            yOp = Expressions.locationExpressionValue(self.Y, self.center_X, self.center_Y)
             self.ButtonRectOutside = pygame.Rect(self.center_X+xOp-self.sizeX/2, self.center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
             self.ButtonRectInside= pygame.Rect(self.center_X+xOp-self.sizeX/2, self.center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
 
@@ -178,8 +178,8 @@ class Button:
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
-        xOp = Expressions.locationOperationValue(self.X, self.center_X, self.center_Y)
-        yOp = Expressions.locationOperationValue(self.Y, self.center_X, self.center_Y)
+        xOp = Expressions.locationExpressionValue(self.X, self.center_X, self.center_Y)
+        yOp = Expressions.locationExpressionValue(self.Y, self.center_X, self.center_Y)
         for label in self.labels:
             label.recenter(center_X+xOp, center_Y+yOp)
      
@@ -320,8 +320,8 @@ class inputTextBox:
 
         self.inputtedText = ""
 
-        xOp = Expressions.locationOperationValue(self.X, center_X, center_Y)
-        yOp = Expressions.locationOperationValue(self.Y, center_X, center_Y)
+        xOp = Expressions.locationExpressionValue(self.X, center_X, center_Y)
+        yOp = Expressions.locationExpressionValue(self.Y, center_X, center_Y)
         self.insideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
         self.outsideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
         self.activeRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
@@ -383,8 +383,8 @@ class inputTextBox:
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
-        xOp = Expressions.locationOperationValue(self.X, center_X, center_Y)
-        yOp = Expressions.locationOperationValue(self.Y, center_X, center_Y)
+        xOp = Expressions.locationExpressionValue(self.X, center_X, center_Y)
+        yOp = Expressions.locationExpressionValue(self.Y, center_X, center_Y)
         self.insideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
         self.outsideRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
         self.activeRect = pygame.Rect(center_X+xOp-self.sizeX/2, center_Y+yOp-self.sizeY/2, self.sizeX, self.sizeY)
@@ -415,7 +415,7 @@ class divider:
         self.thickness = thickness
 
     def draw(self):
-        cord = Expressions.locationOperationValue(self.cord, self.center_X, self.center_Y)
+        cord = Expressions.locationExpressionValue(self.cord, self.center_X, self.center_Y)
         if (self.type == "horizontal"):
             pygame.draw.line(self.screen, self.color, (0,cord), (2*self.center_X,cord), self.thickness)
         elif (self.type == "vertical"):
@@ -455,10 +455,8 @@ class problemNumberBox:
 
         self.label = Elements.Label(self.screen, 30, "text", self.X+self.sizeX/2, self.Y+self.sizeY/2, str(number), self.color, 'ariel')
 
-
-    def recenter(self, X, Y):
-        self.X = X
-        self.Y = Y
+    def recenter(self, center_X, center_Y):
+        pass
 
 class problemController():
 
@@ -470,6 +468,8 @@ class problemController():
 
         self.answer = []
         self.inputElements = []
+
+        self.textBoxLocations = []
 
         self.center_X = center_X
         self.center_Y = center_Y
@@ -508,6 +508,16 @@ class problemController():
             else:
                 self.TextDrawer.add(question[0], "cX", "cY", 60, self.color, "ariel")
 
+    def loadSolutionDisplay(self, problem):
+
+        self.problem = problem
+
+        answers = problem.getAnswer()
+
+        for i in range(len(self.textBoxLocations)):
+            string = "Answer: " + str(answers[i])
+            self.TextDrawer.add(string, self.textBoxLocations[i]+(self.TextDrawer.findSizeOfTextRect(string, 25, "ariel"))/2+5, "2*cY-43", 25, self.color, "ariel")
+
     def loadProblemInput(self, type):
         
         self.inputType = type
@@ -515,6 +525,8 @@ class problemController():
         del self.inputElements[:]
 
         font = 40
+
+        self.textBoxLocations = []
 
         if (type[0] == "textBox"):
             if (type[1] == 1):
@@ -530,6 +542,8 @@ class problemController():
 
                 self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
                 self.inputElements.append(self.textBox1)
+
+                self.textBoxLocations.append(currEnd)
 
             elif (type[1] == 2):
                 
@@ -550,6 +564,9 @@ class problemController():
                 currEnd += 20
 
                 self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
+                self.inputElements.append(self.textBox1)
+
+                self.textBoxLocations.append(currEnd)
 
                 currEnd += lengthTextbox
                 currEnd += 50
@@ -560,8 +577,9 @@ class problemController():
                 currEnd += 20
 
                 self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
-                self.inputElements.append(self.textBox1)
                 self.inputElements.append(self.textBox2)
+
+                self.textBoxLocations.append(currEnd)
             elif (type[1] == 3):
 
                 #Finding sizes
@@ -584,7 +602,10 @@ class problemController():
                 currEnd += 20
 
                 self.textBox1 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
+                self.inputElements.append(self.textBox1)
 
+                self.textBoxLocations.append(currEnd)
+    
                 currEnd += lengthTextbox
                 currEnd += 50
 
@@ -594,6 +615,9 @@ class problemController():
                 currEnd += 20
 
                 self.textBox2 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
+                self.inputElements.append(self.textBox2)
+
+                self.textBoxLocations.append(currEnd)
                 
                 currEnd += lengthTextbox
                 currEnd += 50
@@ -604,10 +628,9 @@ class problemController():
                 currEnd += 20
 
                 self.textBox3 = Elements.inputTextBox(self.screen, self.center_X, self.center_Y, (str(lengthTextbox/2)+"+"+str(currEnd)+"-cX"), "cY-88", lengthTextbox, 50, "Type Answer")
-
-                self.inputElements.append(self.textBox1)
-                self.inputElements.append(self.textBox2)
                 self.inputElements.append(self.textBox3)
+
+                self.textBoxLocations.append(currEnd)
 
     def checkCorrect(self):
 
@@ -624,6 +647,8 @@ class problemController():
         else:
             for i in range(len(self.correctList)):
                 (self.inputElements[i]).submit(self.correctList[i])
+
+        self.loadSolutionDisplay(self.problem)
         pass
     
     def draw(self):
@@ -688,8 +713,8 @@ class switch:
 
         self.size = size
 
-        xOp = Expressions.locationOperationValue(self.X, center_X, center_Y)
-        yOp = Expressions.locationOperationValue(self.Y, center_X, center_Y)
+        xOp = Expressions.locationExpressionValue(self.X, center_X, center_Y)
+        yOp = Expressions.locationExpressionValue(self.Y, center_X, center_Y)
 
         self.backRect = pygame.Rect(xOp-self.size, yOp-self.size/2, 2*self.size, self.size)
 
@@ -720,5 +745,5 @@ class switch:
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
-        xOp = Expressions.locationOperationValue(self.X, center_X, center_Y)
-        yOp = Expressions.locationOperationValue(self.Y, center_X, center_Y)
+        xOp = Expressions.locationExpressionValue(self.X, center_X, center_Y)
+        yOp = Expressions.locationExpressionValue(self.Y, center_X, center_Y)

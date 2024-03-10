@@ -5,6 +5,7 @@ import AlgebraProblems
 import ModProblems
 import DoomProblems
 import Expressions
+import Screens
 
 eventDict = {3799: "popUpExit", 3800: "popUpInPractice", 3801: "checkExit", 3802: "popUpSettings", 4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted", 6901: "newProblem"}
 
@@ -118,7 +119,7 @@ class creditsScreen:
         self.textDrawer.add("- An Kieu", 95, 100, normalTextSize, self.colors["darkBlue"],"ariel")
 
         self.textDrawer.add("BHSS 2023-2024 Math Team: ", 390, 200, titleTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("- An Kieu (Captian), Minh Huynh, Edward Choi, Jackson Fries, Jacob Hammond,", 440, 270, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- An Kieu (Captain), Minh Huynh, Edward Choi, Jackson Fries, Jacob Hammond,", 440, 270, normalTextSize, self.colors["darkBlue"],"ariel")
         self.textDrawer.add("Will Yi, Dylan Stringer, Shayan Shamsipour, Yelena Zhou, Yucelin Zhou", 410, 320, normalTextSize, self.colors["darkBlue"],"ariel")
 
         self.textDrawer.add("Notes Link:", 165, 430, titleTextSize, self.colors["darkBlue"],"ariel")
@@ -231,9 +232,9 @@ class practiceSelectScreen:
         for Elements in self.Elements:
             Elements.recenter(center_X, center_Y)
 
-class algebraScreen:
+class problemScreen:
 
-    def __init__(self, screen, center_X, center_Y):
+    def __init__(self, screen, center_X, center_Y, problemType):
 
         self.screen = screen
 
@@ -241,6 +242,8 @@ class algebraScreen:
         self.Interactive = []
 
         self.InteractiveText = []
+
+        self.problemType = problemType
 
         self.center_X = center_X
         self.center_Y = center_Y
@@ -303,7 +306,13 @@ class algebraScreen:
 
         self.problemController.reset()
 
-        self.problem = AlgebraProblems.problemList[random.randint(0,1)]
+        if (Screens.eventDict[self.problemType] == "algebra"):
+            self.problem = AlgebraProblems.problemList[random.randint(0,1)]
+        elif (Screens.eventDict[self.problemType] == "mod"):
+            self.problem = ModProblems.problemList[random.randint(0,4)]
+        elif (Screens.eventDict[self.problemType] == "dooms"):
+            self.problem = DoomProblems.problemList[random.randint(0,3)]
+
         self.problem.create()
         self.problemController.loadProblemDisplay(self.problem)
         self.problemController.loadProblemInput(self.problem.answerReceiver)
@@ -329,201 +338,5 @@ class algebraScreen:
         self.center_Y = center_Y
         for element in self.Elements:
             element.recenter(center_X, center_Y)
-
-class modScreen:
-
-    def __init__(self, screen, center_X, center_Y):
-
-        self.screen = screen
-
-        self.Elements = []
-        self.Interactive = []
-
-        self.InteractiveText = []
-
-        self.center_X = center_X
-        self.center_Y = center_Y
-
-        self.problemsDone = 0
-
-        self.colors = {"darkBlue": (53, 63, 112), "screenGrey": (230,230,230), "lightBlue":(38, 176, 237)}
-
-        self.titleTextSize = 50
-
-        self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
-        self.textDrawer.add("Modular Arithmetic Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
-
-        self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 95, 7, self.colors["darkBlue"])
-        self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, "2*cY-175", 7, self.colors["darkBlue"])
-        self.problemNumberBox = Elements.problemNumberBox(screen, 25, 140, 60, 60, str(self.problemsDone+1), self.colors["darkBlue"])
-
-        self.problemController = Elements.problemController(screen, self.center_X, self.center_Y, self.colors["darkBlue"])
-        self.loadProblem()
-        self.Elements.append(self.problemController)
-
-        buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
-
-        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 3800, True)
-
-        self.Elements.append(menuButton)
-        self.Interactive.append(menuButton)
-
-        self.checkButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "text", "Submit", 30, center_X, center_Y, 6900, True)
-        self.nextButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "image", "arrowButton.png", 0.3, center_X, center_Y, 6901, True)
-
-        self.Elements.append(self.checkButton)
-        self.Interactive.append(self.checkButton)
-
-        self.Elements.append(self.textDrawer)
-        self.Elements.append(self.topDivider)
-        self.Elements.append(self.bottomDivider)
-        self.Elements.append(self.problemNumberBox)
-
-        self.draw()
-
-    def run(self):
-        self.draw()
-
-    def draw(self):
-        for element in self.Elements:
-            element.draw()
-
-    def loadProblem(self):
-
-        self.problemsDone += 1
-        self.problemNumberBox.changeNumber(self.problemsDone)
-        
-        try:
-            for textbox in self.problemController.inputElements:
-                self.Interactive.append(textbox)
-                self.InteractiveText.append(textbox)
-        except:
-            pass
-
-        self.problemController.reset()
-
-        self.problem = ModProblems.problemList[random.randint(0,4)]
-        self.problem.create()
-        self.problemController.loadProblemDisplay(self.problem)
-        self.problemController.loadProblemInput(self.problem.answerReceiver)
-
-        for textbox in self.problemController.inputElements:
-            self.Interactive.append(textbox)
-            self.InteractiveText.append(textbox)
-
-    def swapButton(self):
-        if (self.checkButton in self.Elements):
-            self.Elements.remove(self.checkButton)
-            self.Interactive.remove(self.checkButton)
-            self.Elements.append(self.nextButton)
-            self.Interactive.append(self.nextButton)
-        else:
-            self.Elements.remove(self.nextButton)
-            self.Interactive.remove(self.nextButton)
-            self.Elements.append(self.checkButton)
-            self.Interactive.append(self.checkButton)
-
-    def recenter(self, center_X, center_Y):
-        self.center_X = center_X
-        self.center_Y = center_Y
-        for element in self.Elements:
-            element.recenter(center_X, center_Y)
-
-class doomScreen:
-
-    def __init__(self, screen, center_X, center_Y):
-
-        self.screen = screen
-
-        self.Elements = []
-        self.Interactive = []
-
-        self.InteractiveText = []
-
-        self.center_X = center_X
-        self.center_Y = center_Y
-
-        self.problemsDone = 0
-
-        self.colors = {"darkBlue": (53, 63, 112), "screenGrey": (230,230,230), "lightBlue":(38, 176, 237)}
-
-        self.titleTextSize = 50
-
-        self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
-        self.textDrawer.add("Doomsday Algorithm Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
-
-        self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 95, 7, self.colors["darkBlue"])
-        self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, "2*cY-175", 7, self.colors["darkBlue"])
-        self.problemNumberBox = Elements.problemNumberBox(screen, 25, 140, 60, 60, str(self.problemsDone+1), self.colors["darkBlue"])
-
-        self.problemController = Elements.problemController(screen, self.center_X, self.center_Y, self.colors["darkBlue"])
-        self.loadProblem()
-        self.Elements.append(self.problemController)
-
-        buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
-
-        menuButton = Elements.Button(screen, "cX-50", "50-cY", 68, 68, buttonColor, 6, 10, "image", "menuButton.png", 0.6, center_X, center_Y, 3800, True)
-
-        self.Elements.append(menuButton)
-        self.Interactive.append(menuButton)
-
-        self.checkButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "text", "Submit", 30, center_X, center_Y, 6900, True)
-        self.nextButton = Elements.Button(screen, "cX-100", "cY-88", 100, 68, buttonColor, 6, 10, "image", "arrowButton.png", 0.3, center_X, center_Y, 6901, True)
-
-        self.Elements.append(self.checkButton)
-        self.Interactive.append(self.checkButton)
-
-        self.Elements.append(self.textDrawer)
-        self.Elements.append(self.topDivider)
-        self.Elements.append(self.bottomDivider)
-        self.Elements.append(self.problemNumberBox)
-
-        self.draw()
-
-    def run(self):
-        self.draw()
-
-    def draw(self):
-        for element in self.Elements:
-            element.draw()
-
-    def loadProblem(self):
-
-        self.problemsDone += 1
-        self.problemNumberBox.changeNumber(self.problemsDone)
-        
-        try:
-            for textbox in self.problemController.inputElements:
-                self.Interactive.append(textbox)
-                self.InteractiveText.append(textbox)
-        except:
-            pass
-
-        self.problemController.reset()
-
-        self.problem = DoomProblems.problemList[random.randint(0,3)]
-        self.problem.create()
-        self.problemController.loadProblemDisplay(self.problem)
-        self.problemController.loadProblemInput(self.problem.answerReceiver)
-
-        for textbox in self.problemController.inputElements:
-            self.Interactive.append(textbox)
-            self.InteractiveText.append(textbox)
-
-    def swapButton(self):
-        if (self.checkButton in self.Elements):
-            self.Elements.remove(self.checkButton)
-            self.Interactive.remove(self.checkButton)
-            self.Elements.append(self.nextButton)
-            self.Interactive.append(self.nextButton)
-        else:
-            self.Elements.remove(self.nextButton)
-            self.Interactive.remove(self.nextButton)
-            self.Elements.append(self.checkButton)
-            self.Interactive.append(self.checkButton)
-
-    def recenter(self, center_X, center_Y):
-        self.center_X = center_X
-        self.center_Y = center_Y
-        for element in self.Elements:
-            element.recenter(center_X, center_Y)
+        self.checkButton.recenter(center_X, center_Y)
+        self.nextButton.recenter(center_X, center_Y)

@@ -1,49 +1,56 @@
-
-def locationOperationValue(expression, center_X = int, center_Y = int):
+def locationExpressionValue(expression, center_X = int, center_Y = int):
 
     if (type(expression) is str):
         if (expression in ["cX", "cx", "centerX", "centerx", "CenterX", "Centerx", "Cx", "CX", "center_X", "center_x", "Center_X", "Center_x"]):
             return center_X
         elif (expression in ["cY", "cy", "centerY", "centery", "CenterY", "Centery", "y", "CY", "center_Y", "center_y", "Center_Y", "Center_y"]):
             return center_Y
-        formatList = locationOperationFormatter(expression, center_X, center_Y)
+        formatList = locationExpressionFormatter(expression, center_X, center_Y)
     else:
         return expression
     
-    #print(expression, type(expression))
-
-    #print(formatList)
-
-    exponentExists, processedListExponents = checkExponent(formatList, center_X, center_Y)
+    exponentExists, processedListExponents = checkExponent(formatList)
     while (exponentExists):
-         exponentExists, processedListExponents = checkExponent(processedListExponents, center_X, center_Y)
+         exponentExists, processedListExponents = checkExponent(processedListExponents)
 
-    divisionExists, processedListDivision = checkDivision(processedListExponents, center_X, center_Y)
-    while (divisionExists):
-         divisionExists, processedListDivision = checkDivision(processedListDivision, center_X, center_Y)
+    operationMDExists, processedListMD = checkMultiplicationOrDivision(processedListExponents)
+    while (operationMDExists):
+         operationMDExists, processedListMD = checkMultiplicationOrDivision(processedListMD)
 
-    multiplicationExists, processedListMultiplication = checkMultiplication(processedListDivision, center_X, center_Y)
-    while (multiplicationExists):
-         multiplicationExists, processedListMultiplication = checkMultiplication(processedListMultiplication, center_X, center_Y)
+    operationASExists, processedListAS = checkAdditionOrSubtraction(processedListMD)
+    while (operationASExists):
+        operationASExists, processedListAS = checkAdditionOrSubtraction(processedListAS)
 
-    additionExists, processedListAddition = checkAddition(processedListMultiplication, center_X, center_Y)
-    while (additionExists):
-        additionExists, processedListAddition = checkAddition(processedListAddition, center_X, center_Y)
+    return processedListAS[0]
 
-    subtractionExists, processedListSubtraction = checkSubtraction(processedListAddition, center_X, center_Y)
-    while (subtractionExists):
-        subtractionExists, processedListSubtraction = checkSubtraction(processedListSubtraction, center_X, center_Y)
+def operationValue(expression, variableDict):
 
-    return processedListSubtraction[0]
+    if (type(expression) is str):
+        formatList = expressionFormatter(expression, variableDict)
+    else:
+        return expression
+    
+    exponentExists, processedListExponents = checkExponent(formatList)
+    while (exponentExists):
+         exponentExists, processedListExponents = checkExponent(processedListExponents)
+
+    operationMDExists, processedListMD = checkMultiplicationOrDivision(processedListExponents)
+    while (operationMDExists):
+         operationMDExists, processedListMD = checkMultiplicationOrDivision(processedListMD)
+
+    operationASExists, processedListAS = checkAdditionOrSubtraction(processedListMD)
+    while (operationASExists):
+        operationASExists, processedListAS = checkAdditionOrSubtraction(processedListAS)
+
+    return processedListAS[0]
 
 # Computes values for exponents symbols
-def checkExponent(formatList, center_X, center_Y):
+def checkExponent(formatList):
 
     processedListExponents = []
     i = len(formatList)-1
     exponentExists = False
     while (i > 0):
-        #print(str(processedListExponents) + " " + str(i))
         if (formatList[i-1] == "^" and exponentExists == False):
             processedListExponents.append(formatList[i-2]**formatList[i])
             exponentExists = True
@@ -56,98 +63,75 @@ def checkExponent(formatList, center_X, center_Y):
 
     processedListExponents.reverse()
 
-    #print(processedListExponents)
-
     return exponentExists, processedListExponents
 
-# Computes values for division symbols
-def checkDivision(formatList, center_X, center_Y):
-
-    divisionExists = False
-    processedListDivision = []
-    i = 0
-    while (i < len(formatList)-1):
-        if (formatList[i+1] == "/"):
-            divisionExists = True
-            if (formatList[i+2] != 0):
-                processedListDivision.append(formatList[i]/formatList[i+2])
-            else:
-                return "DIVISION BY 0"
-            i += 3
-        else: 
-            processedListDivision.append(formatList[i])
-            i += 1
-    if (formatList[len(formatList)-2] != "/"):
-        processedListDivision.append(formatList[len(formatList)-1])
-
-    #print(processedListDivision)
-
-    return divisionExists, processedListDivision
-
-# Computes values for multiplication symbols
-def checkMultiplication(formatList, center_X, center_Y):
+# Computes values for multiplication and division symbols
+def checkMultiplicationOrDivision(formatList):
 
     multiplicationExists = False
-    processedListMultiplication = []
+    processedListMD = []
     i = 0
     while (i < len(formatList)-1):
         if (formatList[i+1] == "*"):
             multiplicationExists = True
-            processedListMultiplication.append(formatList[i]*formatList[i+2])
+            processedListMD.append(formatList[i]*formatList[i+2])
             i += 3
-        else: 
-            processedListMultiplication.append(formatList[i])
-            i += 1
-    if (formatList[len(formatList)-2] != "*"):
-        processedListMultiplication.append(formatList[len(formatList)-1])
-
-    #print(processedListMultiplication)
-
-    return multiplicationExists, processedListMultiplication
-
-# Computes values for addition symbols
-def checkAddition(formatList, center_X, center_Y):
-
-    additionExists = False
-    processedListAddition = []
-    i = 0
-    while (i < len(formatList)-1):
-        if (formatList[i+1] == "+"):
-            additionExists = True
-            processedListAddition.append(formatList[i]+formatList[i+2])
+            while (i < len(formatList)):
+                processedListMD.append(formatList[i])
+                i += 1
+            break
+        elif (formatList[i+1] == "/"):
+            multiplicationExists = True
+            if (formatList[i+2] != 0):
+                processedListMD.append(formatList[i]/formatList[i+2])
+            else:
+                return "DIVISION BY 0"
             i += 3
-        else: 
-            processedListAddition.append(formatList[i])
+            while (i < len(formatList)):
+                processedListMD.append(formatList[i])
             i += 1
-    if (formatList[len(formatList)-2] != "+"):
-        processedListAddition.append(formatList[len(formatList)-1])
+            break
+        else: 
+            processedListMD.append(formatList[i])
+            i += 1
+    if (formatList[len(formatList)-2] != "*" and formatList[len(formatList)-2] != "/"):
+        processedListMD.append(formatList[len(formatList)-1])
 
-    #print(processedListAddition)
+    return multiplicationExists, processedListMD
 
-    return additionExists, processedListAddition
+# Computes values for addition and subtraction symbols
+def checkAdditionOrSubtraction(formatList):
 
-# Computes values for subtraction symbols
-def checkSubtraction(formatList, center_X, center_Y):
-
-    subtractionExists = False
-    processedListSubtraction = []
+    operationExists = False
+    processedListAS = []
     i = 0
     while (i < len(formatList)-1):
         if (formatList[i+1] == "-"):
-            subtractionExists = True
-            processedListSubtraction.append(formatList[i]-formatList[i+2])
+            operationExists = True
+            processedListAS.append(formatList[i]-formatList[i+2])
             i += 3
+            while (i < len(formatList)):
+                processedListAS.append(formatList[i])
+                i += 1
+            break
+        elif (formatList[i+1] == "+"):
+            operationExists = True
+            processedListAS.append(formatList[i]+formatList[i+2])
+            i += 3
+            while (i < len(formatList)):
+                processedListAS.append(formatList[i])
+                i += 1
+            break
         else: 
-            processedListSubtraction.append(formatList[i])
+            processedListAS.append(formatList[i])
             i += 1
-    if (formatList[len(formatList)-2] != "-"):
-        processedListSubtraction.append(formatList[len(formatList)-1])
 
-    #print(processedListSubtraction)
+    if (formatList[len(formatList)-2] != "-" and formatList[len(formatList)-2] != "+"):
+        processedListAS.append(formatList[len(formatList)-1])
 
-    return subtractionExists, processedListSubtraction
+    return operationExists, processedListAS
 
-def locationOperationFormatter(string, center_X, center_Y):
+def locationExpressionFormatter(string, center_X, center_Y):
 
     #Removing Spaces
     string = string.split(" ")
@@ -186,5 +170,49 @@ def locationOperationFormatter(string, center_X, center_Y):
 
     return formatList
 
+def expressionFormatter(string, variableDict):
+
+    #Removing Spaces
+    string = string.split(" ")
+
+    string = "".join(string)
+
+    value = 0
+    
+    formatList = []
+    operations = ["+","-","*","/","^", "(",")"]
+
+    #Turning into a list of numbers and operations
+    substring = ""
+    for i in range(len(string)):
+        if (string[i] in operations):
+            try:
+                formatList.append(variableDict[substring])
+            except:
+                print("ERROR! " + substring + " symbol not found")
+                return "ERROR"
+            if (substring == ""):
+                formatList.append(0)
+            else:
+                formatList.append(float(substring))
+
+            formatList.append(string[i])
+            substring = ""
+        else:
+            substring += string[i]
+            
+    try:
+        formatList.append(variableDict[substring])
+    except:
+        print("ERROR! " + substring + " symbol not found")
+        return "ERROR"
+
+    if (substring == ""):
+        formatList.append(0)
+    else:
+        formatList.append(float(substring))
+
+    return formatList
+
 #Testing
-#print(locationOperationValue("454.5+cX+171", 500, 300))
+#print(locationExpressionValue("cX+171-600-2", 500, 300))

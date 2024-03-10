@@ -128,7 +128,7 @@ class DoomProblem1:
 
         self.answerReceiver = ("textBox",1)
 
-        self.inputTexts.append("Answer:")
+        self.inputTexts.append("Day of the week:")
 
         self.question = []
 
@@ -151,7 +151,7 @@ class DoomProblem1:
         return self.question
 
     def getAnswer(self):
-        return self.answers
+        return [DoomProblems.days[self.anchorDay]]
         
     def display(self):
         pass
@@ -244,11 +244,11 @@ class DoomProblem2:
 
     def generateQuestionAndAnswer(self):
     
-        self.answers = DoomProblems.dayInputs[self.anchorDay]
+        self.answers = DoomProblems.dayInputs[self.answer]
 
         self.answerReceiver = ("textBox",1)
 
-        self.inputTexts.append("Answer:")
+        self.inputTexts.append("Day of the week:")
 
         self.question = []
 
@@ -291,7 +291,7 @@ class DoomProblem2:
         return self.question
 
     def getAnswer(self):
-        return self.answers
+        return [DoomProblems.days[self.anchorDay]]
         
     def display(self):
         pass
@@ -343,7 +343,7 @@ class DoomProblem3:
 
         self.answerReceiver = ("textBox",1)
 
-        self.inputTexts.append("Answer:")
+        self.inputTexts.append("Day of the week:")
 
         self.question = []
 
@@ -366,7 +366,7 @@ class DoomProblem3:
         return self.question
 
     def getAnswer(self):
-        return self.answers
+        return [DoomProblems.days[self.anchorDay]]
 
 # Find the day of the week in the Julian Calender
 class DoomProblem4: 
@@ -452,11 +452,11 @@ class DoomProblem4:
 
     def generateQuestionAndAnswer(self):
     
-        self.answers = DoomProblems.dayInputs[self.anchorDay]
+        self.answers = DoomProblems.dayInputs[self.answer]
 
         self.answerReceiver = ("textBox",1)
 
-        self.inputTexts.append("Answer:")
+        self.inputTexts.append("Day of the week:")
 
         self.question = []
 
@@ -499,7 +499,7 @@ class DoomProblem4:
         return self.question
 
     def getAnswer(self):
-        return self.answers
+        return [DoomProblems.days[self.answer]]
         
     def display(self):
         pass

@@ -114,20 +114,20 @@ class creditsScreen:
         self.Interactive.append(homeButton)
 
         titleTextSize = 70
-        self.textDrawer.add("Created by:", 175, 50, titleTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Created by:", 50+(self.textDrawer.findLengthOfTextRect("Created by:", titleTextSize, "ariel"))/2, 50, titleTextSize, self.colors["darkBlue"],"ariel")
 
         normalTextSize = 30
-        self.textDrawer.add("- An Kieu", 95, 100, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- An Kieu", 50+(self.textDrawer.findLengthOfTextRect("- An Kieu", normalTextSize, "ariel"))/2, 100, normalTextSize, self.colors["darkBlue"],"ariel")
 
-        self.textDrawer.add("BHSS 2023-2024 Math Team: ", 390, 200, titleTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("- An Kieu (Captain), Minh Huynh, Edward Choi, Jackson Fries, Jacob Hammond,", 440, 270, normalTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("Will Yi, Dylan Stringer, Shayan Shamsipour, Yelena Zhou, Yucelin Zhou", 410, 320, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("BHSS 2023-2024 Math Team: ", 50+(self.textDrawer.findLengthOfTextRect("BHSS 2023-2024 Math Team:", titleTextSize, "ariel"))/2, 200, titleTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- An Kieu (Captain), Minh Huynh, Edward Choi, Jackson Fries, Jacob Hammond,", 50+(self.textDrawer.findLengthOfTextRect("- An Kieu (Captain), Minh Huynh, Edward Choi, Jackson Fries, Jacob Hammond,", normalTextSize, "ariel"))/2, 270, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Will Yi, Dylan Stringer, Shayan Shamsipour, Yelena Zhou, Yucelin Zhou", 50+(self.textDrawer.findLengthOfTextRect("Will Yi, Dylan Stringer, Shayan Shamsipour, Yelena Zhou, Yucelin Zhou", normalTextSize, "ariel"))/2, 320, normalTextSize, self.colors["darkBlue"],"ariel")
 
-        self.textDrawer.add("Notes Link:", 165, 430, titleTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("- https://docs.google.com/document/d/1ockbV0BvivHAAlEOwTlSEGRIsPMJ869TA_Aa0GmViF4/edit?usp=sharing", 590, 490, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Notes Link:", 50+(self.textDrawer.findLengthOfTextRect("Notes Link:", titleTextSize, "ariel"))/2, 430, titleTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- https://docs.google.com/document/d/1ockbV0BvivHAAlEOwTlSEGRIsPMJ869TA_Aa0GmViF4/edit?usp=sharing", 50+(self.textDrawer.findLengthOfTextRect("- https://docs.google.com/document/d/1ockbV0BvivHAAlEOwTlSEGRIsPMJ869TA_Aa0GmViF4/edit?usp=sharing", normalTextSize, "ariel"))/2, 490, normalTextSize, self.colors["darkBlue"],"ariel")
 
-        self.textDrawer.add("Assigned Subjects:", 260, 590, titleTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("- https://docs.google.com/spreadsheets/d/18DLC50YC8_uU0_lGhbcC9ZMmexmqa_q2V47GzfwVNSE/edit#gid=0", 575, 650, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Assigned Subjects:", 50+(self.textDrawer.findLengthOfTextRect("Assigned Subjects:", titleTextSize, "ariel"))/2, 590, titleTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- https://docs.google.com/spreadsheets/d/18DLC50YC8_uU0_lGhbcC9ZMmexmqa_q2V47GzfwVNSE/edit#gid=0", 50+(self.textDrawer.findLengthOfTextRect("- https://docs.google.com/spreadsheets/d/18DLC50YC8_uU0_lGhbcC9ZMmexmqa_q2V47GzfwVNSE/edit#gid=0", normalTextSize, "ariel"))/2, 650, normalTextSize, self.colors["darkBlue"],"ariel")
 
 
         self.draw()

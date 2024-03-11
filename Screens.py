@@ -22,8 +22,9 @@ class testScreen:
         self.center_X = center_X
         self.center_Y = center_Y
 
-        self.switch = Elements.switch(screen, 200, 200, center_X, center_Y, 70, True, "test", Elements.colors, True)
+        self.switch = Elements.switch(screen, 500, 500, center_X, center_Y, 50, True, "Multiple Attempts", ["right", 30], Elements.colors, 500, True)
         self.Elements.append(self.switch)
+        self.Interactive.append(self.switch)
 
     def run(self):
         self.draw()

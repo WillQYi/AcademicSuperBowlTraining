@@ -100,7 +100,6 @@ class popUpSettings:
         self.Elements.append(self.screenShader)
         self.Interactive.append(self.screenShader)
 
-
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
         self.Elements.append(self.popUpRect)
         
@@ -112,11 +111,22 @@ class popUpSettings:
         self.exitButton = Elements.Button(screen, 400, 250, 100, 50, buttonColor, 6, 10, "text", "Exit", 30, center_X, center_Y, 4201, True)
         self.returnButton = Elements.Button(screen, -400, 250, 100, 50, buttonColor, 6, 10, "text", "Done", 30, center_X, center_Y, 3799, True)
 
+        self.MAswitch = Elements.switch(screen, "cX-400", "cY-175", center_X, center_Y, 50, False, "Multiple Attempts", ["right", 30], Elements.colors, 500, True)
+        self.TimerSwitch = Elements.switch(screen, "cX-400", "cY-100", center_X, center_Y, 50, False, "Timer", ["right", 30], Elements.colors, 500, True)
+        self.ShowSolutionSwitch = Elements.switch(screen, "cX-400", "cY-25", center_X, center_Y, 50, True, "Show Solution", ["right", 30], Elements.colors, 500, True)
+
         self.Elements.append(self.exitButton)
         self.Elements.append(self.returnButton)
+        self.Elements.append(self.MAswitch)
+        self.Elements.append(self.TimerSwitch)
+        self.Elements.append(self.ShowSolutionSwitch)
 
         self.Interactive.append(self.exitButton)
         self.Interactive.append(self.returnButton)
+        self.Interactive.append(self.MAswitch)
+        self.Interactive.append(self.MAswitch)
+        self.Interactive.append(self.TimerSwitch)
+        self.Interactive.append(self.ShowSolutionSwitch)
 
     def draw(self):
         for element in self.Elements:
@@ -127,4 +137,3 @@ class popUpSettings:
         self.center_Y = center_Y
         for element in self.Elements:
             element.recenter(center_X,center_Y)
-

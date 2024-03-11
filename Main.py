@@ -39,11 +39,13 @@ while running:
 
         if event.type == pygame.MOUSEBUTTONUP:
             mousePos = pygame.mouse.get_pos()
-            for interactive in currScreen.Interactive:
-                interactive.clicked(mousePos)
             if (popUpActive):
                 for interactive in popUp.Interactive:
                     interactive.clicked(mousePos)
+            else:
+                for interactive in currScreen.Interactive:
+                    interactive.clicked(mousePos)
+
 
         if event.type == pygame.KEYDOWN:
             for textbox in currScreen.InteractiveText:
@@ -87,7 +89,7 @@ while running:
                 currScreen = Screens.creditsScreen(screen, center_X, center_Y)
                 continue
             elif Screens.eventDict[event.type] == "pracSelect":
-                currScreen = Screens.practiceSelectScreen(screen, center_X, center_Y)
+                currScreen = Screens.practiceSelectScreen(screen, center_X, center_Y) 
                 continue
             elif event.type >= 4202 and event.type <= 4208:
                 currScreen = Screens.problemScreen(screen, center_X, center_Y, event.type)

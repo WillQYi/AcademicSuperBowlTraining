@@ -67,7 +67,7 @@ class TextDrawer:
             print(textTuple)
         return self.Texts
     
-    def findSizeOfTextRect(self, string, size, font):
+    def findLengthOfTextRect(self, string, size, font):
 
         testFont = pygame.font.SysFont(font, size)
 
@@ -75,6 +75,15 @@ class TextDrawer:
         textRect = text.get_rect()
 
         return textRect.size[0]
+    
+    def findWidthOfTextRect(self, string, size, font):
+
+        testFont = pygame.font.SysFont(font, size)
+
+        text = testFont.render(string, True, (0,0,0))
+        textRect = text.get_rect()
+
+        return textRect.size[1]
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
@@ -458,7 +467,7 @@ class problemNumberBox:
     def recenter(self, center_X, center_Y):
         pass
 
-class problemController():
+class problemController:
 
     def __init__(self, screen, center_X, center_Y, color):
 
@@ -503,7 +512,7 @@ class problemController():
                 for i in range(len(question)-1):
                     self.TextDrawer.add(question[i], "cX", "cY+" + str(topHieght+spacing*i), 60, self.color, "ariel")
 
-                self.TextDrawer.add(question[len(question)-1], 120+(self.TextDrawer.findSizeOfTextRect(question[len(question)-1], 60, "ariel"))/2, 175, 60, self.color, "ariel")
+                self.TextDrawer.add(question[len(question)-1], 120+(self.TextDrawer.findLengthOfTextRect(question[len(question)-1], 60, "ariel"))/2, 175, 60, self.color, "ariel")
             
             else:
                 self.TextDrawer.add(question[0], "cX", "cY", 60, self.color, "ariel")
@@ -516,7 +525,7 @@ class problemController():
 
         for i in range(len(self.textBoxLocations)):
             string = "Answer: " + str(answers[i])
-            self.TextDrawer.add(string, self.textBoxLocations[i]+(self.TextDrawer.findSizeOfTextRect(string, 25, "ariel"))/2+5, "2*cY-43", 25, self.color, "ariel")
+            self.TextDrawer.add(string, self.textBoxLocations[i]+(self.TextDrawer.findLengthOfTextRect(string, 25, "ariel"))/2+5, "2*cY-43", 25, self.color, "ariel")
 
     def loadProblemInput(self, type):
         
@@ -533,7 +542,7 @@ class problemController():
                 text = self.problem.inputTexts[0]
 
                 currEnd  = 50
-                lengthFirstText = self.TextDrawer.findSizeOfTextRect(text, font, "ariel")
+                lengthFirstText = self.TextDrawer.findLengthOfTextRect(text, font, "ariel")
                 self.TextDrawer.add(text, currEnd + lengthFirstText/2, "2*cY-88", font, self.color, "ariel")
                 currEnd += lengthFirstText
                 currEnd += 30 #Spacer between outside text and textbox
@@ -550,10 +559,10 @@ class problemController():
                 #Finding sizes
                 currEnd = 50
                 text1 = text = self.problem.inputTexts[0]
-                lengthFirstText = self.TextDrawer.findSizeOfTextRect(text1, font, "ariel")
+                lengthFirstText = self.TextDrawer.findLengthOfTextRect(text1, font, "ariel")
 
                 text2 = text = self.problem.inputTexts[1]
-                lengthSecondText = self.TextDrawer.findSizeOfTextRect(text2, font, "ariel")
+                lengthSecondText = self.TextDrawer.findLengthOfTextRect(text2, font, "ariel")
 
                 lengthTextbox = (2 * self.center_X - 250 - lengthFirstText - lengthSecondText - 20*2 - 50)/2
 
@@ -585,13 +594,13 @@ class problemController():
                 #Finding sizes
                 currEnd = 50
                 text1 = text = self.problem.inputTexts[0]
-                lengthFirstText = self.TextDrawer.findSizeOfTextRect(text1, font, "ariel")
+                lengthFirstText = self.TextDrawer.findLengthOfTextRect(text1, font, "ariel")
 
                 text2 = text = self.problem.inputTexts[1]
-                lengthSecondText = self.TextDrawer.findSizeOfTextRect(text2, font, "ariel")
+                lengthSecondText = self.TextDrawer.findLengthOfTextRect(text2, font, "ariel")
 
                 text3 = text = self.problem.inputTexts[2]
-                lengthThirdText = self.TextDrawer.findSizeOfTextRect(text3, font, "ariel")
+                lengthThirdText = self.TextDrawer.findLengthOfTextRect(text3, font, "ariel")
 
                 lengthTextbox = (2 * self.center_X - 250 - lengthFirstText - lengthSecondText - lengthThirdText - 20*3 - 50*2)/3
 
@@ -701,7 +710,7 @@ class screenShader:
         
 class switch:
 
-    def __init__(self, screen, X, Y, center_X, center_Y, size, state, text, colors, working):
+    def __init__(self, screen, X, Y, center_X, center_Y, size, state, text, locationOfText, colors, event, working):
         
         self.screen = screen
 
@@ -712,38 +721,85 @@ class switch:
         self.Y = Y
 
         self.size = size
+        self.borderSize = int(size/10)
+        self.fontSize = int(size*2/5)
 
-        xOp = Expressions.locationExpressionValue(self.X, center_X, center_Y)
-        yOp = Expressions.locationExpressionValue(self.Y, center_X, center_Y)
+        self.xOp = Expressions.locationExpressionValue(self.X, center_X, center_Y)
+        self.yOp = Expressions.locationExpressionValue(self.Y, center_X, center_Y)
 
-        self.backRect = pygame.Rect(xOp-self.size, yOp-self.size/2, 2*self.size, self.size)
-
-        self.moveRect = pygame.Rect(xOp-3, yOp-self.size/2, self.size+1, self.size)
-
-        self.isOn = state
-
-        self.text = text
+        self.state = state
 
         self.colors = colors
 
         self.working = working
 
+        self.event = event
+
+        self.backRect = pygame.Rect(self.xOp-self.size, self.yOp-self.size/2, 2*self.size, self.size)
+        
+        if (self.state):
+            self.moveRect = pygame.Rect(self.xOp-self.size, self.yOp-self.size/2, self.size, self.size)
+        else:
+            self.moveRect = pygame.Rect(self.xOp, self.yOp-self.size/2, self.size, self.size)
+
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
 
-        self.textDrawer.add("ON", xOp-self.size/2+5, yOp, 20, (200,200,200), "ariel")
+        self.textDrawer.add("OFF", str(self.X) + "-" + str(self.size/2) + "+" + "5", self.Y, self.fontSize, (100,100,100), "ariel")
 
-        self.textDrawer.add("OFF", xOp+self.size/2-5, yOp, 20, (100,100,100), "ariel")
+        self.textDrawer.add("ON", str(self.X) + "+" + str(self.size/2-5), self.Y, self.fontSize, (240,240,240), "ariel")
+
+        self.text = text
+        self.locationOfText = locationOfText
+
+        self.labelSize = int(1.5*self.fontSize)
+        if (type(locationOfText) == str):
+            if (locationOfText == "left"):
+                self.textDrawer.add(self.text, str(self.X) + "-" + str(self.size-self.textDrawer.findLengthOfTextRect(self.text, self.labelSize, "ariel")/2-30), self.Y, self.labelSize, self.colors["darkBlue"], "ariel")
+            elif (locationOfText == "right"):
+                self.textDrawer.add(self.text, str(self.X) + "+" + str(self.size+self.textDrawer.findLengthOfTextRect(self.text, self.labelSize, "ariel")/2+30), self.Y, self.labelSize, self.colors["darkBlue"], "ariel")
+        elif (type(locationOfText) == list):
+            if (locationOfText[0] == "left"):
+                self.textDrawer.add(self.text, str(self.X) + "-" + str(self.size-self.textDrawer.findLengthOfTextRect(self.text, self.labelSize, "ariel")/2-locationOfText[1]), self.Y, self.labelSize, self.colors["darkBlue"], "ariel")
+            elif (locationOfText[0] == "right"):
+                self.textDrawer.add(self.text, str(self.X) + "+" + str(self.size+self.textDrawer.findLengthOfTextRect(self.text, self.labelSize, "ariel")/2+locationOfText[1]), self.Y, self.labelSize, self.colors["darkBlue"], "ariel")
+
+        else: # Default parameters are to the left and with a 30 pixel spacer
+            self.textDrawer.add(self.text, str(self.X) + "-" + str(self.size-self.textDrawer.findLengthOfTextRect(self.text, self.labelSize, "ariel")/2-30), self.Y, self.labelSize, self.colors["darkBlue"], "ariel")
 
 
     def draw(self):
-        pygame.draw.rect(self.screen, (255,255,255), self.backRect, 0, 10)
-        pygame.draw.rect(self.screen, (175,175,175), self.moveRect, 0, 10)
-        pygame.draw.rect(self.screen, self.colors["darkBlue"], self.moveRect, 7, 10)
-        pygame.draw.rect(self.screen, self.colors["darkBlue"], self.backRect, 7, 10)
+        if (self.state):
+            pygame.draw.rect(self.screen, (70, 170, 250), self.backRect, 0, 15)
+        else:
+            pygame.draw.rect(self.screen, (175,175,175), self.backRect, 0, 15)
+        pygame.draw.rect(self.screen, self.colors["darkBlue"], self.backRect, self.borderSize, 15)
+
         self.textDrawer.draw()
+
+        pygame.draw.rect(self.screen, (255,255,255), self.moveRect, 0, 15)
+        pygame.draw.rect(self.screen, self.colors["darkBlue"], self.moveRect, self.borderSize, 15)
 
     def recenter(self, center_X, center_Y):
         self.center_X = center_X
         self.center_Y = center_Y
-        xOp = Expressions.locationExpressionValue(self.X, center_X, center_Y)
-        yOp = Expressions.locationExpressionValue(self.Y, center_X, center_Y)
+        self.xOp = Expressions.locationExpressionValue(self.X, center_X, center_Y)
+        self.yOp = Expressions.locationExpressionValue(self.Y, center_X, center_Y)
+        self.textDrawer.recenter(self.center_X, self.center_Y)
+        if (self.state):
+            self.moveRect = pygame.Rect(self.xOp-self.size, self.yOp-self.size/2, self.size, self.size)
+        else:
+            self.moveRect = pygame.Rect(self.xOp, self.yOp-self.size/2, self.size, self.size)
+        self.backRect = pygame.Rect(self.xOp-self.size, self.yOp-self.size/2, 2*self.size, self.size)
+
+    def clicked(self, mousePos):
+        if (self.moveRect.collidepoint(mousePos)):
+            self.state = not self.state
+            if (self.state):
+                self.moveRect = pygame.Rect(self.xOp-self.size, self.yOp-self.size/2, self.size, self.size)
+            else:
+                self.moveRect = pygame.Rect(self.xOp, self.yOp-self.size/2, self.size, self.size)
+            CUSTOMEVENT = pygame.event.Event(self.event)
+            pygame.event.post(CUSTOMEVENT)
+            return True
+        else:
+            return False

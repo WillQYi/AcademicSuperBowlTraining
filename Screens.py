@@ -250,6 +250,7 @@ class problemScreen:
         self.center_Y = center_Y
 
         self.problemsDone = 0
+        self.problemsDoneTracker = []
 
         self.colors = {"darkBlue": (53, 63, 112), "screenGrey": (230,230,230), "lightBlue":(38, 176, 237)}
 
@@ -305,7 +306,7 @@ class problemScreen:
         except:
             pass
 
-        self.problemController.reset()
+        self.problemController.reset(self.problemType)
 
         if (Screens.eventDict[self.problemType] == "algebra"):
             self.problem = AlgebraProblems.problemList[random.randint(0,1)]
@@ -341,3 +342,6 @@ class problemScreen:
             element.recenter(center_X, center_Y)
         self.checkButton.recenter(center_X, center_Y)
         self.nextButton.recenter(center_X, center_Y)
+
+    def getType(self):
+        return self.problemType

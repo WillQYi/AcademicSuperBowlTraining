@@ -32,7 +32,7 @@ class popUpRect:
 
 class popUpInPracticeMenu:
 
-    def __init__(self, screen, center_X, center_Y):
+    def __init__(self, screen, center_X, center_Y, practiceInfo):
 
         self.screen = screen
 
@@ -40,6 +40,8 @@ class popUpInPracticeMenu:
 
         self.center_X = center_X
         self.center_Y = center_Y
+
+        self.practiceInfo = practiceInfo
 
         self.Elements = []
         self.Interactive = []
@@ -54,8 +56,20 @@ class popUpInPracticeMenu:
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
         self.Elements.append(self.popUpRect)
-        
+
         self.textDrawer.add("Menu", "cX", "cy-155", 50, self.colors["darkBlue"],"ariel")
+        
+        self.textDrawer.add("Correctly Answered:", "cX" + "+" + str(self.textDrawer.findLengthOfTextRect("Correctly Answered:", 30, "ariel")/2-170), "cy-90", 30, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Incorrectly Answered:", "cX" + "+" + str(self.textDrawer.findLengthOfTextRect("Incorrectly Answered:", 30, "ariel")/2-170), "cy-40", 30, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Timed Correctly Answered:", "cX" + "+" + str(self.textDrawer.findLengthOfTextRect("Timed Correctly Answered:", 30, "ariel")/2-170), "cy+10", 30, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Timed Incorrectly Answered:", "cX" + "+" + str(self.textDrawer.findLengthOfTextRect("Timed Incorrectly Answered:", 30, "ariel")/2-170), "cy+60", 30, self.colors["darkBlue"],"ariel")
+        
+        self.textDrawer.add(str(practiceInfo[0]), "cX" + "+" + str(self.textDrawer.findLengthOfTextRect("Correctly Answered:", 30, "ariel")-140), "cy-90", 30, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add(str(practiceInfo[1]), "cX" + "+" + str(self.textDrawer.findLengthOfTextRect("Incorrectly Answered:", 30, "ariel")-140), "cy-40", 30, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add(str(practiceInfo[2]), "cX" + "+" + str(self.textDrawer.findLengthOfTextRect("Timed Correctly Answered:", 30, "ariel")-140), "cy+10", 30, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add(str(practiceInfo[3]), "cX" + "+" + str(self.textDrawer.findLengthOfTextRect("Timed Incorrectly Answered:", 30, "ariel")-140), "cy+60", 30, self.colors["darkBlue"],"ariel")
+
+        
         self.Elements.append(self.textDrawer)
 
         buttonColor = (self.colors["darkBlue"], self.colors["screenGrey"], self.colors["darkBlue"])
@@ -78,6 +92,9 @@ class popUpInPracticeMenu:
         self.center_Y = center_Y
         for element in self.Elements:
             element.recenter(center_X,center_Y)
+
+    def updateNumbers(self):
+        pass
 
 class popUpSettings:
 

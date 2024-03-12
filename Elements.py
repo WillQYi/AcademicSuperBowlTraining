@@ -475,6 +475,8 @@ class problemController:
         self.color = color
         self.submitted = False
 
+        self.problemType = None
+
         self.answer = []
         self.inputElements = []
 
@@ -485,11 +487,12 @@ class problemController:
         self.TextDrawer = TextDrawer(screen, center_X, center_Y)
         pass
 
-    def reset(self):
+    def reset(self, problemType):
 
         self.answer = []
         del self.inputElements[:]
         self.TextDrawer.clear()
+        self.problemType = problemType
 
     def loadProblemDisplay(self, problem):
 
@@ -645,6 +648,8 @@ class problemController:
 
         self.submitted = True
 
+        passToProblemRecorder = None # A tuple to be passed into problem recorder (Is the problem correct, type of problem, timed or not timed)
+
         self.answer = []
         for textbox in self.inputElements:
             self.answer.append(textbox.inputtedText)
@@ -653,12 +658,30 @@ class problemController:
         if (type(self.correctList) == bool):
             for i in range(len(self.inputElements)):
                 (self.inputElements[i]).submit(self.correctList)
+
+            if (self.correctList):
+                print(1)
+                passToProblemRecorder = (True, self.problemType, 0)
+            else: 
+                print(2)
+                passToProblemRecorder = (False, self.problemType, 0)
         else:
+            correct = True
             for i in range(len(self.correctList)):
                 (self.inputElements[i]).submit(self.correctList[i])
+                if (correct and not self.correctList[i]):
+                    print(3)
+                    correct = False
+                    passToProblemRecorder = (False, self.problemType, 0)
+
+            if (correct):
+                print(4)
+                passToProblemRecorder = (True, self.problemType, 0)
+
+        print(self.correctList)
 
         self.loadSolutionDisplay(self.problem)
-        pass
+        return passToProblemRecorder
     
     def draw(self):
         if (self.questionDisplayType == "lines"):

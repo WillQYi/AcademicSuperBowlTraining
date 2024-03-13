@@ -10,25 +10,6 @@ import Expressions
 #Used for miscellaneous text
 #X and Y are operations relative to the center
 
-#Element template 
-'''
-class Element:
-
-    def __init__(self, screen, X, Y):
-        
-        self.screen = screen
-
-        self.center_X = X
-        self.center_Y = Y
-
-    def draw(self):
-        pass
-
-    def recenter(self, X, Y):
-        self.center_X = X
-        self.center_Y = Y
-'''
-
 colors = {"darkBlue":(53, 63, 112), "screenGrey": (230,230,230)}
 
 class TextDrawer:
@@ -660,25 +641,19 @@ class problemController:
                 (self.inputElements[i]).submit(self.correctList)
 
             if (self.correctList):
-                print(1)
                 passToProblemRecorder = (True, self.problemType, 0)
             else: 
-                print(2)
                 passToProblemRecorder = (False, self.problemType, 0)
         else:
             correct = True
             for i in range(len(self.correctList)):
                 (self.inputElements[i]).submit(self.correctList[i])
                 if (correct and not self.correctList[i]):
-                    print(3)
                     correct = False
                     passToProblemRecorder = (False, self.problemType, 0)
 
             if (correct):
-                print(4)
                 passToProblemRecorder = (True, self.problemType, 0)
-
-        print(self.correctList)
 
         self.loadSolutionDisplay(self.problem)
         return passToProblemRecorder
@@ -826,3 +801,39 @@ class switch:
             return True
         else:
             return False
+
+class Line:
+
+    def __init__(self, screen, center_X, center_Y, startX, startY, endX, endY, thickness, color):
+
+        self.screen = screen
+
+        self.center_X = center_X
+        self.center_Y = center_Y
+
+        self.startX = startX
+        self.startY = startY
+        self.endX = endX
+        self.endY = endY
+        
+        self.thickness = thickness
+        self.color = color
+
+        self.startXOp = Expressions.locationExpressionValue(self.startX, center_X, center_Y)
+        self.startYOp = Expressions.locationExpressionValue(self.startY, center_X, center_Y)
+
+        self.endXOp = Expressions.locationExpressionValue(self.endX, center_X, center_Y)
+        self.endYOp = Expressions.locationExpressionValue(self.endY, center_X, center_Y)
+
+    def draw(self):
+        pygame.draw.line(self.screen, self.color, (self.startXOp, self.startYOp), (self.endXOp, self.endYOp), self.thickness)
+
+    def recenter(self, center_X, center_Y):
+        self.center_X = center_X
+        self.center_Y = center_Y
+
+        self.startXOp = Expressions.locationExpressionValue(self.startX, center_X, center_Y)
+        self.startYOp = Expressions.locationExpressionValue(self.startY, center_X, center_Y)
+
+        self.endXOp = Expressions.locationExpressionValue(self.endX, center_X, center_Y)
+        self.endYOp = Expressions.locationExpressionValue(self.endY, center_X, center_Y)

@@ -7,7 +7,7 @@ import DoomProblems
 import Expressions
 import Screens
 
-eventDict = {3799: "popUpExit", 3800: "popUpInPractice", 3801: "checkExit", 3802: "popUpSettings", 4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted", 6901: "newProblem"}
+eventDict = {3798: "popUpStats", 3799: "popUpExit", 3800: "popUpInPractice", 3801: "checkExit", 3802: "popUpSettings", 4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted", 6901: "newProblem"}
 
 class testScreen:
 
@@ -41,7 +41,6 @@ class testScreen:
         for Elements in self.Elements:
             Elements.recenter(center_X, center_Y)
         
-
 class homescreen:
 
     def __init__(self, screen, center_X, center_Y):
@@ -170,7 +169,7 @@ class practiceSelectScreen:
         #Utility Button Sizes
         homeButton = Elements.Button(screen, "cX-100", "100-cY", 100, 100, buttonColor, 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
         settingsButton = Elements.Button(screen, "cX-100", "cY-100", 100, 100, buttonColor, 8, 10, "image", "settingsButton.png", 0.9, center_X, center_Y, 3802, True)
-        statsButton = Elements.Button(screen, "100-cX", "cY-100", 100, 100, buttonColor, 8, 10, "image", "statsButton.png", 0.9, center_X, center_Y, 4200, False)
+        statsButton = Elements.Button(screen, "100-cX", "cY-100", 100, 100, buttonColor, 8, 10, "image", "statsButton.png", 0.9, center_X, center_Y, 3798, True)
 
         #Practice Button Sizes
         practiceButtonTextSize = 40
@@ -344,4 +343,4 @@ class problemScreen:
         self.nextButton.recenter(center_X, center_Y)
 
     def getType(self):
-        return self.problemType
+        return self.problemType    

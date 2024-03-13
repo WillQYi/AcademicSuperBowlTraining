@@ -82,6 +82,8 @@ while running:
                 popUp = PopUp.popUpInPracticeMenu(screen, center_X, center_Y, problemsDoneList[currScreen.getType()-4202])
             elif (Screens.eventDict[event.type] == "popUpSettings"):
                 popUp = PopUp.popUpSettings(screen, center_X, center_Y)
+            elif (Screens.eventDict[event.type] == "popUpStats"):
+                popUp = PopUp.popUpStats(screen, center_X, center_Y, problemsDoneList)
 
         #Screens
         if event.type >= 4100 and event.type <= 4300:

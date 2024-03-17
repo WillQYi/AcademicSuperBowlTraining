@@ -328,7 +328,7 @@ class StatsProblem3:
 
         return correctList
 
-#
+#Finding the probability of a fixed number of trials given a small binomial distribution
 class StatsProblem4: 
 
     def __init__(self):
@@ -358,7 +358,7 @@ class StatsProblem4:
 
         self.trials = random.randint(6,20)
         self.probabilityList = [0.01,0.05,0.1,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95]
-        self.success = self.probabilityList[random.randint(0,len(self.probabilityList))]
+        self.success = self.probabilityList[random.randint(0,len(self.probabilityList)-1)]
         self.bound = random.randint(0,self.trials)
 
         answer = 0
@@ -422,5 +422,143 @@ class StatsProblem4:
 
         return correctList
 
+#Finding the mean, median and mode of a set of numbers
+class StatsProblem5: 
 
-problemList = [StatsProblem1(), StatsProblem2(), StatsProblem3(), StatsProblem4()]
+    def __init__(self):
+
+        self.question = []
+        self.answers = []
+        self.inputTexts = []
+
+        self.type = None
+
+        self.problemDisplayType = "lines"
+
+        self.create()
+
+        pass
+
+    def create(self):
+
+        self.question = []
+        self.answers = []
+        self.inputTexts = []
+
+        self.generateProblem()
+        self.generateQuestionAndAnswer()
+    
+    def generateProblem(self):
+
+        self.maxNumberOfElement = random.randint(3,6)
+        self.numberOfDifferentElement = int(16/(self.maxNumberOfElement/2))
+        self.listOfNumbers = []
+
+        self.mode = random.randint(1, 100)
+        for i in range(self.maxNumberOfElement):
+            self.listOfNumbers.append(self.mode)
+        for i in range(self.numberOfDifferentElement):
+
+            number = random.randint(1,100)
+            while (number == self.mode):
+                number = random.randint(1,100)
+
+            for j in range(random.randint(1, self.maxNumberOfElement)):
+                self.listOfNumbers.append(number)
+
+        totalSum = sum(self.listOfNumbers)
+        self.mean = truncate_float(totalSum/len(self.listOfNumbers), 4)
+
+        self.listOfNumbers.sort() 
+        middle = len(self.listOfNumbers) // 2
+        self.median = (self.listOfNumbers[middle] + self.listOfNumbers[~middle]) / 2
+
+        random.shuffle(self.listOfNumbers)
+
+        self.type = random.randint(1,11)
+        if (self.type == 1):
+            self.answers.append(self.median)
+        elif (self.type == 2):
+            self.answers.append(self.mean)
+        elif (self.type == 3):
+            self.answers.append(self.mode)
+        elif (self.type == 4):
+            self.answers.append(self.mean + self.median)
+        elif (self.type == 5):
+            self.answers.append(self.mean + self.mode)
+        elif (self.type == 6):
+            self.answers.append(self.mode + self.median)
+        elif (self.type == 7):
+            self.answers.append(self.mean * self.median)
+        elif (self.type == 8):
+            self.answers.append(self.mean * self.mode)
+        elif (self.type == 9):
+            self.answers.append(self.mode * self.median)
+        elif (self.type == 10):
+            self.answers.append(self.mode + self.median + self.mean)
+        elif (self.type == 11):
+            self.answers.append(self.mode * self.median * self.mean)
+
+    def generateQuestionAndAnswer(self):
+
+        self.answerReceiver = ("textBox",1)
+        self.inputTexts = []
+        self.inputTexts.append("Probability: ")
+
+        listString = ""
+
+        for i in range(16):
+            listString += str(self.listOfNumbers[i]) + ", "
+        
+        if (len(self.listOfNumbers) > 16):
+            listString += "\n"
+            for i in range(16, len(self.listOfNumbers)-1):
+                listString += str(self.listOfNumbers[i]) + ", "
+            listString += str(self.listOfNumbers[len(self.listOfNumbers)-1])
+
+        self.question.append(listString)
+        if (self.type == 1):
+            self.question.append("Find the median of the following list")
+        elif (self.type == 2):
+            self.question.append("Find the mean of the following list")
+        elif (self.type == 3):
+            self.question.append("Find the mode of the following list")
+        elif (self.type == 4):
+            self.question.append("Find the sum of the mean and median")
+        elif (self.type == 5):
+            self.question.append("Find the sum of the mean and mode")
+        elif (self.type == 6):
+            self.question.append("Find the sum of the mode and median")
+        elif (self.type == 7):
+            self.question.append("Find the product of the mean and median")
+        elif (self.type == 8):
+            self.question.append("Find the product of the mean and mode")
+        elif (self.type == 9):
+            self.question.append("Find the product of the mode and median")
+        elif (self.type == 10):
+            self.question.append("Find the sum of the mean, median, and mode")
+        elif (self.type == 11):
+            self.question.append("Find the product of the mean, median, and mode")
+
+        return self.question
+
+    def getQuestion(self):
+        return self.question
+
+    def getAnswer(self):
+        return self.answers
+
+    def checkCorrect(self, answer):
+        correctList = []
+        for i in range(len(answer)):
+            try:
+                if (abs(float(self.answers[i]) - float(answer[i])) > 0.01):
+                    correctList.append(False)
+                else:
+                    correctList.append(True)
+            except:
+                correctList.append(False)
+
+        return correctList
+    
+problemList = [StatsProblem1(), StatsProblem2(), StatsProblem3(), StatsProblem4(), StatsProblem5()]

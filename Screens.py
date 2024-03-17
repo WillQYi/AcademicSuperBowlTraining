@@ -331,7 +331,8 @@ class problemScreen:
         elif (Screens.eventDict[self.problemType] == "dooms"):
             self.problem = DoomProblems.problemList[random.randint(0, len(DoomProblems.problemList)-1)]
         elif (Screens.eventDict[self.problemType] == "statistics"):
-            self.problem = StatProblems.problemList[random.randint(0, len(StatProblems.problemList)-1)]
+            #self.problem = StatProblems.problemList[random.randint(0, len(StatProblems.problemList)-1)]
+            self.problem = StatProblems.problemList[4]
 
         self.problem.create()
         self.problemController.loadProblemDisplay(self.problem)

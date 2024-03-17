@@ -4,6 +4,7 @@ import random
 import AlgebraProblems
 import ModProblems
 import DoomProblems
+import StatProblems
 import Expressions
 import Screens
 
@@ -170,6 +171,7 @@ class practiceSelectScreen:
         homeButton = Elements.Button(screen, "cX-100", "100-cY", 100, 100, buttonColor, 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
         settingsButton = Elements.Button(screen, "cX-100", "cY-100", 100, 100, buttonColor, 8, 10, "image", "settingsButton.png", 0.9, center_X, center_Y, 3802, True)
         statsButton = Elements.Button(screen, "100-cX", "cY-100", 100, 100, buttonColor, 8, 10, "image", "statsButton.png", 0.9, center_X, center_Y, 3798, True)
+        helpButton = Elements.Button(screen, "100-cX", "100-cY", 100, 100, buttonColor, 8, 10, "text", "?", 70, center_X, center_Y, 3798, False)
 
         #Practice Button Sizes
         practiceButtonTextSize = 40
@@ -181,7 +183,7 @@ class practiceSelectScreen:
         #Creating Practice Buttons
         AlegbraButton = Elements.Button(screen, 0-practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Algebra", practiceButtonTextSize, center_X, center_Y, 4202, True)
         GeometryButton = Elements.Button(screen, 0, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Geometry", practiceButtonTextSize, center_X, center_Y, 4203, False)
-        StatisticsButton = Elements.Button(screen, 0+practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Statistics", practiceButtonTextSize, center_X, center_Y, 4204, False)
+        StatisticsButton = Elements.Button(screen, 0+practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Statistics", practiceButtonTextSize, center_X, center_Y, 4204, True)
         LogarithmButton = Elements.Button(screen, 0-practiceSpreadX, 50, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Logarithms", practiceButtonTextSize, center_X, center_Y, 4205, False)
         CalculusButton = Elements.Button(screen, 0, 50, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Calculus", practiceButtonTextSize, center_X, center_Y, 4206, False)
         ModButton = Elements.Button(screen, 0+practiceSpreadX, 50, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Modulo Arithemtic", practiceButtonTextSize, center_X, center_Y, 4207, True)
@@ -201,6 +203,7 @@ class practiceSelectScreen:
         self.Elements.append(homeButton)
         self.Elements.append(settingsButton)
         self.Elements.append(statsButton)
+        self.Elements.append(helpButton)
 
         self.Elements.append(self.textDrawer)
 
@@ -216,6 +219,7 @@ class practiceSelectScreen:
         self.Interactive.append(homeButton)
         self.Interactive.append(settingsButton)
         self.Interactive.append(statsButton)
+        self.Interactive.append(helpButton)
 
         self.draw()
 
@@ -256,7 +260,20 @@ class problemScreen:
         self.titleTextSize = 50
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
-        self.textDrawer.add("Algebra Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+
+        print(self.problemType)
+        print(Screens.eventDict[self.problemType])
+        if (Screens.eventDict[self.problemType] == "algebra"):
+            print(self.problemType)
+            self.textDrawer.add("Algebra Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+        elif (Screens.eventDict[self.problemType] == "mod"):
+            self.textDrawer.add("Modular Arithmetic Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+        elif (Screens.eventDict[self.problemType] == "dooms"):
+            self.textDrawer.add("Doomsday Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+        elif (Screens.eventDict[self.problemType] == "statistics"):
+            self.textDrawer.add("Statistics Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+
+        print(self.textDrawer.getTexts())
 
         self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 95, 7, self.colors["darkBlue"])
         self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, "2*cY-175", 7, self.colors["darkBlue"])
@@ -308,11 +325,13 @@ class problemScreen:
         self.problemController.reset(self.problemType)
 
         if (Screens.eventDict[self.problemType] == "algebra"):
-            self.problem = AlgebraProblems.problemList[random.randint(0,1)]
+            self.problem = AlgebraProblems.problemList[random.randint(0, len(AlgebraProblems.problemList)-1)]
         elif (Screens.eventDict[self.problemType] == "mod"):
-            self.problem = ModProblems.problemList[random.randint(0,4)]
+            self.problem = ModProblems.problemList[random.randint(0, len(ModProblems.problemList)-1)]
         elif (Screens.eventDict[self.problemType] == "dooms"):
-            self.problem = DoomProblems.problemList[random.randint(0,3)]
+            self.problem = DoomProblems.problemList[random.randint(0, len(DoomProblems.problemList)-1)]
+        elif (Screens.eventDict[self.problemType] == "statistics"):
+            self.problem = StatProblems.problemList[random.randint(0, len(StatProblems.problemList)-1)]
 
         self.problem.create()
         self.problemController.loadProblemDisplay(self.problem)

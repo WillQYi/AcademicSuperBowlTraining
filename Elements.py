@@ -22,7 +22,14 @@ class TextDrawer:
     
     #Creates a tuple that holds information about individual texts to draw
     def add(self, string, X, Y, size, color, font):
-        self.Texts.append((string, X, Y, size, color, font))
+        lines = string.split("\n")
+        for i in range(len(lines)):
+            if (type(Y) == int):
+                width = self.findWidthOfTextRect(lines[i], size, font) * 1.5
+                self.Texts.append((lines[i], X, Y-(len(lines)-1)*width/2+i*(width), size, color, font))
+            elif (type(Y) == str):
+                width = self.findWidthOfTextRect(lines[i], size, font) * 1.5
+                self.Texts.append((lines[i], X, Y + "-" + str((len(lines)-1)*width/2) + "+" + str(i*(width)), size, color, font))
 
     def drawOne(self, string, X, Y, size, color, font):
 
@@ -40,6 +47,7 @@ class TextDrawer:
         self.screen.blit(text, textRect)
 
     def draw(self):
+        #print(self.Texts)
         for i in range(len(self.Texts)):
             self.drawOne(self.Texts[i][0],self.Texts[i][1],self.Texts[i][2],self.Texts[i][3],self.Texts[i][4],self.Texts[i][5])
 

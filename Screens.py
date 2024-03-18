@@ -4,10 +4,11 @@ import random
 import AlgebraProblems
 import ModProblems
 import DoomProblems
+import StatProblems
 import Expressions
 import Screens
 
-eventDict = {3799: "popUpExit", 3800: "popUpInPractice", 3801: "checkExit", 3802: "popUpSettings", 4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted", 6901: "newProblem"}
+eventDict = {3798: "popUpStats", 3799: "popUpExit", 3800: "popUpInPractice", 3801: "checkExit", 3802: "popUpSettings", 4199: "credits", 4200: "home", 4201: "pracSelect", 4202: "algebra", 4203: "geometry", 4204: "statistics", 4205: "logarithms", 4206: "calculus", 4207: "mod", 4208: "dooms", 6900: "answerInputted", 6901: "newProblem"}
 
 class testScreen:
 
@@ -41,7 +42,6 @@ class testScreen:
         for Elements in self.Elements:
             Elements.recenter(center_X, center_Y)
         
-
 class homescreen:
 
     def __init__(self, screen, center_X, center_Y):
@@ -114,20 +114,20 @@ class creditsScreen:
         self.Interactive.append(homeButton)
 
         titleTextSize = 70
-        self.textDrawer.add("Created by:", 175, 50, titleTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Created by:", 50+(self.textDrawer.findLengthOfTextRect("Created by:", titleTextSize, "ariel"))/2, 50, titleTextSize, self.colors["darkBlue"],"ariel")
 
         normalTextSize = 30
-        self.textDrawer.add("- An Kieu", 95, 100, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- An Kieu", 50+(self.textDrawer.findLengthOfTextRect("- An Kieu", normalTextSize, "ariel"))/2, 100, normalTextSize, self.colors["darkBlue"],"ariel")
 
-        self.textDrawer.add("BHSS 2023-2024 Math Team: ", 390, 200, titleTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("- An Kieu (Captain), Minh Huynh, Edward Choi, Jackson Fries, Jacob Hammond,", 440, 270, normalTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("Will Yi, Dylan Stringer, Shayan Shamsipour, Yelena Zhou, Yucelin Zhou", 410, 320, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("BHSS 2023-2024 Math Team: ", 50+(self.textDrawer.findLengthOfTextRect("BHSS 2023-2024 Math Team:", titleTextSize, "ariel"))/2, 200, titleTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- An Kieu (Captain), Minh Huynh, Edward Choi, Jackson Fries, Jacob Hammond,", 50+(self.textDrawer.findLengthOfTextRect("- An Kieu (Captain), Minh Huynh, Edward Choi, Jackson Fries, Jacob Hammond,", normalTextSize, "ariel"))/2, 270, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Will Yi, Dylan Stringer, Shayan Shamsipour, Yelena Zhou, Yucelin Zhou", 50+(self.textDrawer.findLengthOfTextRect("Will Yi, Dylan Stringer, Shayan Shamsipour, Yelena Zhou, Yucelin Zhou", normalTextSize, "ariel"))/2, 320, normalTextSize, self.colors["darkBlue"],"ariel")
 
-        self.textDrawer.add("Notes Link:", 165, 430, titleTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("- https://docs.google.com/document/d/1ockbV0BvivHAAlEOwTlSEGRIsPMJ869TA_Aa0GmViF4/edit?usp=sharing", 590, 490, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Notes Link:", 50+(self.textDrawer.findLengthOfTextRect("Notes Link:", titleTextSize, "ariel"))/2, 430, titleTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- https://docs.google.com/document/d/1ockbV0BvivHAAlEOwTlSEGRIsPMJ869TA_Aa0GmViF4/edit?usp=sharing", 50+(self.textDrawer.findLengthOfTextRect("- https://docs.google.com/document/d/1ockbV0BvivHAAlEOwTlSEGRIsPMJ869TA_Aa0GmViF4/edit?usp=sharing", normalTextSize, "ariel"))/2, 490, normalTextSize, self.colors["darkBlue"],"ariel")
 
-        self.textDrawer.add("Assigned Subjects:", 260, 590, titleTextSize, self.colors["darkBlue"],"ariel")
-        self.textDrawer.add("- https://docs.google.com/spreadsheets/d/18DLC50YC8_uU0_lGhbcC9ZMmexmqa_q2V47GzfwVNSE/edit#gid=0", 575, 650, normalTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("Assigned Subjects:", 50+(self.textDrawer.findLengthOfTextRect("Assigned Subjects:", titleTextSize, "ariel"))/2, 590, titleTextSize, self.colors["darkBlue"],"ariel")
+        self.textDrawer.add("- https://docs.google.com/spreadsheets/d/18DLC50YC8_uU0_lGhbcC9ZMmexmqa_q2V47GzfwVNSE/edit#gid=0", 50+(self.textDrawer.findLengthOfTextRect("- https://docs.google.com/spreadsheets/d/18DLC50YC8_uU0_lGhbcC9ZMmexmqa_q2V47GzfwVNSE/edit#gid=0", normalTextSize, "ariel"))/2, 650, normalTextSize, self.colors["darkBlue"],"ariel")
 
 
         self.draw()
@@ -170,7 +170,8 @@ class practiceSelectScreen:
         #Utility Button Sizes
         homeButton = Elements.Button(screen, "cX-100", "100-cY", 100, 100, buttonColor, 8, 10, "image", "homeButton.png", 0.23, center_X, center_Y, 4200, True)
         settingsButton = Elements.Button(screen, "cX-100", "cY-100", 100, 100, buttonColor, 8, 10, "image", "settingsButton.png", 0.9, center_X, center_Y, 3802, True)
-        statsButton = Elements.Button(screen, "100-cX", "cY-100", 100, 100, buttonColor, 8, 10, "image", "statsButton.png", 0.9, center_X, center_Y, 4200, False)
+        statsButton = Elements.Button(screen, "100-cX", "cY-100", 100, 100, buttonColor, 8, 10, "image", "statsButton.png", 0.9, center_X, center_Y, 3798, True)
+        helpButton = Elements.Button(screen, "100-cX", "100-cY", 100, 100, buttonColor, 8, 10, "text", "?", 70, center_X, center_Y, 3798, False)
 
         #Practice Button Sizes
         practiceButtonTextSize = 40
@@ -182,7 +183,7 @@ class practiceSelectScreen:
         #Creating Practice Buttons
         AlegbraButton = Elements.Button(screen, 0-practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Algebra", practiceButtonTextSize, center_X, center_Y, 4202, True)
         GeometryButton = Elements.Button(screen, 0, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Geometry", practiceButtonTextSize, center_X, center_Y, 4203, False)
-        StatisticsButton = Elements.Button(screen, 0+practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Statistics", practiceButtonTextSize, center_X, center_Y, 4204, False)
+        StatisticsButton = Elements.Button(screen, 0+practiceSpreadX, 50-practiceSpreadY, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Statistics", practiceButtonTextSize, center_X, center_Y, 4204, True)
         LogarithmButton = Elements.Button(screen, 0-practiceSpreadX, 50, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Logarithms", practiceButtonTextSize, center_X, center_Y, 4205, False)
         CalculusButton = Elements.Button(screen, 0, 50, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Calculus", practiceButtonTextSize, center_X, center_Y, 4206, False)
         ModButton = Elements.Button(screen, 0+practiceSpreadX, 50, practiceButtonX, practiceButtonY, buttonColor, 8, 10, "text", "Modulo Arithemtic", practiceButtonTextSize, center_X, center_Y, 4207, True)
@@ -202,6 +203,7 @@ class practiceSelectScreen:
         self.Elements.append(homeButton)
         self.Elements.append(settingsButton)
         self.Elements.append(statsButton)
+        self.Elements.append(helpButton)
 
         self.Elements.append(self.textDrawer)
 
@@ -217,6 +219,7 @@ class practiceSelectScreen:
         self.Interactive.append(homeButton)
         self.Interactive.append(settingsButton)
         self.Interactive.append(statsButton)
+        self.Interactive.append(helpButton)
 
         self.draw()
 
@@ -250,13 +253,27 @@ class problemScreen:
         self.center_Y = center_Y
 
         self.problemsDone = 0
+        self.problemsDoneTracker = []
 
         self.colors = {"darkBlue": (53, 63, 112), "screenGrey": (230,230,230), "lightBlue":(38, 176, 237)}
 
         self.titleTextSize = 50
 
         self.textDrawer = Elements.TextDrawer(screen, center_X, center_Y)
-        self.textDrawer.add("Algebra Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+
+        print(self.problemType)
+        print(Screens.eventDict[self.problemType])
+        if (Screens.eventDict[self.problemType] == "algebra"):
+            print(self.problemType)
+            self.textDrawer.add("Algebra Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+        elif (Screens.eventDict[self.problemType] == "mod"):
+            self.textDrawer.add("Modular Arithmetic Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+        elif (Screens.eventDict[self.problemType] == "dooms"):
+            self.textDrawer.add("Doomsday Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+        elif (Screens.eventDict[self.problemType] == "statistics"):
+            self.textDrawer.add("Statistics Practice", "cX", 95/2, self.titleTextSize, self.colors["darkBlue"], "ariel")
+
+        print(self.textDrawer.getTexts())
 
         self.topDivider = Elements.divider(screen, "horizontal", center_X, center_Y, 95, 7, self.colors["darkBlue"])
         self.bottomDivider = Elements.divider(screen, "horizontal", center_X, center_Y, "2*cY-175", 7, self.colors["darkBlue"])
@@ -305,14 +322,17 @@ class problemScreen:
         except:
             pass
 
-        self.problemController.reset()
+        self.problemController.reset(self.problemType)
 
         if (Screens.eventDict[self.problemType] == "algebra"):
-            self.problem = AlgebraProblems.problemList[random.randint(0,1)]
+            self.problem = AlgebraProblems.problemList[random.randint(0, len(AlgebraProblems.problemList)-1)]
         elif (Screens.eventDict[self.problemType] == "mod"):
-            self.problem = ModProblems.problemList[random.randint(0,4)]
+            self.problem = ModProblems.problemList[random.randint(0, len(ModProblems.problemList)-1)]
         elif (Screens.eventDict[self.problemType] == "dooms"):
-            self.problem = DoomProblems.problemList[random.randint(0,3)]
+            self.problem = DoomProblems.problemList[random.randint(0, len(DoomProblems.problemList)-1)]
+        elif (Screens.eventDict[self.problemType] == "statistics"):
+            #self.problem = StatProblems.problemList[random.randint(0, len(StatProblems.problemList)-1)]
+            self.problem = StatProblems.problemList[4]
 
         self.problem.create()
         self.problemController.loadProblemDisplay(self.problem)
@@ -341,3 +361,6 @@ class problemScreen:
             element.recenter(center_X, center_Y)
         self.checkButton.recenter(center_X, center_Y)
         self.nextButton.recenter(center_X, center_Y)
+
+    def getType(self):
+        return self.problemType    

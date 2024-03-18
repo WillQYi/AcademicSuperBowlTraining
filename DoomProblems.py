@@ -291,7 +291,7 @@ class DoomProblem2:
         return self.question
 
     def getAnswer(self):
-        return [DoomProblems.days[self.anchorDay]]
+        return [DoomProblems.days[self.answer]]
         
     def display(self):
         pass

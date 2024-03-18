@@ -10,25 +10,6 @@ import Expressions
 #Used for miscellaneous text
 #X and Y are operations relative to the center
 
-#Element template 
-'''
-class Element:
-
-    def __init__(self, screen, X, Y):
-        
-        self.screen = screen
-
-        self.center_X = X
-        self.center_Y = Y
-
-    def draw(self):
-        pass
-
-    def recenter(self, X, Y):
-        self.center_X = X
-        self.center_Y = Y
-'''
-
 colors = {"darkBlue":(53, 63, 112), "screenGrey": (230,230,230)}
 
 class TextDrawer:
@@ -41,7 +22,14 @@ class TextDrawer:
     
     #Creates a tuple that holds information about individual texts to draw
     def add(self, string, X, Y, size, color, font):
-        self.Texts.append((string, X, Y, size, color, font))
+        lines = string.split("\n")
+        for i in range(len(lines)):
+            if (type(Y) == int):
+                width = self.findWidthOfTextRect(lines[i], size, font) * 1.5
+                self.Texts.append((lines[i], X, Y-(len(lines)-1)*width/2+i*(width), size, color, font))
+            elif (type(Y) == str):
+                width = self.findWidthOfTextRect(lines[i], size, font) * 1.5
+                self.Texts.append((lines[i], X, Y + "-" + str((len(lines)-1)*width/2) + "+" + str(i*(width)), size, color, font))
 
     def drawOne(self, string, X, Y, size, color, font):
 
@@ -59,6 +47,7 @@ class TextDrawer:
         self.screen.blit(text, textRect)
 
     def draw(self):
+        #print(self.Texts)
         for i in range(len(self.Texts)):
             self.drawOne(self.Texts[i][0],self.Texts[i][1],self.Texts[i][2],self.Texts[i][3],self.Texts[i][4],self.Texts[i][5])
 
@@ -475,6 +464,8 @@ class problemController:
         self.color = color
         self.submitted = False
 
+        self.problemType = None
+
         self.answer = []
         self.inputElements = []
 
@@ -485,11 +476,12 @@ class problemController:
         self.TextDrawer = TextDrawer(screen, center_X, center_Y)
         pass
 
-    def reset(self):
+    def reset(self, problemType):
 
         self.answer = []
         del self.inputElements[:]
         self.TextDrawer.clear()
+        self.problemType = problemType
 
     def loadProblemDisplay(self, problem):
 
@@ -645,6 +637,8 @@ class problemController:
 
         self.submitted = True
 
+        passToProblemRecorder = None # A tuple to be passed into problem recorder (Is the problem correct, type of problem, timed or not timed)
+
         self.answer = []
         for textbox in self.inputElements:
             self.answer.append(textbox.inputtedText)
@@ -653,12 +647,24 @@ class problemController:
         if (type(self.correctList) == bool):
             for i in range(len(self.inputElements)):
                 (self.inputElements[i]).submit(self.correctList)
+
+            if (self.correctList):
+                passToProblemRecorder = (True, self.problemType, 0)
+            else: 
+                passToProblemRecorder = (False, self.problemType, 0)
         else:
+            correct = True
             for i in range(len(self.correctList)):
                 (self.inputElements[i]).submit(self.correctList[i])
+                if (correct and not self.correctList[i]):
+                    correct = False
+                    passToProblemRecorder = (False, self.problemType, 0)
+
+            if (correct):
+                passToProblemRecorder = (True, self.problemType, 0)
 
         self.loadSolutionDisplay(self.problem)
-        pass
+        return passToProblemRecorder
     
     def draw(self):
         if (self.questionDisplayType == "lines"):
@@ -803,3 +809,39 @@ class switch:
             return True
         else:
             return False
+
+class Line:
+
+    def __init__(self, screen, center_X, center_Y, startX, startY, endX, endY, thickness, color):
+
+        self.screen = screen
+
+        self.center_X = center_X
+        self.center_Y = center_Y
+
+        self.startX = startX
+        self.startY = startY
+        self.endX = endX
+        self.endY = endY
+        
+        self.thickness = thickness
+        self.color = color
+
+        self.startXOp = Expressions.locationExpressionValue(self.startX, center_X, center_Y)
+        self.startYOp = Expressions.locationExpressionValue(self.startY, center_X, center_Y)
+
+        self.endXOp = Expressions.locationExpressionValue(self.endX, center_X, center_Y)
+        self.endYOp = Expressions.locationExpressionValue(self.endY, center_X, center_Y)
+
+    def draw(self):
+        pygame.draw.line(self.screen, self.color, (self.startXOp, self.startYOp), (self.endXOp, self.endYOp), self.thickness)
+
+    def recenter(self, center_X, center_Y):
+        self.center_X = center_X
+        self.center_Y = center_Y
+
+        self.startXOp = Expressions.locationExpressionValue(self.startX, center_X, center_Y)
+        self.startYOp = Expressions.locationExpressionValue(self.startY, center_X, center_Y)
+
+        self.endXOp = Expressions.locationExpressionValue(self.endX, center_X, center_Y)
+        self.endYOp = Expressions.locationExpressionValue(self.endY, center_X, center_Y)
